@@ -1,0 +1,74 @@
+[
+  {
+    "key": "sali",
+    "name": "saLi",
+    "avatar": "10",
+    "aura": "none",
+    "title": "Efsane Kaptan",
+    "goals": 22,
+    "matches": 21,
+    "wins": 7,
+    "createdAt": 1789855098239,
+    "lastActiveAt": 1789926524216
+  },
+  {
+    "key": "messsi",
+    "name": "Messsi",
+    "avatar": "10",
+    "aura": "none",
+    "title": "Çaylak Forvet",
+    "goals": 36,
+    "matches": 21,
+    "wins": 15,
+    "createdAt": 1789856818404,
+    "lastActiveAt": 1789926524216
+  },
+  {
+    "key": "asfasf",
+    "name": "asfasf",
+    "avatar": "10",
+    "aura": "none",
+    "title": "Çaylak Forvet",
+    "goals": 0,
+    "matches": 0,
+    "wins": 0,
+    "createdAt": 1789857808723,
+    "lastActiveAt": 1789857808723
+  },
+  {
+    "key": "player",
+    "name": "Player",
+    "avatar": "10",
+    "aura": "none",
+    "title": "Çaylak Forvet",
+    "goals": 0,
+    "matches": 0,
+    "wins": 0,
+    "createdAt": 1789858531880,
+    "lastActiveAt": 1789858531880
+  },
+  {
+    "key": "maestro",
+    "name": "Maestro",
+    "avatar": "10",
+    "aura": "none",
+    "title": "Çaylak Forvet",
+    "goals": 0,
+    "matches": 0,
+    "wins": 0,
+    "createdAt": 1789923698456,
+    "lastActiveAt": 1789923698456
+  },
+  {
+    "key": "alex",
+    "name": "Alex",
+    "avatar": "10",
+    "aura": "none",
+    "title": "Çaylak Forvet",
+    "goals": 1,
+    "matches": 0,
+    "wins": 0,
+    "createdAt": 1789925877870,
+    "lastActiveAt": 1789925917107
+  }
+]

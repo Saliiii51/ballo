@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover, shrink-to-fit=no">
+  <title>Ballo - 2D Çok Oyunculu Web Futbolu</title>
+  <link rel="stylesheet" href="/css/style.css?v=37.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Mobile Portrait Rotate Prompt -->
+  <div id="rotatePrompt" class="rotate-prompt">
+    <div class="rotate-box">
+      <div class="rotate-anim">
+        <span class="phone-anim">📱</span>
+        <span class="rotate-arrow">🔄</span>
+      </div>
+      <h2>Lütfen Cihazınızı Yatay Çevirin</h2>
+      <p>Ballo en iyi deneyim için <b>Landscape (Yatay)</b> modda oynanır.</p>
+      <button id="btnDismissRotate" class="btn-micro" style="margin-top: 14px; padding: 6px 14px; font-size: 12px;">Dikeyde Devam Et</button>
+    </div>
+  </div>
+
+  <!-- Main Menu Modal (Açılış Menüsü) -->
+  <div id="mainMenuModal" class="modal-overlay main-menu-overlay">
+    <div class="main-menu-card">
+      <!-- SOL PANEL: Marka, Oyuncu Kartı & Müzik -->
+      <div class="menu-col-left">
+        <div class="menu-hero">
+          <div class="menu-brand-row">
+            <div class="menu-brand">
+              <span class="menu-ball-icon">⚽</span>
+              <div class="menu-brand-titles">
+                <h1>BALLO</h1>
+                <span class="menu-badge-live">● CANLI</span>
+              </div>
+            </div>
+            <button type="button" id="btnMenuSoundToggle" class="btn-menu-sound" title="Müziği ve Sesi Aç/Kapat">🔊</button>
+          </div>
+          <p class="menu-subtitle">2D Fizik Futbolu & Gladyatör Arenası</p>
+        </div>
+
+        <!-- Oyuncu Profil Kartı & Hızlı Düzenleme -->
+        <div class="menu-profile-wrapper">
+          <div class="menu-profile-strip" id="menuProfileStrip">
+            <div class="menu-profile-avatar" id="menuAvatarPreview">10</div>
+            <div class="menu-profile-details">
+              <div class="menu-profile-welcome">OYUNCU KARTI</div>
+              <div class="menu-profile-name" id="menuProfileNameText">Misafir Oyuncu</div>
+              <div class="menu-profile-stats" id="menuProfileStatsText">⚽ 0 Gol • 🏟️ 0 Maç</div>
+            </div>
+            <button type="button" id="btnMenuEditProfile" class="btn-micro" title="Profili Düzenle">✏️</button>
+          </div>
+
+          <!-- Satır İçi İsim/Forma Formu (Düzenleme açıkken kartın yerine oturur) -->
+          <form id="menuProfileForm" class="menu-inline-form hidden">
+            <div class="inline-form-title">✏️ PROFİLİ DÜZENLE</div>
+            <div class="form-row">
+              <div class="form-group flex-2">
+                <label for="nicknameInput">İsim</label>
+                <input type="text" id="nicknameInput" placeholder="Messi, Kral..." maxlength="15" autocomplete="off">
+              </div>
+              <div class="form-group flex-1">
+                <label for="avatarInput">Forma</label>
+                <input type="text" id="avatarInput" placeholder="10" maxlength="3" autocomplete="off" value="10">
+              </div>
+            </div>
+            <div class="inline-form-actions">
+              <button type="submit" id="btnSaveMenuProfile" class="btn-primary btn-save-profile">💾 Kaydet</button>
+              <button type="button" id="btnCancelMenuProfile" class="btn-secondary btn-cancel-profile">İptal</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Müzik Göstergesi (Çalan Parça & Ekolayzır) -->
+        <div class="menu-now-playing" id="menuNowPlaying" title="Arka plan müziği">
+          <div class="now-playing-left">
+            <span class="music-wave" id="musicWave">
+              <span class="music-bar b1"></span>
+              <span class="music-bar b2"></span>
+              <span class="music-bar b3"></span>
+              <span class="music-bar b4"></span>
+            </span>
+            <span class="now-playing-tag">MÜZİK</span>
+          </div>
+          <div class="now-playing-track-info">
+            <span class="now-playing-title" id="nowPlayingTitle">Aylex - This Is Phonk</span>
+          </div>
+          <button type="button" id="btnNowPlayingMute" class="btn-now-playing-toggle" title="Müziği Aç/Kapat">🔊</button>
+        </div>
+      </div>
+
+      <!-- SAĞ PANEL: Hemen Oyna & Oyun Modları -->
+      <div class="menu-col-right">
+        <!-- Ana Kahraman Butonu: HEMEN OYNA -->
+        <button type="button" id="btnPlaySolo" class="menu-btn menu-btn-play">
+          <div class="menu-btn-play-content">
+            <span class="menu-btn-icon">⚡</span>
+            <div class="menu-btn-texts">
+              <span class="menu-btn-title">HEMEN OYNA</span>
+              <span class="menu-btn-desc">Hızlı Maç • Doğrudan Sahaya Çık</span>
+            </div>
+          </div>
+          <span class="menu-play-arrow">▶</span>
+        </button>
+
+        <!-- Oyun Modları Izgarası (Dengeli 3+2 Dağılım) -->
+        <div class="menu-modes-grid">
+          <button type="button" id="btnEnterLobby" class="menu-btn menu-btn-lobby">
+            <span class="menu-btn-icon">⚙️</span>
+            <div class="menu-btn-texts">
+              <span class="menu-btn-title">Maç Ayarları</span>
+              <span class="menu-btn-desc">1v1 - 4v4 & Botlar</span>
+            </div>
+          </button>
+
+          <button type="button" id="btnOpenTournament" class="menu-btn menu-btn-tournament">
+            <span class="menu-btn-icon">🏆</span>
+            <div class="menu-btn-texts">
+              <span class="menu-btn-title">Kupa Turnuvası</span>
+              <span class="menu-btn-desc">8 Takımlı Kupa</span>
+            </div>
+          </button>
+
+          <button type="button" id="btnOpenRoomLobby" class="menu-btn menu-btn-rooms">
+            <span class="menu-btn-icon">👥</span>
+            <div class="menu-btn-texts">
+              <span class="menu-btn-title">Çok Oyunculu</span>
+              <span class="menu-btn-desc">Özel Oda Lobi</span>
+            </div>
+          </button>
+
+          <button type="button" id="btnOpenTraining" class="menu-btn menu-btn-training">
+            <span class="menu-btn-icon">🎯</span>
+            <div class="menu-btn-texts">
+              <span class="menu-btn-title">Şut Antrenmanı</span>
+              <span class="menu-btn-desc">Baraj & 90 Frikik Pratiği</span>
+            </div>
+          </button>
+
+          <button type="button" id="btnOpenStadiumEditor" class="menu-btn menu-btn-editor">
+            <span class="menu-btn-icon">🏟️</span>
+            <div class="menu-btn-texts">
+              <span class="menu-btn-title">Saha Editörü</span>
+              <span class="menu-btn-desc">Özel Saha & Yaylar</span>
+            </div>
+          </button>
+        </div>
+
+        <!-- Alt Yardımcı Butonlar -->
+        <div class="menu-secondary-row">
+          <button type="button" id="btnMenuLeaderboard" class="menu-btn-sub">
+            <span class="sub-icon">👑</span> Gol Krallığı
+          </button>
+          <button type="button" id="btnMenuProfile" class="menu-btn-sub">
+            <span class="sub-icon">👤</span> Profilim
+          </button>
+          <button type="button" id="btnMenuHowToPlay" class="menu-btn-sub">
+            <span class="sub-icon">🎮</span> Taktikler
+          </button>
+        </div>
+
+        <!-- Taktikler & Kontroller Bilgi Katmanı (Açıldığında sağ panelin üstünü kaplar, kaydırma yaptırmaz) -->
+        <div id="howToPlayBox" class="how-to-play-box hidden">
+          <div class="how-to-play-header">
+            <h4>🎮 Oyun Kontrolleri & Taktikler</h4>
+            <button type="button" id="btnCloseHowToPlay" class="btn-close-htp" title="Kapat">✕</button>
+          </div>
+          <ul class="how-to-play-list">
+            <li><span class="htp-key-wrap"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></span> <span class="htp-label">Hareket (Mobilde Sol Joystick)</span></li>
+            <li><span class="htp-key-wrap"><kbd>SPACE</kbd> / <kbd>X</kbd></span> <span class="htp-label">Şut & Pas (Mobilde Sağ Buton)</span></li>
+            <li><span class="htp-key-wrap"><kbd>ENTER</kbd></span> <span class="htp-label">Sohbet Mesajı Yaz</span></li>
+            <li><span class="htp-key-wrap">⚡ FALSO</span> <span class="htp-label">Şut tuşuna basılı tutarak topa açı ve sertlik ver</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Player Profile Modal -->
+  <div id="profileModal" class="modal-overlay hidden">
+    <div class="profile-card">
+      <div class="profile-card-body">
+        <!-- SOL SÜTUN: Oyuncu Kimliği & İstatistikler -->
+        <div class="profile-col-left">
+          <div class="profile-card-header">
+            <div class="profile-avatar-circle" id="profileModalAvatar">10</div>
+            <h2 id="profileModalName">Oyuncu Adı</h2>
+            <div id="profileModalRankBadge" class="profile-rank-badge">👑 Gol Krallığı: Hesaplanıyor...</div>
+          </div>
+
+          <div class="profile-stats-grid">
+            <div class="profile-stat-box highlight-stat">
+              <span class="p-stat-icon">⚽</span>
+              <span class="p-stat-val" id="profStatGoals">0</span>
+              <span class="p-stat-label">Toplam Gol</span>
+            </div>
+            <div class="profile-stat-box">
+              <span class="p-stat-icon">🏟️</span>
+              <span class="p-stat-val" id="profStatMatches">0</span>
+              <span class="p-stat-label">Oynanan Maç</span>
+            </div>
+            <div class="profile-stat-box">
+              <span class="p-stat-icon">🏆</span>
+              <span class="p-stat-val" id="profStatWins">0</span>
+              <span class="p-stat-label">Galibiyet</span>
+            </div>
+            <div class="profile-stat-box">
+              <span class="p-stat-icon">📊</span>
+              <span class="p-stat-val" id="profStatAvg">0.00</span>
+              <span class="p-stat-label">Gol / Maç</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SAĞ SÜTUN: Forma, Auralar, Unvan & Aksiyonlar -->
+        <div class="profile-col-right">
+          <!-- Quick Forma Update -->
+          <div class="profile-edit-row">
+            <label for="profileEditAvatarInput">Forma No / İkon:</label>
+            <div class="edit-avatar-group">
+              <input type="text" id="profileEditAvatarInput" maxlength="3" placeholder="10">
+              <button id="btnProfileSaveAvatar" class="btn-mini">Güncelle</button>
+            </div>
+          </div>
+
+          <!-- Çember Auraları & Unvan Seçici (Kozmetikler) -->
+          <div class="profile-cosmetics-section">
+            <div class="cosmetics-title">✨ ÇEMBER AURASI & EFEKTİ</div>
+            <div class="cosmetics-grid" id="auraOptionsGrid">
+              <div class="cosmetic-option selected" data-aura="none">
+                <span class="cosmetic-icon">⚪</span>
+                <span class="cosmetic-name">Klasik</span>
+                <span class="cosmetic-req">Açık</span>
+              </div>
+              <div class="cosmetic-option" data-aura="flame" data-min-goals="5">
+                <span class="cosmetic-icon">🔥</span>
+                <span class="cosmetic-name">Alev</span>
+                <span class="cosmetic-req">5+</span>
+              </div>
+              <div class="cosmetic-option" data-aura="lightning" data-min-goals="15">
+                <span class="cosmetic-icon">⚡</span>
+                <span class="cosmetic-name">Şimşek</span>
+                <span class="cosmetic-req">15+</span>
+              </div>
+              <div class="cosmetic-option" data-aura="chroma" data-min-goals="30">
+                <span class="cosmetic-icon">🌈</span>
+                <span class="cosmetic-name">RGB</span>
+                <span class="cosmetic-req">30+</span>
+              </div>
+              <div class="cosmetic-option" data-aura="gold" data-min-goals="50">
+                <span class="cosmetic-icon">👑</span>
+                <span class="cosmetic-name">Altın</span>
+                <span class="cosmetic-req">50+</span>
+              </div>
+            </div>
+
+            <div class="cosmetics-title" style="margin-top: 6px;">🏷️ SAHA UNVANI (ROZET)</div>
+            <div class="titles-select-wrapper">
+              <select id="selectPlayerTitle" class="select-clean" style="width: 100%;">
+                <option value="Çaylak Forvet">🌱 Çaylak Forvet (Varsayılan)</option>
+                <option value="90 Avcısı">🎯 90 Avcısı (5+ Gol)</option>
+                <option value="Frikik Ustası">⚽ Frikik Ustası (15+ Gol)</option>
+                <option value="Baraj Kıran">💥 Baraj Kıran (25+ Gol)</option>
+                <option value="Efsane Kaptan">👑 Efsane Kaptan (50+ Gol)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="profile-modal-actions">
+            <button id="btnProfileViewLeaderboard" class="btn-primary">🏆 Gol Krallığı</button>
+            <button id="btnChangeProfile" class="btn-secondary">🔄 Değiştir</button>
+            <button id="btnCloseProfile" class="btn-secondary">Kapat</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gol Krallığı / Leaderboard Modal -->
+  <div id="leaderboardModal" class="modal-overlay hidden">
+    <div class="modal-card leaderboard-card">
+      <div class="modal-header">
+        <span class="crown-big-icon">👑</span>
+        <h2>GOL KRALLIĞI</h2>
+        <p>En çok gol atan forvetler tablosu</p>
+      </div>
+
+      <!-- Your Rank Indicator Banner -->
+      <div id="myRankIndicator" class="my-rank-indicator">
+        <span>👤 Senin Derecen: <b id="myRankText">-</b></span>
+      </div>
+
+      <!-- Top 3 Podium -->
+      <div id="leaderboardPodium" class="leaderboard-podium">
+        <!-- Rank 2: Silver -->
+        <div class="podium-col silver-col" id="podiumRank2">
+          <div class="podium-badge">🥈 2.</div>
+          <div class="podium-avatar" id="podium2Avatar">-</div>
+          <div class="podium-name" id="podium2Name">-</div>
+          <div class="podium-goals" id="podium2Goals">0 ⚽</div>
+        </div>
+        <!-- Rank 1: Gold -->
+        <div class="podium-col gold-col" id="podiumRank1">
+          <div class="podium-crown">👑</div>
+          <div class="podium-badge">🥇 1.</div>
+          <div class="podium-avatar" id="podium1Avatar">-</div>
+          <div class="podium-name" id="podium1Name">-</div>
+          <div class="podium-goals" id="podium1Goals">0 ⚽</div>
+        </div>
+        <!-- Rank 3: Bronze -->
+        <div class="podium-col bronze-col" id="podiumRank3">
+          <div class="podium-badge">🥉 3.</div>
+          <div class="podium-avatar" id="podium3Avatar">-</div>
+          <div class="podium-name" id="podium3Name">-</div>
+          <div class="podium-goals" id="podium3Goals">0 ⚽</div>
+        </div>
+      </div>
+
+      <!-- Scrollable Leaderboard Table -->
+      <div class="leaderboard-table-wrapper">
+        <table class="leaderboard-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Oyuncu</th>
+              <th>Forma</th>
+              <th>Gol ⚽</th>
+              <th>Maç</th>
+              <th>Galibiyet</th>
+              <th>Ort.</th>
+            </tr>
+          </thead>
+          <tbody id="leaderboardTbody">
+            <tr>
+              <td colspan="7" class="empty-table-msg">Henüz gol atılmadı! Sahaya çık ve ilk golü at!</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="modal-actions-bar">
+        <button id="btnCloseLeaderboard" class="btn-primary">Kapat</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- End of Match Stats Modal -->
+  <div id="statsModal" class="modal-overlay hidden">
+    <div class="modal-card stats-card">
+      <div class="modal-header">
+        <h2 id="statsWinnerTitle">🏆 MAÇ SONUCU</h2>
+        <p id="statsScoreText" class="stats-big-score">0 - 0</p>
+      </div>
+
+      <!-- Match Goal Scorers List (Including K.K. for own goals) -->
+      <div class="match-goals-card">
+        <div class="goals-card-header">⚽ ATILAN GOLLER</div>
+        <div class="goals-columns">
+          <div class="goals-column">
+            <span class="goals-col-title red-text">🔴 KIRMIZI</span>
+            <ul id="redGoalsList" class="goals-list">
+              <li class="no-goals-item">-</li>
+            </ul>
+          </div>
+          <div class="goals-column">
+            <span class="goals-col-title blue-text">🔵 MAVİ</span>
+            <ul id="blueGoalsList" class="goals-list">
+              <li class="no-goals-item">-</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-table">
+        <div class="stats-row stats-header-row">
+          <span class="red-text">KIRMIZI</span>
+          <span class="stat-name">İSTATİSTİK</span>
+          <span class="blue-text">MAVİ</span>
+        </div>
+        <div class="stats-row">
+          <span id="statRedPossession" class="stat-val red-text">50%</span>
+          <span class="stat-name">Topla Oynama</span>
+          <span id="statBluePossession" class="stat-val blue-text">50%</span>
+        </div>
+        <div class="stats-row">
+          <span id="statRedShots" class="stat-val red-text">0</span>
+          <span class="stat-name">Şut Sayısı</span>
+          <span id="statBlueShots" class="stat-val blue-text">0</span>
+        </div>
+        <div class="stats-row" style="background: rgba(255, 215, 0, 0.08); border-radius: 6px; margin-top: 6px;">
+          <span class="stat-name" style="width: 100%; color: #ffd700; font-weight: 700;">👑 Maçın Kralı (Son Gol): <span id="statCrownHolder">-</span></span>
+        </div>
+      </div>
+
+      <!-- Match Goal Replays Card (Gol Tekrarları) -->
+      <div id="replaysCard" class="match-replays-card hidden" style="margin-top: 14px; background: rgba(230, 57, 70, 0.08); border: 1px solid rgba(230, 57, 70, 0.35); border-radius: 8px; padding: 10px 14px;">
+        <div style="font-size: 12px; font-weight: 700; color: #ff6b77; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
+          <span>🎬 MAÇIN GOL TEKRARLARI</span>
+          <span style="font-size: 11px; color: var(--text-muted);">0.5x Ağır Çekim</span>
+        </div>
+        <div id="replaysBtnContainer" style="display: flex; flex-wrap: wrap; gap: 8px;">
+          <!-- Populated dynamically by main.js -->
+        </div>
+      </div>
+
+      <div class="stats-modal-actions">
+        <button id="btnStartNewMatch" class="btn-primary">🔄 Aynı Ayarlarla Rövanş</button>
+        <button id="btnOpenSetupFromStats" class="btn-secondary" style="border-color: #38bdf8; color: #38bdf8;">⚙️ Yeni Maç Ayarla</button>
+        <button id="btnOpenLeaderboardFromStats" class="btn-secondary" style="border-color: #ffd700; color: #ffd700;">🏆 Gol Krallığı</button>
+        <button id="btnCloseStats" class="btn-secondary">Kapat</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tournament Cup Modal (Tek Kişilik Turnuva Ağacı) -->
+  <div id="tournamentModal" class="modal-overlay hidden">
+    <div class="modal-card tournament-card">
+      <div class="tournament-header">
+        <span class="cup-icon">🏆</span>
+        <h2>BALLO CHAMPIONS CUP</h2>
+        <p>8 Takımlı Eleme Kupası: Çeyrek Final &rarr; Yarı Final &rarr; Büyük Final!</p>
+      </div>
+
+      <!-- ONLINE TURNUVA (gerçek oyuncular, oda bazlı) -->
+      <div id="onlineTournamentBox" style="background: rgba(0,128,255,0.07); border: 1px solid rgba(0,128,255,0.35); border-radius: 10px; padding: 12px 14px; margin-bottom: 14px; text-align: left;">
+        <div style="font-weight: 800; font-size: 13px; color: #7dd3fc; margin-bottom: 8px;">🌐 ONLINE TURNUVA (Gerçek Oyuncular)</div>
+        <div id="onlineTournamentStatus" style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">Bu odada aktif online turnuva yok.</div>
+        <div id="onlineTournamentParts" style="font-size: 12px; margin-bottom: 8px; display: flex; flex-wrap: wrap; gap: 6px;"></div>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+          <select id="onlineTournamentSize" class="select-clean" style="background: var(--bg-surface-light); border: 1px solid var(--border-color); border-radius: 6px; padding: 8px;">
+            <option value="4">4 Oyuncu</option>
+            <option value="8">8 Oyuncu</option>
+          </select>
+          <button type="button" id="btnCreateOnlineTournament" class="btn-micro blue">+ Oluştur</button>
+          <button type="button" id="btnJoinOnlineTournament" class="btn-micro blue">Katıl</button>
+          <button type="button" id="btnStartOnlineTournament" class="btn-micro red">▶ Başlat (Host)</button>
+          <button type="button" id="btnLeaveOnlineTournament" class="btn-micro">Ayrıl</button>
+          <button type="button" id="btnCancelOnlineTournament" class="btn-micro danger">İptal (Host)</button>
+        </div>
+      </div>
+
+      <!-- Tournament Bracket View -->
+      <div class="tournament-bracket-grid">
+        <!-- Quarter Finals -->
+        <div class="bracket-round">
+          <div class="round-title">ÇEYREK FİNAL</div>
+          <div class="bracket-match" id="matchQF1">
+            <div class="match-team player-bracket-team" id="qf1Team1">🔴 Sen (Oyuncu)</div>
+            <div class="match-vs">vs</div>
+            <div class="match-team" id="qf1Team2">🔵 Real Madrid</div>
+          </div>
+          <div class="bracket-match" id="matchQF2">
+            <div class="match-team" id="qf2Team1">🔴 Man City</div>
+            <div class="match-vs">vs</div>
+            <div class="match-team" id="qf2Team2">🔵 Barcelona</div>
+          </div>
+          <div class="bracket-match" id="matchQF3">
+            <div class="match-team" id="qf3Team1">🔴 Galatasaray</div>
+            <div class="match-vs">vs</div>
+            <div class="match-team" id="qf3Team2">🔵 Arsenal</div>
+          </div>
+          <div class="bracket-match" id="matchQF4">
+            <div class="match-team" id="qf4Team1">🔴 Fenerbahçe</div>
+            <div class="match-vs">vs</div>
+            <div class="match-team" id="qf4Team2">🔵 Bayern Münih</div>
+          </div>
+        </div>
+
+        <!-- Semi Finals -->
+        <div class="bracket-round">
+          <div class="round-title">YARI FİNAL</div>
+          <div class="bracket-match" id="matchSF1">
+            <div class="match-team" id="sf1Team1">?</div>
+            <div class="match-vs">vs</div>
+            <div class="match-team" id="sf1Team2">?</div>
+          </div>
+          <div class="bracket-match" id="matchSF2">
+            <div class="match-team" id="sf2Team1">?</div>
+            <div class="match-vs">vs</div>
+            <div class="match-team" id="sf2Team2">?</div>
+          </div>
+        </div>
+
+        <!-- Grand Final -->
+        <div class="bracket-round highlight-round">
+          <div class="round-title gold-title">👑 BÜYÜK FİNAL</div>
+          <div class="bracket-match final-match" id="matchFinal">
+            <div class="match-team" id="finalTeam1">?</div>
+            <div class="match-vs gold-text">🏆 FINAL</div>
+            <div class="match-team" id="finalTeam2">?</div>
+          </div>
+          <div class="cup-trophy-display">
+            <span class="trophy-anim">🏆</span>
+            <div class="cup-winner-name" id="cupWinnerName">Kupayı Kazanan: -</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tournament-actions-bar">
+        <button id="btnStartTournamentMatch" class="btn-primary">⚔️ Sıradaki Turnuva Maçını Oyna</button>
+        <button id="btnResetTournament" class="btn-secondary">🔄 Sıfırla</button>
+        <button id="btnCloseTournament" class="btn-secondary">Kapat</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Multi-Room Lobby Modal (Oda Kur & Katıl) -->
+  <div id="roomModal" class="modal-overlay hidden">
+    <div class="modal-card room-card">
+      <div class="modal-header">
+        <span class="ball-icon">👥</span>
+        <h2>ÇOK OYUNCULU ODALAR</h2>
+        <p>Arkadaşınla özel oda kur veya açık odalara katıl</p>
+      </div>
+
+      <!-- Quick Room Creation Box -->
+      <div class="create-room-box">
+        <h4>⚡ Yeni Özel Oda Kur</h4>
+        <div class="form-row">
+          <div class="form-group flex-2">
+            <input type="text" id="createRoomNameInput" placeholder="Oda Adı (Örn: Dostluk Maçı)" maxlength="20">
+          </div>
+          <div class="form-group flex-1">
+            <input type="password" id="createRoomPassInput" placeholder="Şifre (Opsiyonel)" maxlength="32" autocomplete="new-password">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group flex-1">
+            <select id="createRoomFormatSelect" class="select-clean" style="flex: 1;" title="Maç formatı">
+              <option value="1v1">👥 1v1</option>
+              <option value="2v2">👥 2v2</option>
+              <option value="3v3">👥 3v3</option>
+              <option value="4v4">👥 4v4</option>
+            </select>
+          </div>
+          <div class="form-group flex-1">
+            <select id="createRoomModeSelect" class="select-clean" style="flex: 1;" title="Oyun modu">
+              <option value="classic">⚽ Klasik</option>
+              <option value="bomb">💣 Bomba</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group flex-1">
+            <select id="createRoomDurationSelect" class="select-clean" style="flex: 1;" title="Maç süresi">
+              <option value="60">⏱️ 1 Dk</option>
+              <option value="120">⏱️ 2 Dk</option>
+              <option value="180" selected>⏱️ 3 Dk</option>
+              <option value="300">⏱️ 5 Dk</option>
+              <option value="0">⏱️ Süresiz</option>
+            </select>
+          </div>
+          <div class="form-group flex-1">
+            <select id="createRoomScoreSelect" class="select-clean" style="flex: 1;" title="Gol limiti">
+              <option value="3" selected>🎯 İlk 3 Gol</option>
+              <option value="5">🎯 İlk 5 Gol</option>
+              <option value="7">🎯 İlk 7 Gol</option>
+              <option value="10">🎯 İlk 10 Gol</option>
+              <option value="0">🎯 Limitsiz</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row" id="createRoomBombRow" style="display: none;">
+          <div class="form-group flex-1">
+            <select id="createRoomBombSelect" class="select-clean" style="flex: 1;" title="Bomba patlama süresi">
+              <option value="10">💣 10 Sn</option>
+              <option value="15">💣 15 Sn</option>
+              <option value="20" selected>💣 20 Sn</option>
+              <option value="30">💣 30 Sn</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group flex-1">
+            <select id="createRoomBotSelect" class="select-clean" style="flex: 1;" title="Bot seviyesi">
+              <option value="easy">🤖 Kolay</option>
+              <option value="medium">🤖 Orta</option>
+              <option value="hard">🤖 Zor</option>
+              <option value="extreme" selected>🤖 Pro</option>
+            </select>
+          </div>
+          <div class="form-group flex-1" style="justify-content: center;">
+            <label style="font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 6px; cursor: pointer;">
+              <input type="checkbox" id="createRoomAutofillCheck" checked style="width: 16px; height: 16px;"> Botla doldur
+            </label>
+          </div>
+        </div>
+        <div class="create-room-subrow">
+          <select id="createRoomPresetSelect" class="select-clean" style="flex: 1;">
+            <option value="classic">🟢 Classic Çim</option>
+            <option value="big">🏟️ Big Stadium</option>
+            <option value="futsal">🏀 Futsal Salonu</option>
+            <option value="hockey">❄️ Buz Pisti</option>
+            <option value="street" selected>🧱 Sokak & Halı Saha</option>
+          </select>
+          <button id="btnSubmitCreateRoom" class="btn-primary" style="width: auto; padding: 10px 18px;">+ Odayı Aç</button>
+        </div>
+        <div style="font-size: 11px; color: var(--text-muted); margin-top: 6px;">💡 2 kişi odaya girince takımlar otomatik dağıtılır ve maç başlar.</div>
+      </div>
+
+      <!-- Open Rooms List -->
+      <div class="room-list-header">
+        <span>AÇIK ODALAR</span>
+        <button id="btnRefreshRoomList" class="btn-micro">🔄 Yenile</button>
+      </div>
+      <div class="rooms-table-wrapper">
+        <table class="rooms-table">
+          <thead>
+            <tr>
+              <th>Oda</th>
+              <th>Harita</th>
+              <th>Skor / Durum</th>
+              <th>Kişi</th>
+              <th>İşlem</th>
+            </tr>
+          </thead>
+          <tbody id="roomListTbody">
+            <tr>
+              <td colspan="5" class="empty-table-msg">Odalar yükleniyor...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="modal-actions-bar">
+        <button id="btnCloseRoomModal" class="btn-secondary">Kapat</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Room Password Modal (prompt yerine güvenli modal) -->
+  <div id="roomPasswordModal" class="modal-overlay hidden">
+    <div class="modal-card" style="max-width: 360px;">
+      <div class="modal-header">
+        <span class="ball-icon">🔒</span>
+        <h2>ŞİFRELİ ODA</h2>
+        <p id="roomPasswordModalDesc">Bu odaya katılmak için şifreyi girin</p>
+      </div>
+      <form id="roomPasswordForm">
+        <input type="password" id="roomPasswordInput" placeholder="Oda şifresi" maxlength="32" autocomplete="off"
+          style="width: 100%; padding: 12px 14px; background: var(--bg-surface-light); border: 1px solid var(--border-color); border-radius: 8px; color: #fff; font-size: 16px; outline: none; margin-bottom: 12px;">
+        <div id="roomPasswordError" class="hidden" style="color: #ff6b77; font-size: 12px; margin-bottom: 8px;"></div>
+        <div style="display: flex; gap: 8px;">
+          <button type="submit" class="btn-primary" style="flex: 1;">Katıl</button>
+          <button type="button" id="btnCloseRoomPassword" class="btn-secondary" style="flex: 1;">Vazgeç</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Stadium Editor Modal (Kendi Sahasını Çiz) -->
+  <div id="stadiumEditorModal" class="modal-overlay hidden">
+    <div class="modal-card stadium-editor-card">
+      <div class="modal-header">
+        <span class="modal-header-icon">🏟️</span>
+        <h2>STADYUM EDİTÖRÜ</h2>
+        <p>Kendi özel sahanızı çizin, boyutları belirleyin ve pinball tamponları yerleştirin</p>
+      </div>
+
+      <div class="editor-main-layout">
+        <!-- Left: Tool & Parameter Panel -->
+        <div class="editor-tools-panel">
+          <!-- 1. Saha Boyutu -->
+          <div class="editor-group">
+            <label class="editor-label">📐 Saha Boyutu:</label>
+            <div class="editor-pills" id="editorSizePills">
+              <button type="button" class="btn-micro-pill" data-size="compact">Kompakt (700x380)</button>
+              <button type="button" class="btn-micro-pill active" data-size="standard">Standart (800x400)</button>
+              <button type="button" class="btn-micro-pill" data-size="big">Dev Saha (1000x520)</button>
+            </div>
+          </div>
+
+          <!-- 2. Zemin Teması -->
+          <div class="editor-group">
+            <label class="editor-label">🎨 Zemin Teması:</label>
+            <div class="editor-pills" id="editorThemePills">
+              <button type="button" class="btn-micro-pill active" data-theme="turf">🌿 Çim</button>
+              <button type="button" class="btn-micro-pill" data-theme="futsal">🪵 Futsal</button>
+              <button type="button" class="btn-micro-pill" data-theme="street">🧱 Sokak</button>
+              <button type="button" class="btn-micro-pill" data-theme="hockey">❄️ Buz</button>
+              <button type="button" class="btn-micro-pill" data-theme="neon">⚡ Siber Neon</button>
+            </div>
+          </div>
+
+          <!-- 3. Kale Tipi -->
+          <div class="editor-group">
+            <label class="editor-label">🥅 Kale Genişliği:</label>
+            <div class="editor-pills" id="editorGoalPills">
+              <button type="button" class="btn-micro-pill" data-goal="110">Dar (110px)</button>
+              <button type="button" class="btn-micro-pill active" data-goal="150">Normal (150px)</button>
+              <button type="button" class="btn-micro-pill" data-goal="200">Büyük (200px)</button>
+            </div>
+          </div>
+
+          <!-- 4. Çizim / Yerleştirme Aracı -->
+          <div class="editor-group">
+            <label class="editor-label">🛠️ Tuval Aracı (Tıkla & Yerleştir):</label>
+            <div class="editor-pills" id="editorToolPills">
+              <button type="button" class="btn-micro-pill active" data-tool="bumper">🟡 Pinball Tamponu Ekle</button>
+              <button type="button" class="btn-micro-pill" data-tool="delete">❌ Sil / Kaldır</button>
+            </div>
+          </div>
+
+          <!-- 5. Hazır Şablonlar -->
+          <div class="editor-group">
+            <label class="editor-label">⚡ Hazır Şablonlar:</label>
+            <div class="editor-pills">
+              <button type="button" id="btnTplPinball" class="btn-micro-pill">🎰 Pinball Arenası</button>
+              <button type="button" id="btnTplCrossbar" class="btn-micro-pill">🛡️ Çift Kale Koridoru</button>
+              <button type="button" id="btnTplClear" class="btn-micro-pill danger">🧹 Temizle</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Interactive Canvas Editor -->
+        <div class="editor-canvas-container">
+          <div class="canvas-editor-hint">
+            💡 Sahada istediğin yere <b>tıklayarak</b> Pinball Tamponu koyabilir veya silebilirsin.
+          </div>
+          <canvas id="editorCanvas" width="620" height="340" class="editor-canvas"></canvas>
+          <div class="editor-summary-bar">
+            <span>🏟️ <b id="editorSummaryDim">800x400</b></span>
+            <span>🎨 <b id="editorSummaryTheme">Classic Çim</b></span>
+            <span>🟡 Tamponlar: <b id="editorBumperCount">0</b> / 10</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-actions-bar" style="margin-top: 14px;">
+        <button type="button" id="btnPlayCustomStadium" class="btn-primary">⚔️ Bu Sahada Oyna</button>
+        <button type="button" id="btnSaveCustomStadium" class="btn-secondary">💾 Tasarımı Kaydet</button>
+        <button type="button" id="btnCloseStadiumEditor" class="btn-secondary">Kapat</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pre-Match Setup Modal (Maç Öncesi Ayarlar & Lobi) -->
+  <div id="matchSetupModal" class="modal-overlay hidden">
+    <div class="modal-card match-setup-card">
+      <div class="modal-header">
+        <span class="modal-header-icon">⚙️</span>
+        <h2>MAÇ AYARLARI</h2>
+        <p>Maç başlamadan önce kadroyu, süreyi ve saha kurallarını belirleyin</p>
+      </div>
+
+      <div class="setup-form-content">
+        <!-- 0. Oyun Modu (Klasik Futbol / Bomba Topu) -->
+        <div class="setup-section">
+          <label class="setup-label">🎮 Oyun Modu:</label>
+          <div class="setup-pill-group" id="groupGameMode">
+            <button type="button" class="setup-pill active" data-val="classic">
+              <span class="pill-title">⚽ Klasik Futbol</span>
+              <span class="pill-desc">Geleneksel Ballo</span>
+            </button>
+            <button type="button" class="setup-pill bomb-pill" data-val="bomb">
+              <span class="pill-title">💣 Bomba Topu</span>
+              <span class="pill-desc">Ebeleme & Geri Sayım</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 1. Kaça Kaç Oynanacak (Format) -->
+        <div class="setup-section">
+          <label class="setup-label">👥 Maç Formatı (Kaça Kaç):</label>
+          <div class="setup-pill-group" id="groupMatchFormat">
+            <button type="button" class="setup-pill active" data-val="1v1">
+              <span class="pill-title">1v1</span>
+              <span class="pill-desc">Teke Tek</span>
+            </button>
+            <button type="button" class="setup-pill" data-val="2v2">
+              <span class="pill-title">2v2</span>
+              <span class="pill-desc">Takım Oyunu</span>
+            </button>
+            <button type="button" class="setup-pill" data-val="3v3">
+              <span class="pill-title">3v3</span>
+              <span class="pill-desc">Klasik 3'e 3</span>
+            </button>
+            <button type="button" class="setup-pill" data-val="4v4">
+              <span class="pill-title">4v4</span>
+              <span class="pill-desc">Büyük Maç</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 2. Takım Seçimi (Kırmızı / Mavi) -->
+        <div class="setup-section">
+          <label class="setup-label">🛡️ Takımın (Hangi Taraftasın?):</label>
+          <div class="setup-pill-group" id="groupTeamSelect">
+            <button type="button" class="setup-pill team-pill red active" data-val="red">
+              <span class="pill-title">🔴 Kırmızı Takım</span>
+              <span class="pill-desc">Sol Kale</span>
+            </button>
+            <button type="button" class="setup-pill team-pill blue" data-val="blue">
+              <span class="pill-title">🔵 Mavi Takım</span>
+              <span class="pill-desc">Sağ Kale</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 3. Maç Süresi & Gol Limiti (Klasik) / Bomba Patlama Süresi (Bomba Modu) -->
+        <div class="setup-grid-2col" id="matchParamsGrid">
+          <div class="setup-section" id="sectionMatchDuration">
+            <label class="setup-label">⏱️ Maç Süresi:</label>
+            <div class="setup-pill-group wrap" id="groupMatchDuration">
+              <button type="button" class="setup-pill sm" data-val="60">1 Dk</button>
+              <button type="button" class="setup-pill sm" data-val="120">2 Dk</button>
+              <button type="button" class="setup-pill sm active" data-val="180">3 Dk</button>
+              <button type="button" class="setup-pill sm" data-val="300">5 Dk</button>
+              <button type="button" class="setup-pill sm" data-val="420">7 Dk</button>
+              <button type="button" class="setup-pill sm" data-val="0">Süresiz ♾️</button>
+            </div>
+          </div>
+
+          <div class="setup-section hidden" id="sectionBombDuration">
+            <label class="setup-label">💣 Bomba Patlama Süresi:</label>
+            <div class="setup-pill-group wrap" id="groupBombDuration">
+              <button type="button" class="setup-pill sm" data-val="10">10 Sn</button>
+              <button type="button" class="setup-pill sm" data-val="15">15 Sn</button>
+              <button type="button" class="setup-pill sm active" data-val="20">20 Sn</button>
+              <button type="button" class="setup-pill sm" data-val="25">25 Sn</button>
+              <button type="button" class="setup-pill sm" data-val="30">30 Sn</button>
+            </div>
+          </div>
+
+          <div class="setup-section" id="sectionScoreLimit">
+            <label class="setup-label">🎯 Gol Limiti:</label>
+            <div class="setup-pill-group wrap" id="groupScoreLimit">
+              <button type="button" class="setup-pill sm active" data-val="3">İlk 3 Gol</button>
+              <button type="button" class="setup-pill sm" data-val="5">İlk 5 Gol</button>
+              <button type="button" class="setup-pill sm" data-val="7">İlk 7 Gol</button>
+              <button type="button" class="setup-pill sm" data-val="10">İlk 10 Gol</button>
+              <button type="button" class="setup-pill sm" data-val="0">Limitsiz ⚽</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Bot Zorluk Seviyesi -->
+        <div class="setup-section">
+          <label class="setup-label">🤖 Bot Seviyesi & Yapay Zeka:</label>
+          <div class="setup-pill-group wrap" id="groupBotDifficulty">
+            <button type="button" class="setup-pill sm" data-val="easy">Kolay</button>
+            <button type="button" class="setup-pill sm" data-val="medium">Orta</button>
+            <button type="button" class="setup-pill sm" data-val="hard">Zor</button>
+            <button type="button" class="setup-pill sm active" data-val="extreme">⚡ Pro (Efsane)</button>
+          </div>
+        </div>
+
+        <!-- 5. Stadyum Haritası & Aydınlatma -->
+        <div class="setup-grid-2col">
+          <div class="setup-section">
+            <label class="setup-label">🏟️ Stadyum Haritası:</label>
+            <div class="setup-pill-group wrap" id="groupStadiumMap">
+              <button type="button" class="setup-pill sm active" data-val="classic">🌿 Classic</button>
+              <button type="button" class="setup-pill sm" data-val="big">🏟️ Big Arena</button>
+              <button type="button" class="setup-pill sm" data-val="futsal">🪵 Futsal</button>
+              <button type="button" class="setup-pill sm" data-val="hockey">❄️ Buz Pisti</button>
+              <button type="button" class="setup-pill sm" data-val="street">🧱 Sokak</button>
+              <button type="button" class="setup-pill sm" data-val="custom">🛠️ Özel Saham</button>
+            </div>
+          </div>
+
+          <div class="setup-section">
+            <label class="setup-label">💡 Aydınlatma & Hava Modu:</label>
+            <div class="setup-pill-group wrap" id="groupStadiumWeather">
+              <button type="button" class="setup-pill sm active" data-val="night">🌙 Gece Projektör</button>
+              <button type="button" class="setup-pill sm" data-val="rain">🌧️ Gece & Yağmur</button>
+              <button type="button" class="setup-pill sm" data-val="sunset">🌅 Gün Batımı</button>
+              <button type="button" class="setup-pill sm" data-val="day">☀️ Açık Gündüz</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. Canlı Bilgi & Özet Şeridi -->
+        <div class="setup-summary-strip" id="setupSummaryText">
+          ⚡ 1v1 Maç • 3 Dakika • İlk 3 Gol • Pro Botlar • Classic Saha • 🔴 Kırmızı Takım
+        </div>
+      </div>
+
+      <div class="setup-modal-actions">
+        <button type="button" id="btnLaunchMatch" class="btn-launch-match">
+          <span class="launch-icon">⚽</span>
+          <span class="launch-text">MAÇI BAŞLAT</span>
+        </button>
+        <button type="button" id="btnCloseMatchSetup" class="btn-secondary">Kapat</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- In-Game Pause Menu Modal -->
+  <div id="pauseMenuModal" class="modal-overlay hidden">
+    <div class="modal-card pause-card">
+      <div class="pause-modal-header">
+        <span class="pause-big-icon">⏸️</span>
+        <h2>OYUN DURAKLATILDI</h2>
+        <div id="pauseMatchSummary" class="pause-match-summary">1v1 • RED 0 - 0 BLUE • 00:00</div>
+      </div>
+
+      <div class="pause-menu-actions">
+        <!-- 1. Resume Game -->
+        <button type="button" id="btnResumeGame" class="pause-btn pause-btn-resume">
+          <span class="pause-btn-icon">▶️</span>
+          <span class="pause-btn-text">DEVAM ET</span>
+        </button>
+
+        <!-- 2. Team Switch Group -->
+        <div class="pause-team-section">
+          <span class="pause-section-label">🛡️ Takımını Seç:</span>
+          <div class="team-btn-group pause-team-group">
+            <button id="btnJoinRed" class="btn-team btn-red">🔴 Kırmızı</button>
+            <button id="btnJoinSpec" class="btn-team btn-spec">⚪ İzleyici</button>
+            <button id="btnJoinBlue" class="btn-team btn-blue">🔵 Mavi</button>
+          </div>
+        </div>
+
+        <!-- 3. Rematch & Setup -->
+        <button type="button" id="btnRestartMatch" class="pause-btn pause-btn-rematch" title="Aynı ayarlarla maçı sıfırla">
+          <span class="pause-btn-icon">🔄</span>
+          <span class="pause-btn-text">Yeniden Başlat (Rövanş)</span>
+        </button>
+
+        <button type="button" id="btnOpenMatchSetup" class="pause-btn pause-btn-setup" title="Format, bot ve saha ayarları">
+          <span class="pause-btn-icon">⚙️</span>
+          <span class="pause-btn-text">Maç Formatı & Kadro Ayarları</span>
+        </button>
+
+        <!-- 4. Profile & Krallık -->
+        <div class="pause-grid-2col">
+          <button type="button" id="btnOpenProfile" class="pause-btn pause-btn-sub">
+            <span class="pause-btn-icon">👤</span>
+            <span class="pause-btn-text">Profilim</span>
+          </button>
+          <button type="button" id="btnOpenLeaderboard" class="pause-btn pause-btn-sub">
+            <span class="pause-btn-icon">🏆</span>
+            <span class="pause-btn-text">Gol Krallığı</span>
+          </button>
+        </div>
+
+        <!-- 5. Sound & Fullscreen -->
+        <div class="pause-grid-2col">
+          <button type="button" id="btnSoundToggle" class="pause-btn pause-btn-sub">
+            <span id="pauseSoundIcon" class="pause-btn-icon">🔊</span>
+            <span id="pauseSoundLabel" class="pause-btn-text">Ses: Açık</span>
+          </button>
+          <button type="button" id="btnFullscreen" class="pause-btn pause-btn-sub">
+            <span class="pause-btn-icon">⛶</span>
+            <span class="pause-btn-text">Tam Ekran</span>
+          </button>
+        </div>
+
+        <!-- 6. Return to Menu -->
+        <button type="button" id="btnReturnToMenu" class="pause-btn pause-btn-danger" title="Ana menüye dön">
+          <span class="pause-btn-icon">🏠</span>
+          <span class="pause-btn-text">Ana Menüye Dön</span>
+        </button>
+
+        <!-- Hidden/Accessible Roster containers for state tracking -->
+        <div class="pause-roster-accordion">
+          <div class="pause-roster-row red-text">🔴 Kırmızı: <span id="countRed">0</span> <ul id="listRed" class="player-roster hidden"></ul></div>
+          <div class="pause-roster-row blue-text">🔵 Mavi: <span id="countBlue">0</span> <ul id="listBlue" class="player-roster hidden"></ul></div>
+          <div class="pause-roster-row spec-text">⚪ İzleyici: <span id="countSpec">0</span> <ul id="listSpec" class="player-roster hidden"></ul></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- In-Game Floating Chat Modal / Drawer -->
+  <div id="inGameChatModal" class="in-game-chat-overlay hidden">
+    <div class="in-game-chat-card">
+      <div class="in-game-chat-header">
+        <div class="chat-header-title">
+          <span class="chat-icon">💬</span>
+          <span>OYUN İÇİ SOHBET</span>
+        </div>
+        <button type="button" id="btnCloseInGameChat" class="btn-chat-close" title="Kapat">✖</button>
+      </div>
+      <div id="chatMessages" class="in-game-chat-logs"></div>
+      <form id="chatForm" class="in-game-chat-input-row">
+        <input type="text" id="chatInput" placeholder="Mesajını yaz (Enter)..." maxlength="100" autocomplete="off">
+        <button type="submit" id="btnSendChat">Gönder</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Main Game Container -->
+  <div class="app-layout minimal-layout">
+    <!-- Streamlined Minimalist Top HUD Bar: Pause Menu (Left) - Score Capsule (Center) - Chat (Right) -->
+    <header class="game-header minimal-hud">
+      <!-- Left: Pause Menu Button -->
+      <button id="btnPauseGame" class="hud-action-btn btn-pause-hud" title="Oyunu Duraklat / Menü (ESC)">
+        <span class="hud-btn-icon">⏸️</span>
+        <span class="hud-btn-text">Menü</span>
+      </button>
+
+      <!-- Center Scoreboard & Live Possession Bar -->
+      <div class="scoreboard-wrapper">
+        <div class="scoreboard">
+          <div class="team-score red-score-box">
+            <span class="team-label">RED</span>
+            <span id="scoreRed" class="score-digit">0</span>
+          </div>
+          <div class="match-timer-box">
+            <div id="matchFormatBadge" class="match-format-pill" title="Maç Formatı & Süresi">1v1 • 3 Dk</div>
+            <div id="matchStateText" class="match-status">BEKLENİYOR</div>
+            <div id="matchTime" class="match-timer">00:00</div>
+          </div>
+          <div class="team-score blue-score-box">
+            <span id="scoreBlue" class="score-digit">0</span>
+            <span class="team-label">BLUE</span>
+          </div>
+        </div>
+
+        <!-- Live Possession Bar (Minimalist) -->
+        <div class="possession-bar-container" title="Canlı Topla Oynama Oranı">
+          <span id="possessionRed" class="pos-text red">50%</span>
+          <div class="possession-track">
+            <div id="possessionFill" class="possession-fill" style="width: 50%;"></div>
+          </div>
+          <span id="possessionBlue" class="pos-text blue">50%</span>
+        </div>
+      </div>
+
+      <!-- Bomb Mode Status Capsule -->
+      <div id="hudBombBanner" class="hud-bomb-capsule hidden" title="Bomba Geri Sayımı & Tutan Takım">
+        <span class="bomb-icon-anim">💣</span>
+        <span class="bomb-sec-val" id="hudBombTimer">10</span>s
+        <span class="bomb-team-tag" id="hudBombTeam">EBE YOK</span>
+      </div>
+
+      <!-- Right: In-Game Chat Button -->
+      <button id="btnFloatingChat" class="hud-action-btn btn-chat-hud" title="Sohbeti Aç (ENTER)">
+        <span class="hud-btn-icon">💬</span>
+        <span class="hud-btn-text">Sohbet</span>
+        <span id="chatUnreadDot" class="chat-unread-dot hidden"></span>
+      </button>
+    </header>
+
+    <!-- Center Arena Viewport (Now takes full screen height without bottom bars) -->
+    <main class="arena-wrapper">
+      <div class="canvas-container">
+        <canvas id="gameCanvas" width="1000" height="560"></canvas>
+        
+        <!-- Animated Goal Announcement Banner -->
+        <div id="goalBanner" class="goal-banner hidden">
+          <h1 id="goalBannerText">GOOOOOOOL!</h1>
+          <p id="goalTeamText">KIRMIZI TAKIM ATTI</p>
+          <div id="goalMilestoneBadge" class="goal-milestone-badge hidden">
+            <span class="milestone-icon">⚽</span>
+            <span id="goalMilestoneText" class="milestone-text">Bu maçtaki 1., kariyerindeki 1. golü!</span>
+          </div>
+        </div>
+
+        <!-- Golden Goal Announcement -->
+        <div id="overtimeBanner" class="overtime-banner hidden">
+          <h1>⚡ ALTIN GOL!</h1>
+          <p>İlk golü atan maçı kazanır!</p>
+        </div>
+
+        <!-- Game Over Banner -->
+        <div id="gameOverBanner" class="game-over-banner hidden">
+          <h1 id="winnerBannerText">MAÇ BİTTİ</h1>
+          <p id="finalScoreText">0 - 0</p>
+          <div id="gameOverScorersList" class="game-over-scorers"></div>
+        </div>
+
+        <!-- Walkout Banner (Takımlar Sahaya Çıkıyor) -->
+        <div id="walkoutBanner" class="walkout-banner hidden">
+          <div class="walkout-content">
+            <span class="walkout-pulse-icon">🏃‍♂️</span>
+            <span class="walkout-text">TAKIMLAR SAHAYA ÇIKIYOR...</span>
+          </div>
+          <button id="btnSkipWalkout" type="button" class="btn-skip-walkout" title="Seremoniyi Geç (Boşluk / Tıkla)">Geç ⏭️</button>
+        </div>
+
+        <!-- Referee Whistle Kickoff Flash Banner -->
+        <div id="kickoffWhistleBanner" class="kickoff-whistle-banner hidden">
+          <span class="whistle-icon">📣</span>
+          <span class="whistle-text">DÜDÜK ÇALDI! MAÇ BAŞLADI</span>
+        </div>
+
+        <!-- Kickoff Countdown Overlay (Golden Sonrası & Maç Başlangıcı Sayaç) -->
+        <div id="kickoffCountdownOverlay" class="kickoff-countdown-overlay hidden">
+          <div class="countdown-badge count-3">
+            <div id="countdownNumber" class="countdown-number">3</div>
+            <div id="countdownSubtext" class="countdown-subtext">HAZIRLANIN!</div>
+          </div>
+        </div>
+
+        <!-- Eliminated Player Spectator Banner (Yedek Kulübesi İzleyici Modu) -->
+        <div id="eliminatedSpectatorBanner" class="eliminated-spectator-banner hidden">
+          <span class="elim-door-icon">🪑</span>
+          <span class="elim-main-text">ELENDİN - YEDEK KULÜBESİNDESİN</span>
+          <span class="elim-sub-text">(Maçı İzliyorsun...)</span>
+        </div>
+
+        <!-- Training Mode Floating HUD -->
+        <div id="trainingHud" class="training-hud hidden">
+          <div class="training-hud-title">🎯 ŞUT & FRİKİK ANTRENMANI</div>
+          <div class="training-hud-stats">
+            <span class="hud-spot" id="trainingSpotName">Merkez Yay (20m)</span>
+            <span class="hud-score" id="trainingScoreText">0 Puan</span>
+          </div>
+          <div class="training-hud-actions">
+            <button id="btnTrainingResetBall" class="btn-micro" title="Topu Frikik Noktasına Getir">🔄 Topu Sıfırla</button>
+            <button id="btnTrainingNextSpot" class="btn-micro" title="Farklı Açıdan Frikik">🎯 Açı Değiştir</button>
+            <button id="btnExitTraining" class="btn-micro danger" title="Antrenmandan Çık">🚪 Çıkış</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Mobile Virtual Touch Controls Overlay -->
+  <div id="touchControls" class="touch-controls">
+    <!-- Left Side: Dynamic/Static Virtual Joystick -->
+    <div id="joystickZone" class="joystick-zone">
+      <div id="joystickBase" class="joystick-base">
+        <span class="joy-dir-arrow joy-up">▲</span>
+        <span class="joy-dir-arrow joy-down">▼</span>
+        <span class="joy-dir-arrow joy-left">◀</span>
+        <span class="joy-dir-arrow joy-right">▶</span>
+        <div id="joystickKnob" class="joystick-knob"></div>
+      </div>
+    </div>
+
+    <!-- Right Side: Big Touch Kick Button -->
+    <div class="touch-action-zone">
+      <button id="touchKickBtn" class="touch-kick-btn" type="button">
+        <span class="kick-icon">⚽</span>
+        <span class="kick-label">ŞUT</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/audio.js?v=11.0"></script>
+  <script src="/js/renderer.js?v=31.0"></script>
+  <script src="/js/input.js?v=13.0"></script>
+  <script src="/js/tournament.js?v=8.0"></script>
+  <script src="/js/training.js?v=7.0"></script>
+  <script src="/js/gif-encoder.js?v=3.0"></script>
+  <script src="/js/replay-gif.js?v=3.1"></script>
+  <script src="/js/main.js?v=33.0"></script>
+</body>
+</html>

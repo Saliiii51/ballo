@@ -1,0 +1,5104 @@
+:root {
+  --bg-main: #0e1117;
+  --bg-surface: #171b26;
+  --bg-surface-light: #202636;
+  --border-color: #2b3245;
+
+  --red-team: #e63946;
+  --red-team-glow: rgba(230, 57, 70, 0.4);
+  --blue-team: #0080ff;
+  --blue-team-glow: rgba(0, 128, 255, 0.4);
+  --spec-team: #8b9bb4;
+
+  --text-main: #f0f4fc;
+  --text-muted: #8e9bb0;
+  --accent-gold: #ffd166;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+html, body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  touch-action: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  overscroll-behavior: none;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 12, 18, 0.88);
+  backdrop-filter: blur(8px);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-overlay.hidden {
+  display: none !important;
+}
+
+.modal-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  padding: 22px 26px;
+  border-radius: 16px;
+  width: 92%;
+  max-width: 480px;
+  max-height: min(92vh, 720px);
+  overflow-y: auto;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  text-align: center;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+.modal-header .ball-icon {
+  font-size: 40px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.modal-header h2 {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 28px;
+  letter-spacing: 2px;
+  color: #fff;
+}
+
+.modal-header p {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin-top: 4px;
+  margin-bottom: 24px;
+}
+
+.form-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-1 { flex: 1; }
+.flex-2 { flex: 2; }
+
+#joinForm label {
+  display: block;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+#nicknameInput, #avatarInput {
+  width: 100%;
+  padding: 12px 14px;
+  background: var(--bg-surface-light);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 16px !important; /* Prevents auto-zoom on mobile focus */
+  outline: none;
+  transition: border-color 0.2s;
+  margin-bottom: 18px;
+  touch-action: manipulation;
+}
+
+#nicknameInput:focus, #avatarInput:focus {
+  border-color: var(--blue-team);
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #0080ff, #0056b3);
+  color: #fff;
+  font-weight: 700;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.2s;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px var(--blue-team-glow);
+}
+
+.controls-hint {
+  margin-top: 20px;
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+/* App Layout */
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* Header */
+.game-header {
+  height: 52px;
+  min-height: 52px;
+  max-height: 52px;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  gap: 8px;
+  z-index: 50;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.v2-tag {
+  color: var(--accent-gold);
+  margin-left: 2px;
+}
+
+/* Modern Stadium Scoreboard & Capsule HUD (Matches ChatGPT Mockup) */
+.scoreboard-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.scoreboard {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(10, 15, 28, 0.75);
+  padding: 3px 6px;
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), inset 0 0 12px rgba(255, 255, 255, 0.05);
+}
+
+.team-score {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 16px;
+  border-radius: 20px;
+  font-family: 'Chakra Petch', sans-serif;
+  transition: all 0.2s ease;
+}
+
+.red-score-box {
+  background: linear-gradient(135deg, rgba(230, 57, 70, 0.35) 0%, rgba(153, 27, 27, 0.45) 100%);
+  border: 1.5px solid #ef4444;
+  box-shadow: 0 0 14px rgba(239, 68, 68, 0.35);
+}
+
+.red-score-box .team-label {
+  color: #fca5a5;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.score-digit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 6px;
+  border-radius: 7px;
+  background: rgba(0, 0, 0, 0.45);
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 19px;
+  font-weight: 700;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: all 0.2s ease;
+}
+
+.red-score-box .score-digit {
+  color: #ffffff;
+  border-color: rgba(239, 68, 68, 0.6);
+  background: rgba(185, 28, 28, 0.45);
+  box-shadow: inset 0 0 8px rgba(239, 68, 68, 0.5);
+  text-shadow: 0 0 10px rgba(239, 68, 68, 0.9);
+}
+
+.blue-score-box {
+  background: linear-gradient(135deg, rgba(2, 132, 199, 0.45) 0%, rgba(14, 165, 233, 0.35) 100%);
+  border: 1.5px solid #38bdf8;
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+}
+
+.blue-score-box .team-label {
+  color: #bae6fd;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.blue-score-box .score-digit {
+  color: #ffffff;
+  border-color: rgba(56, 189, 248, 0.6);
+  background: rgba(2, 132, 199, 0.45);
+  box-shadow: inset 0 0 8px rgba(56, 189, 248, 0.5);
+  text-shadow: 0 0 10px rgba(56, 189, 248, 0.9);
+}
+
+.match-timer-box {
+  text-align: center;
+  min-width: 80px;
+  padding: 0 4px;
+}
+
+.match-status {
+  font-size: 9px;
+  color: #4ade80;
+  font-weight: 700;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.match-status::before {
+  content: '●';
+  font-size: 8px;
+  color: #4ade80;
+  animation: liveBlink 1.5s infinite;
+}
+
+@keyframes liveBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.match-timer {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 1.5px;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Possession Bar with Glowing Neon Gradients */
+.possession-bar-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 220px;
+}
+
+.pos-text {
+  font-size: 11px;
+  font-weight: 700;
+  min-width: 32px;
+  font-family: 'Chakra Petch', sans-serif;
+}
+
+.pos-text.red { color: #f87171; text-align: right; text-shadow: 0 0 8px rgba(248, 113, 113, 0.6); }
+.pos-text.blue { color: #38bdf8; text-align: left; text-shadow: 0 0 8px rgba(56, 189, 248, 0.6); }
+
+.possession-track {
+  flex: 1;
+  height: 5px;
+  background: #0284c7;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 0 8px rgba(2, 132, 199, 0.6);
+}
+
+.possession-fill {
+  height: 100%;
+  background: #ef4444;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.8);
+  transition: width 0.3s ease;
+}
+
+/* Header Controls & Action Buttons */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 1;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.header-actions::-webkit-scrollbar {
+  display: none;
+}
+
+.header-select-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 2px 5px;
+  border-radius: 7px;
+  border: 1px solid var(--border-color);
+}
+
+.header-control-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  background: transparent;
+  padding: 2px 4px;
+  border-radius: 5px;
+}
+
+.ctrl-icon {
+  font-size: 13px;
+  line-height: 1;
+}
+
+.ctrl-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+.select-clean {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+}
+
+.select-clean option {
+  background: var(--bg-surface);
+  color: #fff;
+}
+
+.bot-btn-group {
+  display: flex;
+  gap: 3px;
+  background: rgba(0, 0, 0, 0.25);
+  padding: 2px 4px;
+  border-radius: 7px;
+  border: 1px solid var(--border-color);
+}
+
+.btn-micro {
+  padding: 4px 7px;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.15s;
+  line-height: 1.2;
+}
+
+.btn-micro.red {
+  background: rgba(230, 57, 70, 0.2);
+  color: #ff6b77;
+  border-color: rgba(230, 57, 70, 0.4);
+}
+.btn-micro.red:hover { background: var(--red-team); color: #fff; }
+
+.btn-micro.blue {
+  background: rgba(0, 128, 255, 0.2);
+  color: #66b2ff;
+  border-color: rgba(0, 128, 255, 0.4);
+}
+.btn-micro.blue:hover { background: var(--blue-team); color: #fff; }
+
+.btn-micro.danger {
+  background: rgba(239, 68, 68, 0.15);
+  color: #fca5a5;
+  border-color: rgba(239, 68, 68, 0.3);
+}
+.btn-micro.danger:hover { background: #dc2626; color: #fff; }
+
+.btn-action {
+  background: var(--bg-surface-light);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s, transform 0.1s;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.btn-action:hover {
+  background: #2b334a;
+  transform: translateY(-1px);
+}
+
+.header-util-group {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.btn-icon-only {
+  padding: 5px 7px !important;
+  font-size: 13px !important;
+  min-width: 30px;
+  justify-content: center;
+}
+
+/* Arena Viewport */
+.arena-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at center, #151924 0%, #0a0d14 100%);
+  position: relative;
+  overflow: hidden;
+  padding: 10px;
+}
+
+.canvas-container {
+  position: relative;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 0 2px var(--border-color);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #080b13;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+#gameCanvas {
+  display: block;
+  image-rendering: auto;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* Goal and Game Over Overlays */
+.goal-banner, .game-over-banner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  background: rgba(14, 17, 23, 0.92);
+  border: 2px solid #fff;
+  border-radius: 16px;
+  padding: 24px 48px;
+  text-align: center;
+  box-shadow: 0 0 50px rgba(255, 255, 255, 0.3);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  pointer-events: none;
+  z-index: 10;
+}
+
+.goal-banner h1 {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--accent-gold);
+  text-shadow: 0 0 20px rgba(255, 209, 102, 0.6);
+  letter-spacing: 4px;
+}
+
+.goal-banner p {
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 6px;
+}
+
+.goal-milestone-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 6px 20px;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.18) 0%, rgba(255, 170, 0, 0.08) 100%);
+  border: 1.5px solid rgba(255, 215, 0, 0.55);
+  border-radius: 999px;
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.35);
+  backdrop-filter: blur(8px);
+}
+
+.goal-milestone-badge .milestone-icon {
+  font-size: 16px;
+  animation: rotateBall 4s linear infinite;
+}
+
+.goal-milestone-badge .milestone-text {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffd700;
+  letter-spacing: 0.8px;
+  text-shadow: 0 0 12px rgba(255, 215, 0, 0.7);
+}
+
+@keyframes rotateBall {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.game-over-banner h1 {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 36px;
+  color: #fff;
+}
+
+.game-over-banner p {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--accent-gold);
+  margin-top: 8px;
+}
+
+.hidden {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.8);
+  pointer-events: none;
+  visibility: hidden;
+}
+
+/* Dashboard Bottom Area */
+.game-dashboard {
+  height: 220px;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+}
+
+.team-control-bar {
+  display: flex;
+  gap: 8px;
+  padding: 5px 12px;
+  background: var(--bg-surface-light);
+  border-bottom: 1px solid var(--border-color);
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.team-control-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.drawer-bot-group {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.btn-team {
+  padding: 5px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.btn-red {
+  background: rgba(230, 57, 70, 0.2);
+  color: #ff6b77;
+  border-color: rgba(230, 57, 70, 0.4);
+}
+.btn-red:hover {
+  background: var(--red-team);
+  color: #fff;
+}
+
+.btn-blue {
+  background: rgba(0, 128, 255, 0.2);
+  color: #66b2ff;
+  border-color: rgba(0, 128, 255, 0.4);
+}
+.btn-blue:hover {
+  background: var(--blue-team);
+  color: #fff;
+}
+
+.btn-spec {
+  background: rgba(139, 155, 180, 0.15);
+  color: #cbd5e1;
+  border-color: rgba(139, 155, 180, 0.3);
+}
+.btn-spec:hover {
+  background: #475569;
+  color: #fff;
+}
+
+/* Dashboard Panels */
+.dashboard-panels {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+.panel {
+  flex: 1;
+  padding: 10px 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.roster-panel {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  border-right: 1px solid var(--border-color);
+  flex: 1.2;
+}
+
+.roster-column {
+  flex: 1;
+  background: rgba(14, 17, 23, 0.5);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.roster-column h4 {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.red-roster h4 { color: var(--red-team); }
+.blue-roster h4 { color: var(--blue-team); }
+.spec-roster h4 { color: var(--spec-team); }
+
+.player-roster {
+  list-style: none;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.player-roster li {
+  font-size: 12px;
+  padding: 3px 6px;
+  border-radius: 4px;
+  margin-bottom: 2px;
+  background: rgba(255, 255, 255, 0.03);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.player-roster li.you-item {
+  border-left: 3px solid var(--accent-gold);
+  font-weight: 600;
+}
+
+.player-roster li.crowned-roster-item {
+  border-left: 3px solid #ffd700;
+  background: linear-gradient(90deg, rgba(255, 215, 0, 0.22) 0%, rgba(255, 215, 0, 0.04) 100%);
+  color: #ffd700;
+  font-weight: 700;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.15);
+}
+
+/* Chat Panel */
+.chat-panel {
+  flex: 1;
+}
+
+.chat-logs {
+  flex: 1;
+  overflow-y: auto;
+  font-size: 12px;
+  padding-right: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.chat-message {
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.chat-time {
+  color: var(--text-muted);
+  font-size: 10px;
+  margin-right: 6px;
+}
+
+.chat-sender {
+  font-weight: 700;
+  margin-right: 4px;
+}
+
+.chat-sender.red { color: var(--red-team); }
+.chat-sender.blue { color: var(--blue-team); }
+.chat-sender.spec { color: var(--spec-team); }
+
+.chat-text {
+  color: #e2e8f0;
+}
+
+.chat-input-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+#chatInput {
+  flex: 1;
+  padding: 8px 12px;
+  background: var(--bg-surface-light);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: #fff;
+  font-size: 16px !important; /* Prevents auto-zoom on mobile focus */
+  outline: none;
+  touch-action: manipulation;
+}
+
+#chatInput:focus {
+  border-color: var(--blue-team);
+}
+
+#btnSendChat {
+  background: var(--bg-surface-light);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 0 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#btnSendChat:hover {
+  background: #2b334a;
+}
+
+/* Overtime / Golden Goal Banner */
+.overtime-banner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  background: rgba(14, 17, 23, 0.95);
+  border: 2px solid var(--accent-gold);
+  border-radius: 16px;
+  padding: 24px 48px;
+  text-align: center;
+  box-shadow: 0 0 50px rgba(255, 209, 102, 0.4);
+  pointer-events: none;
+  z-index: 10;
+  transition: all 0.3s;
+}
+
+.overtime-banner h1 {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 38px;
+  color: var(--accent-gold);
+  letter-spacing: 2px;
+}
+
+.overtime-banner p {
+  color: #fff;
+  font-size: 16px;
+  margin-top: 6px;
+}
+
+/* Avatar Quick Edit in Dashboard */
+.team-control-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 16px;
+  background: var(--bg-surface-light);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.team-btn-group {
+  display: flex;
+  gap: 10px;
+}
+
+.avatar-quick-edit {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.avatar-quick-edit label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.avatar-quick-edit input {
+  width: 44px;
+  background: var(--bg-surface-light);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  color: #fff;
+  font-size: 16px !important; /* Prevents auto-zoom on mobile focus */
+  font-weight: 700;
+  text-align: center;
+  padding: 2px 4px;
+  outline: none;
+  touch-action: manipulation;
+}
+
+.btn-mini {
+  background: #2b334a;
+  border: 1px solid var(--border-color);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.btn-mini:hover { background: #3b4666; }
+
+/* Match Stats Dialog */
+.stats-card {
+  max-width: 480px;
+}
+
+.stats-big-score {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 38px;
+  font-weight: 700;
+  color: var(--accent-gold);
+  margin-top: 4px;
+  margin-bottom: 16px;
+}
+
+.stats-table {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.stats-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 6px;
+}
+
+.stats-header-row {
+  background: transparent;
+  font-size: 12px;
+  font-weight: 700;
+  border-bottom: 1px solid var(--border-color);
+  border-radius: 0;
+  padding-bottom: 6px;
+}
+
+.stat-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.stat-val {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  min-width: 40px;
+}
+
+.red-text { color: var(--red-team); }
+.blue-text { color: var(--blue-team); }
+
+/* Match Goals Section in Stats Modal */
+.match-goals-card {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+}
+
+.goals-card-header {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent-gold);
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.goals-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.goals-column {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.goals-col-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 3px;
+}
+
+.goals-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 110px;
+  overflow-y: auto;
+}
+
+.goals-list li {
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 3px 6px;
+  border-radius: 4px;
+}
+
+.goal-time-badge {
+  font-family: 'Chakra Petch', monospace;
+  font-size: 10px;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.06);
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
+.kk-tag {
+  color: #ff4757;
+  font-weight: 700;
+  font-size: 11px;
+  background: rgba(255, 71, 87, 0.15);
+  border: 1px solid rgba(255, 71, 87, 0.3);
+  padding: 0 4px;
+  border-radius: 3px;
+  margin-left: 2px;
+}
+
+.no-goals-item {
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: 11px;
+  background: transparent !important;
+}
+
+/* Modal Actions */
+.stats-modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.stats-modal-actions button {
+  flex: 1;
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.btn-restart {
+  background: linear-gradient(135deg, rgba(46, 213, 115, 0.15), rgba(0, 209, 178, 0.15));
+  border-color: rgba(46, 213, 115, 0.4);
+  color: #2ed573;
+}
+
+.btn-restart:hover {
+  background: rgba(46, 213, 115, 0.3);
+  border-color: #2ed573;
+}
+
+.game-over-scorers {
+  font-size: 13px;
+  color: #e0e6ed;
+  margin-top: 8px;
+  max-width: 420px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+/* ==========================================================================
+   📱 Mobile Landscape, Touch Controls & Rotate Prompt
+   ========================================================================== */
+
+.mobile-only {
+  display: none !important;
+}
+
+/* 1. Portrait Rotate Prompt Overlay */
+.rotate-prompt {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 10, 16, 0.96);
+  backdrop-filter: blur(12px);
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+}
+
+.rotate-box {
+  background: var(--bg-surface);
+  border: 2px solid var(--border-color);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(255, 209, 102, 0.2);
+  border-radius: 20px;
+  padding: 32px 24px;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.rotate-anim {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.phone-anim {
+  font-size: 54px;
+  display: inline-block;
+  animation: phoneRotateAnim 2.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.rotate-arrow {
+  position: absolute;
+  bottom: -4px;
+  right: 6px;
+  font-size: 26px;
+  animation: spinSlow 3s linear infinite;
+}
+
+@keyframes phoneRotateAnim {
+  0%, 15% { transform: rotate(0deg); }
+  50%, 70% { transform: rotate(-90deg); }
+  90%, 100% { transform: rotate(0deg); }
+}
+
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.rotate-box h2 {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 20px;
+  color: var(--accent-gold);
+  margin-bottom: 8px;
+}
+
+.rotate-box p {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* Trigger rotate overlay on portrait phone/tablet */
+@media screen and (orientation: portrait) and (max-width: 900px) {
+  body:not(.dismissed-rotate) .rotate-prompt {
+    display: flex;
+  }
+}
+
+/* 2. Virtual Touch Controls Overlay */
+.touch-controls {
+  position: fixed;
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 900;
+  display: flex !important;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 8px 14px;
+  padding-bottom: max(6px, env(safe-area-inset-bottom, 6px));
+  padding-left: max(8px, env(safe-area-inset-left, 8px));
+  padding-right: max(8px, env(safe-area-inset-right, 8px));
+  box-sizing: border-box;
+}
+
+/* Hide on desktop only if width is large and standard mouse pointer */
+@media screen and (min-width: 1025px) and (pointer: fine) {
+  body:not(.touch-device) .touch-controls {
+    display: none !important;
+  }
+}
+
+/* Left Virtual Joystick - High-Tech Glassmorphism with Directional Arrows & Outer Ring */
+.joystick-zone {
+  width: 155px;
+  height: 145px;
+  pointer-events: auto;
+  position: relative;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.joystick-base {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.15) 0%, rgba(10, 20, 38, 0.55) 100%);
+  border: 2px solid rgba(56, 189, 248, 0.45);
+  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(56, 189, 248, 0.25), 0 0 16px rgba(56, 189, 248, 0.3);
+  position: absolute;
+  bottom: 6px;
+  left: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+  opacity: 0.65;
+  transition: opacity 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.joystick-base.active {
+  opacity: 1;
+  border-color: #38bdf8;
+  box-shadow: 0 6px 32px rgba(0, 0, 0, 0.7), inset 0 0 24px rgba(56, 189, 248, 0.4), 0 0 24px rgba(56, 189, 248, 0.7);
+}
+
+/* Directional subtle notches around base */
+.joystick-base::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 1px dashed rgba(56, 189, 248, 0.35);
+  pointer-events: none;
+}
+
+.joystick-base::after {
+  content: '';
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: rgba(56, 189, 248, 0.5);
+  box-shadow: 0 0 8px #38bdf8;
+  position: absolute;
+}
+
+/* Directional arrows around joystick base (Matches ChatGPT Mockup) */
+.joy-dir-arrow {
+  position: absolute;
+  color: rgba(56, 189, 248, 0.65);
+  font-size: 11px;
+  pointer-events: none;
+  text-shadow: 0 0 6px #38bdf8;
+  user-select: none;
+  line-height: 1;
+  transition: all 0.2s ease;
+  z-index: 2;
+}
+.joy-up { top: 6px; left: 50%; transform: translateX(-50%); }
+.joy-down { bottom: 6px; left: 50%; transform: translateX(-50%); }
+.joy-left { left: 6px; top: 50%; transform: translateY(-50%); }
+.joy-right { right: 6px; top: 50%; transform: translateY(-50%); }
+
+.joystick-base.active .joy-dir-arrow {
+  color: #38bdf8;
+  text-shadow: 0 0 12px #38bdf8;
+}
+
+.joystick-knob {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #7dd3fc 0%, #0284c7 70%, #0369a1 100%);
+  border: 2.5px solid #ffffff;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6), 0 0 18px rgba(56, 189, 248, 0.85);
+  transform: translate(0px, 0px);
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Right Touch Action Zone */
+.touch-action-zone {
+  pointer-events: auto;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  margin-bottom: 6px;
+  margin-right: 6px;
+}
+
+/* Red / Fire Radiant Kick Button matching ChatGPT design */
+.touch-kick-btn {
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ff4d4d 0%, #b91c1c 65%, #7f1d1d 100%);
+  border: 3.5px solid #ffffff;
+  color: #ffffff;
+  box-shadow: 0 6px 30px rgba(185, 28, 28, 0.75), 0 0 25px rgba(255, 77, 77, 0.65), inset 0 0 15px rgba(255, 200, 200, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.08s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+  backdrop-filter: blur(6px);
+  opacity: 0.85;
+  position: relative;
+}
+
+/* Outer Fiery Glow Ring */
+.touch-kick-btn::before {
+  content: '';
+  position: absolute;
+  inset: -7px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 120, 0, 0.7);
+  box-shadow: 0 0 20px rgba(255, 90, 0, 0.8);
+  pointer-events: none;
+  animation: pulseKickRing 2s ease-in-out infinite;
+}
+
+@keyframes pulseKickRing {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.05); opacity: 1; }
+}
+
+/* Fiery Flame Wing/Trail on Kick Button (Matches ChatGPT Mockup) */
+.touch-kick-btn::after {
+  content: '';
+  position: absolute;
+  top: -12px;
+  right: -16px;
+  width: 48px;
+  height: 48px;
+  background: radial-gradient(circle, rgba(255, 130, 0, 0.95) 0%, rgba(255, 60, 0, 0.65) 45%, rgba(255, 0, 0, 0) 75%);
+  filter: blur(4px);
+  border-radius: 50% 10% 50% 50%;
+  transform: rotate(35deg);
+  pointer-events: none;
+  animation: flameFlicker 1.4s ease-in-out infinite alternate;
+}
+
+@keyframes flameFlicker {
+  0% { transform: rotate(30deg) scale(0.92); opacity: 0.75; }
+  100% { transform: rotate(38deg) scale(1.18); opacity: 1; }
+}
+
+.touch-kick-btn:active,
+.touch-kick-btn.active {
+  opacity: 1;
+  transform: scale(0.92);
+  background: radial-gradient(circle at 35% 35%, #fef08a 0%, #f97316 65%, #c2410c 100%);
+  box-shadow: 0 2px 22px rgba(249, 115, 22, 0.95), 0 0 35px rgba(254, 240, 138, 0.95);
+  border-color: #fef08a;
+}
+
+.kick-icon {
+  font-size: 32px;
+  line-height: 1;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
+}
+
+.kick-label {
+  font-family: 'Chakra Petch', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 1.5px;
+  margin-top: 3px;
+  pointer-events: none;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+/* 3. Landscape Mode Optimizations */
+@media screen and (orientation: landscape) and (max-height: 600px), screen and (max-width: 950px) and (orientation: landscape) {
+  .mobile-only {
+    display: inline-flex !important;
+  }
+
+  .app-layout {
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  /* Compact Header */
+  .game-header {
+    padding: 4px 12px;
+    min-height: 44px;
+    height: 44px;
+    background: rgba(14, 17, 23, 0.95);
+  }
+
+  .brand {
+    font-size: 14px;
+  }
+
+  .brand h1 {
+    font-size: 15px;
+  }
+
+  .brand-ball {
+    font-size: 16px;
+  }
+
+  .scoreboard {
+    gap: 8px;
+  }
+
+  .score-digit {
+    font-size: 18px;
+  }
+
+  .team-label {
+    font-size: 9px;
+  }
+
+  .match-timer {
+    font-size: 14px;
+  }
+
+  .match-status {
+    font-size: 8px;
+  }
+
+  .possession-bar-container {
+    height: 3px;
+    margin-top: 2px;
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    overflow-x: auto;
+  }
+
+  .header-select-group {
+    display: none; /* Hide selects from compact landscape header */
+  }
+
+  .header-actions .btn-text,
+  .header-left .btn-text {
+    display: none;
+  }
+
+  .bot-btn-group {
+    display: flex !important;
+    gap: 3px;
+    align-items: center;
+  }
+
+  .bot-btn-group .btn-micro {
+    padding: 2px 6px;
+    font-size: 11px;
+    height: 26px;
+    line-height: 1;
+    font-weight: 700;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  /* Arena Viewport fills available screen with safe horizontal inset */
+  .arena-wrapper {
+    padding: 0 16px;
+    flex: 1;
+    height: calc(100vh - 44px);
+    height: calc(100dvh - 44px);
+  }
+
+  .canvas-container {
+    border-radius: 6px;
+    max-width: calc(100vw - 32px);
+    max-height: calc(100vh - 44px);
+    max-height: calc(100dvh - 44px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: none;
+  }
+
+  #gameCanvas {
+    max-width: calc(100vw - 32px);
+    max-height: calc(100vh - 44px);
+    max-height: calc(100dvh - 44px);
+    width: auto !important;
+    height: auto !important;
+    aspect-ratio: 1000 / 560;
+    object-fit: contain;
+  }
+
+  /* Bottom Dashboard hidden in landscape mobile unless toggled */
+  .game-dashboard {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 70vh;
+    z-index: 100;
+    background: rgba(14, 17, 23, 0.96);
+    backdrop-filter: blur(14px);
+    border-top: 2px solid var(--border-color);
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.9);
+  }
+
+  .game-dashboard.drawer-open {
+    display: flex;
+    flex-direction: column;
+    animation: slideUp 0.25s ease-out;
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+  }
+
+  .goal-banner h1 {
+    font-size: 32px;
+  }
+
+  .goal-banner p {
+    font-size: 14px;
+  }
+
+  /* Compact Entry & Stats Modal on Landscape Phone */
+  .modal-card {
+    padding: 16px 22px;
+    max-height: 92vh;
+    overflow-y: auto;
+    width: 95%;
+    max-width: 400px;
+  }
+
+  .modal-header .ball-icon {
+    font-size: 26px;
+    margin-bottom: 2px;
+  }
+
+  .modal-header h2 {
+    font-size: 20px;
+  }
+
+  .modal-header p {
+    margin-bottom: 10px;
+    font-size: 12px;
+  }
+
+  #nicknameInput, #avatarInput {
+    padding: 10px 12px;
+    margin-bottom: 10px;
+    font-size: 16px !important; /* Prevents auto-zoom on mobile focus */
+    touch-action: manipulation !important;
+  }
+
+  .btn-primary {
+    padding: 12px;
+    font-size: 15px;
+  }
+
+  .controls-hint {
+    margin-top: 8px;
+    font-size: 11px;
+  }
+}
+
+/* Responsive Header Collapsing: Never wrap, keep buttons fitting perfectly on all screens */
+@media screen and (max-width: 1280px) {
+  .header-actions .btn-text,
+  .header-left .btn-text {
+    display: none;
+  }
+  .btn-action {
+    padding: 4px 8px;
+    font-size: 11px;
+  }
+  .btn-profile-header, .btn-leaderboard-header {
+    padding: 4px 7px;
+  }
+}
+
+@media screen and (max-width: 950px) {
+  .header-select-group {
+    display: none; /* Hide selects to prioritize scoreboard and buttons */
+  }
+}
+
+/* ==========================================================================
+   Profile & Gol Krallığı Leaderboard Styles
+   ========================================================================== */
+
+/* Header Profile & Leaderboard Buttons */
+.btn-profile-header {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.btn-profile-header:hover {
+  background: rgba(0, 128, 255, 0.18);
+  border-color: var(--blue-team);
+  box-shadow: 0 0 10px rgba(0, 128, 255, 0.3);
+}
+
+.header-goals-badge {
+  background: linear-gradient(135deg, #ffd700, #ff9900);
+  color: #0b0e14;
+  padding: 1px 7px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 11px;
+  margin-left: 2px;
+}
+
+.btn-leaderboard-header {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 215, 0, 0.1);
+  border: 1px solid rgba(255, 215, 0, 0.35);
+  color: #ffd700;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.btn-leaderboard-header:hover {
+  background: rgba(255, 215, 0, 0.22);
+  border-color: #ffd700;
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
+}
+
+/* Returning Profile Box in Entry Modal */
+.profile-entry-card {
+  max-width: 440px;
+}
+
+.saved-profile-box {
+  background: rgba(0, 128, 255, 0.08);
+  border: 1px solid rgba(0, 128, 255, 0.3);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+.saved-profile-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.saved-avatar-circle {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0080ff, #0044aa);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: bold;
+  color: #fff;
+  border: 2px solid #ffd700;
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.35);
+  flex-shrink: 0;
+}
+
+.saved-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.saved-welcome-tag {
+  font-size: 11px;
+  color: #4ade80;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.saved-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  margin: 1px 0 3px 0;
+  font-family: 'Chakra Petch', sans-serif;
+}
+
+.saved-stats {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.btn-quick-play {
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  border: none;
+  font-weight: 700;
+}
+
+.btn-quick-play:hover {
+  box-shadow: 0 4px 16px rgba(34, 197, 94, 0.4);
+}
+
+.btn-text-link {
+  display: block;
+  width: 100%;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 12px;
+  text-align: center;
+  cursor: pointer;
+  padding: 4px;
+  text-decoration: underline;
+  transition: color 0.15s ease;
+}
+
+.btn-text-link:hover {
+  color: #fff;
+}
+
+.profile-form-intro {
+  text-align: left;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.intro-title {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.intro-desc {
+  display: block;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* ==========================================================================
+   Profile Modal
+   ========================================================================== */
+.profile-card {
+  max-width: 660px !important;
+  width: min(92vw, 660px) !important;
+  max-height: min(94dvh, 460px) !important;
+  height: auto !important;
+  overflow: hidden !important;
+  padding: 12px 16px !important;
+  border-radius: 16px;
+  background: radial-gradient(135% 125% at 10% 5%, #182238 0%, #0d1220 50%, #080b14 100%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.85);
+}
+
+.profile-card-body {
+  display: grid;
+  grid-template-columns: 210px 1fr;
+  gap: 14px;
+  align-items: stretch;
+}
+
+.profile-col-left {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  padding-right: 14px;
+}
+
+.profile-col-right {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.profile-card-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 0;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 8px;
+}
+
+.profile-avatar-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0080ff, #003399);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  border: 2px solid #ffd700;
+  box-shadow: 0 0 14px rgba(255, 215, 0, 0.35);
+  margin-bottom: 4px;
+}
+
+.profile-card-header h2 {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 16px;
+  color: #fff;
+  letter-spacing: 0.8px;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.profile-rank-badge {
+  margin-top: 3px;
+  padding: 2px 8px;
+  background: rgba(255, 215, 0, 0.12);
+  border: 1px solid rgba(255, 215, 0, 0.4);
+  border-radius: 20px;
+  color: #ffd700;
+  font-size: 9.5px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.profile-stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+  margin-bottom: 0;
+}
+
+.profile-stat-box {
+  background: var(--bg-surface-light);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 5px 4px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-stat-box.highlight-stat {
+  border-color: rgba(255, 215, 0, 0.35);
+  background: rgba(255, 215, 0, 0.05);
+}
+
+.profile-stat-box .p-stat-icon {
+  font-size: 14px;
+  margin-bottom: 1px;
+}
+
+.profile-stat-box .p-stat-val {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.1;
+}
+
+.profile-stat-box.highlight-stat .p-stat-val {
+  color: #ffd700;
+}
+
+.profile-stat-box .p-stat-label {
+  font-size: 9px;
+  color: var(--text-muted);
+  margin-top: 1px;
+}
+
+.profile-edit-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-surface-light);
+  padding: 5px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  margin-bottom: 0;
+}
+
+.profile-edit-row label {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.edit-avatar-group {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.edit-avatar-group input {
+  width: 44px;
+  padding: 4px 6px;
+  border-radius: 6px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  color: #fff;
+  text-align: center;
+  font-size: 13px !important;
+  margin: 0 !important;
+}
+
+.profile-modal-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  margin-top: 0;
+}
+
+.profile-modal-actions button {
+  flex: 1;
+  padding: 6px 8px;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+/* Portrait Fallback for Profile Modal */
+@media screen and (orientation: portrait), (max-width: 600px) and (max-aspect-ratio: 1/1) {
+  .profile-card {
+    max-width: 400px !important;
+    width: 92% !important;
+    max-height: 90vh !important;
+    overflow-y: auto !important;
+  }
+  .profile-card-body {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+  .profile-col-left {
+    border-right: none !important;
+    padding-right: 0 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 8px;
+  }
+}
+
+/* ==========================================================================
+   Gol Krallığı / Leaderboard Modal
+   ========================================================================== */
+.leaderboard-card {
+  max-width: 580px;
+  width: 95%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.crown-big-icon {
+  font-size: 38px;
+  display: block;
+  margin-bottom: 4px;
+  animation: floatCrown 3s ease-in-out infinite;
+}
+
+@keyframes floatCrown {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.my-rank-indicator {
+  background: rgba(255, 215, 0, 0.08);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 8px;
+  padding: 8px 14px;
+  margin-bottom: 14px;
+  font-size: 13px;
+  color: #f0f4fc;
+  text-align: center;
+}
+
+/* Podium 3 Columns */
+.leaderboard-podium {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 12px;
+  margin-bottom: 16px;
+  min-height: 125px;
+}
+
+.podium-col {
+  flex: 1;
+  border-radius: 12px;
+  padding: 10px 6px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+  transition: transform 0.2s ease;
+}
+
+.podium-col.gold-col {
+  background: linear-gradient(180deg, rgba(255, 215, 0, 0.25), rgba(255, 215, 0, 0.04));
+  border: 1px solid rgba(255, 215, 0, 0.55);
+  order: 2;
+  height: 135px;
+  box-shadow: 0 0 18px rgba(255, 215, 0, 0.25);
+}
+
+.podium-col.silver-col {
+  background: linear-gradient(180deg, rgba(200, 210, 225, 0.2), rgba(200, 210, 225, 0.03));
+  border: 1px solid rgba(200, 210, 225, 0.45);
+  order: 1;
+  height: 115px;
+}
+
+.podium-col.bronze-col {
+  background: linear-gradient(180deg, rgba(215, 140, 70, 0.2), rgba(215, 140, 70, 0.03));
+  border: 1px solid rgba(215, 140, 70, 0.45);
+  order: 3;
+  height: 105px;
+}
+
+.podium-crown {
+  font-size: 18px;
+  position: absolute;
+  top: -14px;
+  animation: floatCrown 2.5s infinite ease-in-out;
+}
+
+.podium-badge {
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.gold-col .podium-badge { color: #ffd700; }
+.silver-col .podium-badge { color: #e2e8f0; }
+.bronze-col .podium-badge { color: #e09f67; }
+
+.podium-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--bg-surface-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.gold-col .podium-avatar { border: 2px solid #ffd700; }
+.silver-col .podium-avatar { border: 2px solid #c0c0c0; }
+.bronze-col .podium-avatar { border: 2px solid #cd7f32; }
+
+.podium-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  max-width: 95px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.podium-goals {
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffd700;
+  margin-top: 2px;
+}
+
+/* Scrollable Leaderboard Table */
+.leaderboard-table-wrapper {
+  max-height: 220px;
+  overflow-y: auto;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  margin-bottom: 14px;
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  text-align: left;
+}
+
+.leaderboard-table th {
+  background: var(--bg-surface-light);
+  padding: 8px 6px;
+  color: var(--text-muted);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.leaderboard-table td {
+  padding: 8px 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: #f0f4fc;
+}
+
+.leaderboard-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.my-leaderboard-row {
+  background: rgba(255, 215, 0, 0.12) !important;
+  border-left: 3px solid #ffd700;
+}
+
+.you-badge {
+  background: #0080ff;
+  color: #fff;
+  font-size: 9px;
+  padding: 1px 4px;
+  border-radius: 4px;
+  font-weight: 700;
+  margin-left: 4px;
+}
+
+.table-avatar-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 4px;
+  border-radius: 11px;
+  background: var(--bg-surface-light);
+  border: 1px solid var(--border-color);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.gold-text {
+  color: #ffd700;
+}
+
+.empty-table-msg {
+  text-align: center;
+  padding: 24px;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* ==========================================================================
+   Main Menu Modal Styles
+   ========================================================================== */
+/* ==========================================================================
+   Main Menu Modal Styles - 2-Column High-Tech Sports Console Hub
+   ========================================================================== */
+.main-menu-card {
+  position: relative;
+  width: min(88vw, 700px) !important;
+  max-width: 700px !important;
+  height: auto !important;
+  max-height: 94dvh !important;
+  padding: 12px 16px !important;
+  background: radial-gradient(135% 125% at 10% 5%, #182238 0%, #0d1220 50%, #080b14 100%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 18px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 0 45px rgba(14, 165, 233, 0.10);
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 12px;
+  overflow: hidden !important; /* MOBİL YATAYDA KESİNLİKLE KAYDIRMA YOK */
+  box-sizing: border-box;
+  animation: menuFadeIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.menu-brand-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.btn-menu-sound {
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  color: #fff;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.btn-menu-sound:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(56, 189, 248, 0.6);
+  transform: scale(1.08);
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+}
+
+.btn-menu-sound:active {
+  transform: scale(0.95);
+}
+
+@keyframes menuFadeIn {
+  from { opacity: 0; transform: scale(0.97) translateY(6px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* --------------------------------------------------------------------------
+   SOL PANEL: Marka, Oyuncu Kartı & Müzik Barı
+   -------------------------------------------------------------------------- */
+.menu-col-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 10px;
+  border-right: 1px solid rgba(255, 255, 255, 0.07);
+  padding-right: 16px;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* Brand Hero */
+.menu-hero {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.menu-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.menu-ball-icon {
+  font-size: clamp(24px, 4.5dvh, 30px);
+  filter: drop-shadow(0 0 14px rgba(56, 189, 248, 0.5));
+  animation: ballBounce 2.5s infinite ease-in-out;
+}
+
+@keyframes ballBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+.menu-brand-titles {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.menu-brand h1 {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: clamp(20px, 4.2dvh, 26px);
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  background: linear-gradient(180deg, #ffffff 40%, #cbd5e1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+}
+
+.menu-badge-live {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: #34d399;
+  background: rgba(16, 185, 129, 0.16);
+  border: 1px solid rgba(16, 185, 129, 0.45);
+  border-radius: 999px;
+  padding: 2px 7px;
+  text-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+  white-space: nowrap;
+}
+
+.menu-subtitle {
+  font-size: clamp(10px, 2dvh, 11px);
+  color: #94a3b8;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+}
+
+/* Oyuncu Profil Kartı & Form Alanı */
+.menu-profile-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0;
+  min-height: 0;
+}
+
+.menu-profile-strip {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 14px;
+  padding: clamp(8px, 1.8dvh, 14px) clamp(10px, 1.5vw, 14px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+.menu-profile-avatar {
+  width: clamp(38px, 8dvh, 48px);
+  height: clamp(38px, 8dvh, 48px);
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e63946 0%, #991b1b 100%);
+  border: 2px solid #ffffff;
+  color: #fff;
+  font-family: 'Chakra Petch', sans-serif;
+  font-weight: 800;
+  font-size: clamp(13px, 2.8dvh, 16px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(230, 57, 70, 0.45);
+  flex-shrink: 0;
+}
+
+.menu-profile-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.menu-profile-welcome {
+  font-size: 9px;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-weight: 700;
+}
+
+.menu-profile-name {
+  font-size: clamp(13px, 2.8dvh, 16px);
+  font-weight: 800;
+  color: #f8fafc;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.3px;
+}
+
+.menu-profile-stats {
+  font-size: clamp(10px, 2dvh, 12px);
+  color: #ffd700;
+  font-weight: 700;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.btn-micro {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 8px;
+  color: #e2e8f0;
+  padding: 6px 9px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  flex-shrink: 0;
+}
+
+.btn-micro:hover {
+  background: rgba(56, 189, 248, 0.2);
+  border-color: rgba(56, 189, 248, 0.6);
+  transform: scale(1.08);
+}
+
+/* Satır İçi Profil Formu (Düzenle butonuna basınca kartın üzerine oturur) */
+.menu-inline-form {
+  position: absolute;
+  inset: 0;
+  z-index: 15;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: rgba(14, 20, 34, 0.98);
+  border: 1px solid rgba(56, 189, 248, 0.45);
+  border-radius: 14px;
+  padding: 8px 12px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+  animation: menuFadeIn 0.15s ease-out;
+}
+
+.menu-inline-form.hidden {
+  display: none !important;
+}
+
+.inline-form-title {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  color: #38bdf8;
+  letter-spacing: 0.8px;
+  margin-bottom: 4px;
+}
+
+.inline-form-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.btn-save-profile {
+  flex: 2;
+  padding: 6px 10px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  border-radius: 8px !important;
+}
+
+.btn-cancel-profile {
+  flex: 1;
+  padding: 6px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-cancel-profile:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+/* Now Playing Müzik Çubuğu */
+.menu-now-playing {
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(56, 189, 248, 0.22);
+  border-radius: 10px;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 11px;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+}
+
+.now-playing-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.now-playing-tag {
+  font-size: 9px;
+  font-weight: 800;
+  color: #38bdf8;
+  letter-spacing: 0.6px;
+}
+
+.now-playing-track-info {
+  flex: 1;
+  text-align: left;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.now-playing-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: #e2e8f0;
+}
+
+/* --------------------------------------------------------------------------
+   SAĞ PANEL: Hemen Oyna, Modlar Izgarası & Alt Çubuk
+   -------------------------------------------------------------------------- */
+.menu-col-right {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 8px;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* Ana Kahraman Butonu (HEMEN OYNA) */
+.menu-btn-play {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: clamp(8px, 1.8dvh, 12px) clamp(12px, 1.8vw, 18px);
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 45%, #1d4ed8 100%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 14px;
+  box-shadow: 0 4px 20px rgba(2, 132, 199, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.menu-btn-play:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(2, 132, 199, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.menu-btn-play:active {
+  transform: scale(0.985);
+}
+
+.menu-btn-play-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.menu-btn-play .menu-btn-icon {
+  font-size: clamp(20px, 4.2dvh, 26px);
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.6));
+}
+
+.menu-btn-play .menu-btn-title {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: clamp(15px, 3dvh, 18px);
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  line-height: 1.1;
+}
+
+.menu-btn-play .menu-btn-desc {
+  font-size: clamp(10px, 1.9dvh, 11px);
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 500;
+  margin-top: 1px;
+}
+
+.menu-play-arrow {
+  font-size: clamp(14px, 2.8dvh, 18px);
+  color: #bae6fd;
+  transition: transform 0.2s ease;
+}
+
+.menu-btn-play:hover .menu-play-arrow {
+  transform: translateX(4px);
+  color: #fff;
+}
+
+/* Oyun Modları Izgarası (3+2 Dengeli Tasarım) */
+.menu-modes-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: clamp(5px, 1.1dvh, 8px);
+  margin: 0;
+}
+
+.menu-modes-grid .menu-btn {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: clamp(6px, 1.4dvh, 10px) clamp(8px, 1.2vw, 12px);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.035);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+}
+
+.menu-modes-grid .menu-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+}
+
+.menu-modes-grid .menu-btn:active {
+  transform: scale(0.97);
+}
+
+/* İlk satırdaki 3 buton (her biri 2/6 genişlik kaplar) */
+.menu-btn-lobby {
+  grid-column: span 2;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.8) 100%) !important;
+  border-color: rgba(148, 163, 184, 0.22) !important;
+}
+.menu-btn-lobby:hover {
+  border-color: rgba(148, 163, 184, 0.5) !important;
+}
+
+.menu-btn-tournament {
+  grid-column: span 2;
+  background: linear-gradient(135deg, rgba(69, 26, 3, 0.7) 0%, rgba(20, 10, 4, 0.85) 100%) !important;
+  border-color: rgba(245, 158, 11, 0.3) !important;
+}
+.menu-btn-tournament:hover {
+  border-color: rgba(245, 158, 11, 0.65) !important;
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.25) !important;
+}
+
+.menu-btn-rooms {
+  grid-column: span 2;
+  background: linear-gradient(135deg, rgba(6, 78, 59, 0.7) 0%, rgba(2, 44, 34, 0.85) 100%) !important;
+  border-color: rgba(16, 185, 129, 0.3) !important;
+}
+.menu-btn-rooms:hover {
+  border-color: rgba(16, 185, 129, 0.65) !important;
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.25) !important;
+}
+
+/* İkinci satırdaki 2 buton (her biri 3/6 genişlik kaplar) */
+.menu-btn-training {
+  grid-column: span 3;
+  background: linear-gradient(135deg, rgba(67, 20, 7, 0.7) 0%, rgba(24, 9, 5, 0.85) 100%) !important;
+  border-color: rgba(249, 115, 22, 0.3) !important;
+}
+.menu-btn-training:hover {
+  border-color: rgba(249, 115, 22, 0.65) !important;
+  box-shadow: 0 6px 20px rgba(249, 115, 22, 0.25) !important;
+}
+
+.menu-btn-editor {
+  grid-column: span 3;
+  background: linear-gradient(135deg, rgba(59, 7, 100, 0.7) 0%, rgba(26, 4, 46, 0.85) 100%) !important;
+  border-color: rgba(168, 85, 247, 0.3) !important;
+}
+.menu-btn-editor:hover {
+  border-color: rgba(168, 85, 247, 0.65) !important;
+  box-shadow: 0 6px 20px rgba(168, 85, 247, 0.25) !important;
+}
+
+.menu-modes-grid .menu-btn-icon {
+  font-size: clamp(16px, 3.2dvh, 22px);
+  flex-shrink: 0;
+}
+
+.menu-modes-grid .menu-btn-texts {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.menu-modes-grid .menu-btn-title {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: clamp(11px, 2.3dvh, 13.5px);
+  font-weight: 700;
+  color: #f1f5f9;
+  letter-spacing: 0.3px;
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.menu-modes-grid .menu-btn-desc {
+  font-size: clamp(9px, 1.8dvh, 10.5px);
+  color: #94a3b8;
+  margin-top: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Alt Yardımcı Hap Butonlar */
+.menu-secondary-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px;
+}
+
+.menu-btn-sub {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: clamp(6px, 1.4dvh, 9px) 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 9px;
+  color: #cbd5e1;
+  font-size: clamp(10px, 2dvh, 11.5px);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.menu-btn-sub:hover {
+  background: rgba(255, 255, 255, 0.10);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.menu-btn-sub:active {
+  transform: scale(0.97);
+}
+
+/* Taktikler Bilgi Katmanı (Açıldığında sağ panelin üzerine biner, asla kaydırma yapmaz) */
+.how-to-play-box {
+  position: absolute;
+  inset: 0;
+  background: rgba(11, 16, 28, 0.97);
+  border: 1.5px solid rgba(56, 189, 248, 0.45);
+  border-radius: 14px;
+  padding: clamp(8px, 1.8dvh, 14px) clamp(10px, 1.5vw, 16px);
+  backdrop-filter: blur(16px);
+  z-index: 25;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85);
+  animation: menuFadeIn 0.18s ease-out;
+}
+
+.how-to-play-box.hidden {
+  display: none !important;
+}
+
+.how-to-play-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 4px;
+}
+
+.how-to-play-box h4 {
+  font-size: clamp(11px, 2.2dvh, 13px);
+  color: #ffd700;
+  margin: 0;
+  font-family: 'Chakra Petch', sans-serif;
+  font-weight: 700;
+}
+
+.btn-close-htp {
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  border-radius: 50%;
+  color: #94a3b8;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 11px;
+  transition: all 0.15s ease;
+}
+
+.btn-close-htp:hover {
+  background: rgba(239, 68, 68, 0.3);
+  color: #fff;
+}
+
+.how-to-play-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(4px, 1dvh, 7px);
+  padding: 0;
+  margin: 4px 0;
+}
+
+.how-to-play-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: clamp(10px, 1.9dvh, 11.5px);
+  color: #cbd5e1;
+}
+
+.htp-key-wrap {
+  display: inline-flex;
+  gap: 3px;
+  flex-shrink: 0;
+  min-width: 80px;
+}
+
+.how-to-play-box kbd {
+  background: #1e293b;
+  color: #38bdf8;
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-family: monospace;
+  font-weight: 700;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.htp-label {
+  color: #94a3b8;
+}
+
+/* --------------------------------------------------------------------------
+   DİKEY EKRAN & KÜÇÜK CİHAZ UYUMLULUĞU (PORTRAIT MOBİL FALLBACK)
+   -------------------------------------------------------------------------- */
+@media screen and (max-width: 660px) and (orientation: portrait), (max-aspect-ratio: 1/1) and (max-width: 660px) {
+  .main-menu-card {
+    grid-template-columns: 1fr;
+    height: auto;
+    max-height: 96dvh;
+    overflow-y: auto !important;
+    gap: 12px;
+  }
+
+  .menu-col-left {
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-right: 0;
+    padding-bottom: 10px;
+    gap: 8px;
+  }
+
+  .menu-modes-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .menu-btn-lobby, .menu-btn-tournament, .menu-btn-rooms, .menu-btn-training, .menu-btn-editor {
+    grid-column: span 1 !important;
+  }
+}
+
+.btn-menu-return {
+  background: linear-gradient(135deg, #2b3245, #1f2533);
+  color: #ffd700;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  font-weight: 700;
+}
+
+.btn-menu-return:hover {
+  background: #39425b;
+  border-color: #ffd700;
+  transform: translateY(-1px);
+}
+
+/* --------------------------------------------------------------------------
+   ULTRA-COMPACT YATAY MOBİL (Height <= 420px) - SIFIR KAYDIRMA GARANTİSİ
+   -------------------------------------------------------------------------- */
+@media screen and (orientation: landscape) and (max-height: 420px) {
+  .main-menu-card {
+    width: min(86vw, 670px) !important;
+    max-width: 670px !important;
+    height: auto !important;
+    max-height: 94dvh !important;
+    padding: 8px 12px !important;
+    gap: 10px !important;
+    border-radius: 16px !important;
+    grid-template-columns: 190px 1fr !important;
+  }
+
+  .menu-col-left {
+    gap: 6px !important;
+    padding-right: 12px !important;
+  }
+
+  .menu-col-right {
+    gap: 6px !important;
+  }
+
+  .menu-hero {
+    gap: 0px;
+  }
+
+  .menu-ball-icon {
+    font-size: 20px;
+  }
+
+  .menu-brand h1 {
+    font-size: 18px;
+    letter-spacing: 1.5px;
+  }
+
+  .menu-subtitle {
+    display: none;
+  }
+
+  .menu-profile-wrapper {
+    margin: 0 !important;
+  }
+
+  .menu-profile-strip {
+    padding: 6px 8px;
+    gap: 8px;
+    border-radius: 10px;
+  }
+
+  .menu-profile-avatar {
+    width: 34px;
+    height: 34px;
+    font-size: 13px;
+  }
+
+  .menu-profile-name {
+    font-size: 13px;
+  }
+
+  .menu-profile-stats {
+    font-size: 10.5px;
+  }
+
+  .btn-micro {
+    padding: 4px 7px;
+    font-size: 11px;
+  }
+
+  .menu-now-playing {
+    padding: 4px 8px;
+    border-radius: 8px;
+  }
+
+  .now-playing-title {
+    font-size: 10.5px;
+  }
+
+  .menu-btn-play {
+    padding: 8px 14px;
+    min-height: 42px;
+    border-radius: 10px;
+  }
+
+  .menu-btn-play .menu-btn-title {
+    font-size: 14px;
+  }
+
+  .menu-btn-play .menu-btn-desc {
+    font-size: 10px;
+  }
+
+  .menu-modes-grid {
+    gap: 5px !important;
+    margin: 0 !important;
+  }
+
+  .menu-modes-grid .menu-btn {
+    padding: 6px 8px;
+    min-height: 38px;
+    border-radius: 8px;
+  }
+
+  .menu-modes-grid .menu-btn-title {
+    font-size: 11.5px;
+  }
+
+  .menu-modes-grid .menu-btn-desc {
+    font-size: 9.5px;
+  }
+
+  .menu-secondary-row {
+    gap: 5px;
+  }
+
+  .menu-btn-sub {
+    padding: 5px 6px;
+    font-size: 10.5px;
+    border-radius: 7px;
+  }
+
+  .btn-menu-sound {
+    width: 28px;
+    height: 28px;
+    font-size: 13px;
+  }
+}
+
+/* ==========================================================================
+   Tournament Cup Modal & Bracket Styles
+   ========================================================================== */
+.tournament-card {
+  max-width: 780px;
+  width: 95%;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: linear-gradient(180deg, #1c1824 0%, #0f0d14 100%);
+  border: 1px solid rgba(255, 215, 0, 0.25);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(255, 215, 0, 0.12);
+}
+
+.tournament-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.cup-icon {
+  font-size: 38px;
+  display: block;
+  margin-bottom: 4px;
+  filter: drop-shadow(0 0 14px rgba(255, 215, 0, 0.6));
+}
+
+.tournament-header h2 {
+  font-family: 'Chakra Petch', sans-serif;
+  color: #ffd700;
+  font-size: 24px;
+  letter-spacing: 2px;
+}
+
+.tournament-header p {
+  color: var(--text-muted);
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.tournament-bracket-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.bracket-round {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.round-title {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 6px;
+}
+
+.gold-title {
+  color: #ffd700;
+  border-bottom-color: rgba(255, 215, 0, 0.4);
+}
+
+.bracket-match {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 8px 10px;
+  text-align: left;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: all 0.2s;
+}
+
+.bracket-match.active-match {
+  border-color: #ffd700;
+  background: rgba(255, 215, 0, 0.08);
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.2);
+}
+
+.match-team {
+  font-weight: 600;
+  color: #fff;
+  padding: 3px 6px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.player-bracket-team {
+  background: rgba(230, 57, 70, 0.2);
+  border-left: 3px solid #e63946;
+}
+
+.match-vs {
+  font-size: 10px;
+  color: var(--text-muted);
+  text-align: center;
+  font-weight: 700;
+}
+
+.final-match {
+  border-color: rgba(255, 215, 0, 0.4);
+  background: rgba(255, 215, 0, 0.06);
+  padding: 14px;
+}
+
+.cup-trophy-display {
+  text-align: center;
+  margin-top: 10px;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px dashed rgba(255, 215, 0, 0.3);
+}
+
+.trophy-anim {
+  font-size: 32px;
+  display: block;
+}
+
+.cup-winner-name {
+  font-size: 12px;
+  color: #ffd700;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+.tournament-actions-bar {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+/* ==========================================================================
+   Multi-Room Lobby Modal Styles
+   ========================================================================== */
+.room-card {
+  max-width: 650px;
+  width: 95%;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 24px;
+}
+
+.create-room-box {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+.create-room-box h4 {
+  font-size: 13px;
+  color: #2ec4b6;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.create-room-subrow {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.room-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 700;
+  margin-bottom: 8px;
+  text-align: left;
+}
+
+.rooms-table-wrapper {
+  max-height: 220px;
+  overflow-y: auto;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.rooms-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  text-align: left;
+}
+
+.rooms-table th {
+  background: var(--bg-surface-light);
+  padding: 8px 10px;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.rooms-table td {
+  padding: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: #fff;
+}
+
+.rooms-table tr:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.btn-join-room {
+  background: linear-gradient(135deg, #0080ff, #0056b3);
+  color: #fff;
+  border: none;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-join-room:hover {
+  filter: brightness(1.15);
+}
+
+.menu-btn-training {
+  background: linear-gradient(135deg, #432b05 0%, #1c1100 100%);
+  color: #ff9f43;
+  border: 1px solid rgba(255, 159, 67, 0.35);
+}
+
+.menu-btn-training:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(255, 159, 67, 0.25);
+  border-color: #ff9f43;
+}
+
+/* ==========================================================================
+   Cosmetics & Aura Selector in Profile Modal
+   ========================================================================== */
+.profile-cosmetics-section {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--border-color);
+  border-radius: 9px;
+  padding: 6px 10px;
+  margin-top: 0;
+  text-align: left;
+}
+
+.cosmetics-title {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--accent-gold);
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.cosmetics-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+}
+
+.cosmetic-option {
+  background: var(--bg-surface-light);
+  border: 1px solid var(--border-color);
+  border-radius: 7px;
+  padding: 4px 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.cosmetic-option:hover {
+  border-color: var(--blue-team);
+  background: #252c3d;
+}
+
+.cosmetic-option.selected {
+  border-color: #ffd700;
+  background: rgba(255, 215, 0, 0.15);
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+.cosmetic-option.locked {
+  opacity: 0.45;
+  cursor: not-allowed;
+  filter: grayscale(0.8);
+}
+
+.cosmetic-icon {
+  font-size: 18px;
+}
+
+.cosmetic-name {
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.cosmetic-req {
+  font-size: 9px;
+  color: var(--text-muted);
+}
+
+.titles-select-wrapper {
+  margin-top: 4px;
+}
+
+/* ==========================================================================
+   Training Mode Floating HUD
+   ========================================================================== */
+.training-hud {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(15, 19, 28, 0.92);
+  border: 1px solid rgba(255, 159, 67, 0.4);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 159, 67, 0.2);
+  border-radius: 12px;
+  padding: 10px 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  z-index: 50;
+  backdrop-filter: blur(6px);
+  animation: menuFadeIn 0.25s ease-out;
+}
+
+.training-hud.hidden {
+  display: none !important;
+}
+
+.training-hud-title {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #ff9f43;
+  letter-spacing: 1px;
+}
+
+.training-hud-stats {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.hud-spot {
+  color: #fff;
+}
+
+.hud-score {
+  color: #ffd700;
+}
+
+.training-hud-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+/* Universal Zoom Lock & Input Fix for Mobile / Touch Devices */
+input, select, textarea {
+  font-size: 16px !important;
+  touch-action: manipulation !important;
+}
+
+#gameCanvas,
+.canvas-container,
+.arena-wrapper,
+.touch-controls,
+.joystick-zone,
+.joystick-base,
+.joystick-knob,
+.touch-action-zone,
+.touch-kick-btn {
+  touch-action: none !important;
+  -webkit-touch-callout: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  overscroll-behavior: none !important;
+}
+
+/* Match Replay Interactive Buttons */
+.btn-replay-item {
+  transition: all 0.2s ease-in-out;
+}
+.btn-replay-item:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+.btn-replay-item:active {
+  transform: scale(0.96);
+}
+
+/* ==========================================================================
+   Center Bottom Tactical HUD Dock (Matches ChatGPT Design)
+   ========================================================================== */
+.tactical-hud-dock {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 45;
+  pointer-events: auto;
+}
+
+.tactical-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  transition: all 0.15s ease;
+}
+
+.tactical-btn:hover {
+  background: rgba(30, 41, 59, 0.9);
+  border-color: #38bdf8;
+  transform: translateY(-2px);
+}
+
+.tactical-pitch-pill {
+  height: 38px;
+  padding: 0 16px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(16, 40, 24, 0.85) 0%, rgba(10, 25, 40, 0.85) 100%);
+  border: 1.5px solid rgba(255, 255, 255, 0.18);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), inset 0 0 12px rgba(255, 255, 255, 0.04);
+  position: relative;
+}
+
+.tactical-pitch-pill::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.pill-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  position: relative;
+  z-index: 1;
+}
+
+.pill-dot.red {
+  background: #ef4444;
+  box-shadow: 0 0 8px #ef4444;
+}
+
+.pill-dot.blue {
+  background: #38bdf8;
+  box-shadow: 0 0 8px #38bdf8;
+}
+
+.pill-ball {
+  font-size: 13px;
+  position: relative;
+  z-index: 1;
+  animation: pulseBall 2s ease-in-out infinite;
+}
+
+@keyframes pulseBall {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.18); }
+}
+
+.pill-divider {
+  width: 1px;
+  height: 18px;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* ==========================================================================
+   Bottom Feature Badges Strip (Matches ChatGPT Design)
+   ========================================================================== */
+.hud-features-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background: rgba(10, 15, 26, 0.85);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  flex-wrap: wrap;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #94a3b8;
+  letter-spacing: 0.5px;
+  user-select: none;
+}
+
+.hud-feature-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 4px 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.2s ease;
+  cursor: default;
+}
+
+.hud-feature-pill:hover {
+  background: rgba(255, 255, 255, 0.09);
+  color: #f8fafc;
+  border-color: rgba(56, 189, 248, 0.45);
+  transform: translateY(-1px);
+}
+
+.hud-feature-pill .feat-icon {
+  font-size: 13px;
+}
+
+/* ==========================================================================
+   Pre-Match Setup Modal & Lobby (Kaça Kaç, Süre, Gol, Bot, Saha)
+   ========================================================================== */
+.match-setup-card {
+  max-width: 640px;
+  width: 95%;
+  max-height: min(92vh, 720px);
+  overflow-y: auto;
+  background: linear-gradient(180deg, #131b2e 0%, #0c111e 100%);
+  border: 1.5px solid rgba(56, 189, 248, 0.35);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 35px rgba(56, 189, 248, 0.15);
+}
+
+.setup-form-content {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.setup-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.setup-label {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #94a3b8;
+  text-transform: uppercase;
+}
+
+.setup-pill-group {
+  display: flex;
+  gap: 8px;
+}
+
+.setup-pill-group.wrap {
+  flex-wrap: wrap;
+}
+
+.setup-pill {
+  flex: 1;
+  min-width: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 8px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  user-select: none;
+}
+
+.setup-pill:hover {
+  background: rgba(56, 189, 248, 0.08);
+  border-color: rgba(56, 189, 248, 0.45);
+  transform: translateY(-1px);
+}
+
+.setup-pill.active {
+  background: linear-gradient(135deg, rgba(2, 132, 199, 0.35) 0%, rgba(14, 165, 233, 0.2) 100%);
+  border-color: #38bdf8;
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.4);
+}
+
+.setup-pill .pill-title {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.setup-pill .pill-desc {
+  font-size: 10.5px;
+  color: #94a3b8;
+  margin-top: 2px;
+}
+
+.setup-pill.active .pill-desc {
+  color: #bae6fd;
+}
+
+/* Small pill variant for duration, score, bot, map */
+.setup-pill.sm {
+  flex: initial;
+  min-width: auto;
+  padding: 7px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 8px;
+  flex-direction: row;
+  gap: 4px;
+}
+
+/* Team Pill Specials */
+.team-pill.red.active {
+  background: linear-gradient(135deg, rgba(230, 57, 70, 0.4) 0%, rgba(153, 27, 27, 0.25) 100%);
+  border-color: #ef4444;
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.45);
+}
+.team-pill.red.active .pill-desc {
+  color: #fca5a5;
+}
+
+.team-pill.blue.active {
+  background: linear-gradient(135deg, rgba(2, 132, 199, 0.4) 0%, rgba(14, 165, 233, 0.25) 100%);
+  border-color: #38bdf8;
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.45);
+}
+.team-pill.blue.active .pill-desc {
+  color: #bae6fd;
+}
+
+.setup-grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  transition: all 0.25s ease;
+}
+
+.setup-grid-2col.bomb-mode-active {
+  grid-template-columns: 1fr;
+}
+
+#groupBombDuration .setup-pill.active {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.45), rgba(249, 115, 22, 0.45));
+  border-color: #f97316;
+  color: #fff;
+  box-shadow: 0 0 14px rgba(249, 115, 22, 0.45);
+}
+
+@media (max-width: 580px) {
+  .setup-grid-2col {
+    grid-template-columns: 1fr;
+  }
+}
+
+.setup-summary-strip {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px dashed rgba(56, 189, 248, 0.35);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #38bdf8;
+  text-align: center;
+  letter-spacing: 0.3px;
+  margin-top: 4px;
+}
+
+.setup-modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.btn-launch-match {
+  flex: 2;
+  padding: 12px 20px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border: 1.5px solid #34d399;
+  color: #ffffff;
+  font-family: 'Chakra Petch', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 1.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.45);
+  transition: all 0.2s ease;
+}
+
+.btn-launch-match:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 28px rgba(16, 185, 129, 0.7);
+  background: linear-gradient(135deg, #34d399 0%, #059669 100%);
+}
+
+.btn-launch-match:active {
+  transform: scale(0.97);
+}
+
+.btn-setup-header {
+  border-color: rgba(56, 189, 248, 0.5) !important;
+  color: #38bdf8 !important;
+  background: rgba(56, 189, 248, 0.12) !important;
+}
+
+.btn-setup-header:hover {
+  background: rgba(56, 189, 248, 0.25) !important;
+  border-color: #38bdf8 !important;
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.4) !important;
+}
+
+.match-format-pill {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  padding: 1px 6px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: 2px;
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   🎮 Streamlined Minimalist Match UI (Pause & Chat System)
+   ========================================================================== */
+
+/* 1. Minimal Top HUD Bar */
+.minimal-hud {
+  height: 46px !important;
+  min-height: 46px !important;
+  max-height: 46px !important;
+  background: rgba(10, 15, 26, 0.90) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 0 16px !important;
+  z-index: 100;
+  box-sizing: border-box;
+}
+
+.hud-action-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1.5px solid rgba(56, 189, 248, 0.35);
+  color: #f0f4fc;
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(8px);
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.hud-action-btn:hover {
+  background: rgba(56, 189, 248, 0.18);
+  border-color: #38bdf8;
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.45);
+  transform: translateY(-1px);
+}
+
+.hud-action-btn:active {
+  transform: scale(0.96);
+}
+
+.btn-pause-hud {
+  border-color: rgba(56, 189, 248, 0.45);
+}
+
+.btn-chat-hud {
+  border-color: rgba(255, 209, 102, 0.45);
+}
+
+.btn-chat-hud:hover {
+  border-color: #ffd166;
+  box-shadow: 0 0 14px rgba(255, 209, 102, 0.45);
+}
+
+.chat-unread-dot {
+  width: 8px;
+  height: 8px;
+  background: #ef4444;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #ef4444;
+  display: inline-block;
+  animation: liveBlink 1s infinite;
+}
+
+/* 1b. Minimal HUD Scoreboard Optimization (Fits inside top bar without clipping or pitch overlap) */
+.minimal-hud .scoreboard-wrapper {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 1px !important;
+  max-height: 40px !important;
+}
+
+.minimal-hud .scoreboard {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 1.5px 8px !important;
+  border-radius: 20px !important;
+  background: rgba(10, 15, 28, 0.88) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5) !important;
+}
+
+.minimal-hud .team-score {
+  padding: 2px 8px !important;
+  gap: 6px !important;
+  border-radius: 14px !important;
+}
+
+.minimal-hud .team-score .team-label {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px !important;
+}
+
+.minimal-hud .score-digit {
+  min-width: 22px !important;
+  height: 22px !important;
+  font-size: 14px !important;
+  padding: 0 4px !important;
+  border-radius: 5px !important;
+}
+
+.minimal-hud .match-timer-box {
+  min-width: 65px !important;
+  padding: 0 2px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0px !important;
+}
+
+.minimal-hud .match-format-pill {
+  font-size: 8.5px !important;
+  padding: 0 4px !important;
+  line-height: 1.2 !important;
+  margin-bottom: 0 !important;
+  border-radius: 3px !important;
+}
+
+.minimal-hud .match-status {
+  font-size: 8px !important;
+  line-height: 1 !important;
+  letter-spacing: 0.5px !important;
+}
+
+.minimal-hud .match-status::before {
+  font-size: 6px !important;
+}
+
+.minimal-hud .match-timer {
+  font-size: 15px !important;
+  line-height: 1.1 !important;
+  letter-spacing: 1px !important;
+}
+
+.minimal-hud .possession-bar-container {
+  width: 140px !important;
+  gap: 4px !important;
+  margin-top: 0 !important;
+  height: 6px !important;
+}
+
+.minimal-hud .possession-track {
+  height: 2.5px !important;
+  border-radius: 2px !important;
+}
+
+.minimal-hud .pos-text {
+  font-size: 8px !important;
+  min-width: 20px !important;
+}
+
+/* 2. Pause Menu Modal */
+.pause-card {
+  max-width: 440px;
+  width: 92%;
+  background: linear-gradient(180deg, #131b2e 0%, #0a0e1a 100%) !important;
+  border: 1.5px solid rgba(56, 189, 248, 0.45) !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 35px rgba(56, 189, 248, 0.2) !important;
+  padding: 22px 24px !important;
+  border-radius: 20px !important;
+  text-align: center;
+}
+
+.pause-modal-header {
+  margin-bottom: 16px;
+}
+
+.pause-big-icon {
+  font-size: 36px;
+  display: inline-block;
+  margin-bottom: 4px;
+  filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.6));
+}
+
+.pause-card h2 {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 22px;
+  color: #fff;
+  letter-spacing: 2px;
+}
+
+.pause-match-summary {
+  font-family: 'Chakra Petch', monospace;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  padding: 4px 14px;
+  border-radius: 20px;
+  display: inline-block;
+  margin-top: 6px;
+}
+
+.pause-menu-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pause-btn {
+  width: 100%;
+  padding: 11px 16px;
+  border-radius: 10px;
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.18s ease;
+}
+
+.pause-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.pause-btn:active {
+  transform: scale(0.98);
+}
+
+.pause-btn-resume {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border-color: #34d399;
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+  font-size: 15px;
+  padding: 13px 18px;
+}
+
+.pause-btn-resume:hover {
+  background: linear-gradient(135deg, #34d399 0%, #059669 100%);
+  box-shadow: 0 6px 26px rgba(16, 185, 129, 0.6);
+}
+
+.pause-team-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 6px 12px;
+  border-radius: 10px;
+}
+
+.pause-section-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #94a3b8;
+  letter-spacing: 0.5px;
+}
+
+.pause-team-group {
+  display: flex;
+  gap: 6px;
+}
+
+.pause-team-group .btn-team {
+  padding: 4px 10px;
+  font-size: 11px;
+}
+
+.pause-grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.pause-btn-sub {
+  padding: 9px 12px;
+  font-size: 12px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.pause-btn-danger {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #fca5a5;
+}
+
+.pause-btn-danger:hover {
+  background: #dc2626;
+  color: #fff;
+  border-color: #ef4444;
+}
+
+.pause-roster-accordion {
+  display: flex;
+  justify-content: space-around;
+  font-size: 11px;
+  font-weight: 600;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  padding: 4px 8px;
+  margin-top: 2px;
+}
+
+/* 3. In-Game Floating Chat Overlay */
+.in-game-chat-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 11, 18, 0.65);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 950;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+}
+
+.in-game-chat-card {
+  width: 95%;
+  max-width: 460px;
+  max-height: 82vh;
+  background: rgba(15, 21, 35, 0.96);
+  border: 1.5px solid rgba(56, 189, 248, 0.4);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), 0 0 30px rgba(56, 189, 248, 0.2);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: popInChat 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes popInChat {
+  from { transform: scale(0.92); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.in-game-chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.chat-header-title {
+  font-family: 'Chakra Petch', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 1px;
+  color: #38bdf8;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-chat-close {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 2px 8px;
+  border-radius: 4px;
+  transition: color 0.15s, background 0.15s;
+}
+
+.btn-chat-close:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.in-game-chat-logs {
+  flex: 1;
+  min-height: 180px;
+  max-height: 250px;
+  overflow-y: auto;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12.5px;
+}
+
+.in-game-chat-input-row {
+  display: flex;
+  gap: 8px;
+  padding: 10px 14px;
+  background: rgba(10, 14, 24, 0.85);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* 4. Full Canvas Viewport Scaling (No Bottom Bars) */
+.minimal-layout .arena-wrapper {
+  padding: 0 !important;
+  width: 100% !important;
+  height: calc(100vh - 44px) !important;
+  height: calc(100dvh - 44px) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+}
+
+.minimal-layout .canvas-container {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  border-radius: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  overflow: hidden !important;
+}
+
+.minimal-layout #gameCanvas {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  display: block !important;
+}
+
+@media screen and (orientation: landscape) and (max-height: 600px), screen and (max-width: 950px) and (orientation: landscape) {
+  .minimal-hud {
+    height: 44px !important;
+    min-height: 44px !important;
+    max-height: 44px !important;
+    padding: 0 10px !important;
+  }
+  .hud-action-btn {
+    padding: 3px 10px;
+    font-size: 11.5px;
+  }
+  .minimal-layout .arena-wrapper {
+    padding: 0 !important;
+    width: 100% !important;
+    height: calc(100vh - 44px) !important;
+    height: calc(100dvh - 44px) !important;
+  }
+  .minimal-layout .canvas-container {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    border-radius: 0 !important;
+    border: none !important;
+  }
+  .minimal-layout #gameCanvas {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+  }
+}
+
+/* 5. Walkout Ceremony & Kickoff Whistle Banners */
+.walkout-banner {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(10, 15, 28, 0.92);
+  border: 1.5px solid rgba(255, 215, 0, 0.6);
+  border-radius: 24px;
+  padding: 4px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.8), 0 0 16px rgba(255, 215, 0, 0.25);
+  backdrop-filter: blur(8px);
+  z-index: 50;
+  pointer-events: auto;
+  font-size: 11.5px;
+  animation: walkoutDrop 0.35s ease-out;
+}
+
+@keyframes walkoutDrop {
+  0% { transform: translate(-50%, -20px); opacity: 0; }
+  100% { transform: translate(-50%, 0); opacity: 1; }
+}
+
+.walkout-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.walkout-pulse-icon {
+  font-size: 17px;
+  animation: walkPulse 0.9s ease-in-out infinite alternate;
+}
+
+@keyframes walkPulse {
+  0% { transform: translateY(0) scale(1); }
+  100% { transform: translateY(-2px) scale(1.15); }
+}
+
+.walkout-text {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: #ffd700;
+  letter-spacing: 1px;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+  white-space: nowrap;
+}
+
+.btn-skip-walkout {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.25), rgba(245, 158, 11, 0.45));
+  border: 1.5px solid #ffd700;
+  color: #ffffff;
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.btn-skip-walkout:hover {
+  background: #ffd700;
+  color: #0b0f19;
+  box-shadow: 0 0 14px rgba(255, 215, 0, 0.8);
+  transform: scale(1.05);
+}
+
+.btn-skip-walkout:active {
+  transform: scale(0.96);
+}
+
+.kickoff-whistle-banner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(10, 15, 28, 0.92);
+  border: 2px solid #10b981;
+  border-radius: 18px;
+  padding: 16px 36px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 0 45px rgba(16, 185, 129, 0.55), 0 12px 35px rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  z-index: 55;
+  pointer-events: none;
+  animation: whistleFlash 1.4s ease-out forwards;
+}
+
+@keyframes whistleFlash {
+  0% { transform: translate(-50%, -50%) scale(0.7); opacity: 0; }
+  15% { transform: translate(-50%, -50%) scale(1.05); opacity: 1; }
+  25% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  75% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(0.95); opacity: 0; }
+}
+
+.whistle-icon {
+  font-size: 26px;
+}
+
+.whistle-text {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #34d399;
+  letter-spacing: 1.5px;
+  text-shadow: 0 0 14px rgba(16, 185, 129, 0.7);
+  white-space: nowrap;
+}
+
+/* Kickoff Countdown Overlay (Golden Sonrası & Maç Başlangıcı Sayaç) */
+.kickoff-countdown-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 60;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.25s ease;
+}
+
+.countdown-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle, rgba(14, 21, 37, 0.95) 0%, rgba(10, 15, 28, 0.90) 100%);
+  border: 3px solid rgba(255, 215, 0, 0.8);
+  border-radius: 50%;
+  width: 140px;
+  height: 140px;
+  box-shadow: 0 0 50px rgba(255, 215, 0, 0.45), inset 0 0 25px rgba(255, 215, 0, 0.2);
+  backdrop-filter: blur(14px);
+  animation: countdownPulse 0.95s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite;
+}
+
+.countdown-number {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 64px;
+  font-weight: 900;
+  line-height: 1;
+  color: #ffd700;
+  text-shadow: 0 0 25px rgba(255, 215, 0, 0.85);
+}
+
+.countdown-subtext {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #94a3b8;
+  margin-top: 4px;
+  text-transform: uppercase;
+}
+
+/* Specific Countdown Number Themes */
+.countdown-badge.count-3 {
+  border-color: rgba(255, 209, 102, 0.9);
+  box-shadow: 0 0 50px rgba(255, 209, 102, 0.5), inset 0 0 20px rgba(255, 209, 102, 0.2);
+}
+.countdown-badge.count-3 .countdown-number {
+  color: #ffd166;
+  text-shadow: 0 0 25px rgba(255, 209, 102, 0.85);
+}
+
+.countdown-badge.count-2 {
+  border-color: rgba(249, 115, 22, 0.9);
+  box-shadow: 0 0 50px rgba(249, 115, 22, 0.55), inset 0 0 20px rgba(249, 115, 22, 0.2);
+}
+.countdown-badge.count-2 .countdown-number {
+  color: #fb923c;
+  text-shadow: 0 0 25px rgba(249, 115, 22, 0.85);
+}
+
+.countdown-badge.count-1 {
+  border-color: rgba(56, 189, 248, 0.9);
+  box-shadow: 0 0 50px rgba(56, 189, 248, 0.55), inset 0 0 20px rgba(56, 189, 248, 0.2);
+}
+.countdown-badge.count-1 .countdown-number {
+  color: #38bdf8;
+  text-shadow: 0 0 25px rgba(56, 189, 248, 0.85);
+}
+
+.countdown-badge.count-go {
+  width: 230px;
+  height: 94px;
+  border-radius: 47px;
+  border-color: rgba(52, 211, 153, 0.95);
+  box-shadow: 0 0 60px rgba(52, 211, 153, 0.7), inset 0 0 25px rgba(52, 211, 153, 0.35);
+}
+.countdown-badge.count-go .countdown-number {
+  font-size: 44px;
+  color: #34d399;
+  text-shadow: 0 0 30px rgba(52, 211, 153, 0.95);
+  letter-spacing: 3px;
+}
+.countdown-badge.count-go .countdown-subtext {
+  color: #a7f3d0;
+}
+
+@keyframes countdownPulse {
+  0% {
+    transform: scale(0.65);
+    opacity: 0;
+  }
+  30% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ==========================================================================
+   BOMB MODE & STADIUM EDITOR STYLES
+   ========================================================================== */
+
+/* Menu Stadium Editor Button */
+.menu-btn-editor {
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.18), rgba(168, 85, 247, 0.18));
+  border: 1px solid rgba(236, 72, 153, 0.45);
+}
+.menu-btn-editor:hover {
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.35), rgba(168, 85, 247, 0.35));
+  border-color: #ec4899;
+  box-shadow: 0 0 20px rgba(236, 72, 153, 0.5);
+  transform: translateY(-2px);
+}
+
+/* Match Setup Bomb Mode Pill */
+.setup-pill.bomb-pill.active {
+  background: linear-gradient(135deg, #ef4444, #f97316);
+  border-color: #ff3b30;
+  color: #ffffff;
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.6);
+}
+
+/* In-Game Floating Bomb Capsule */
+.hud-bomb-capsule {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(15, 18, 28, 0.88);
+  border: 1.5px solid #f97316;
+  border-radius: 20px;
+  padding: 4px 10px;
+  box-shadow: 0 0 14px rgba(249, 115, 22, 0.35);
+  backdrop-filter: blur(8px);
+  margin-left: 8px;
+}
+.hud-bomb-capsule.red-hold {
+  border-color: #ef4444;
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.6);
+}
+.hud-bomb-capsule.blue-hold {
+  border-color: #0284c7;
+  box-shadow: 0 0 16px rgba(2, 132, 199, 0.6);
+}
+.hud-bomb-capsule.urgent {
+  animation: bombPulse 0.4s infinite alternate;
+}
+@keyframes bombPulse {
+  0% { transform: scale(1); border-color: #ff3b30; box-shadow: 0 0 10px #ff3b30; }
+  100% { transform: scale(1.08); border-color: #ffd60a; box-shadow: 0 0 24px #ff3b30; }
+}
+.bomb-icon-anim {
+  font-size: 16px;
+  line-height: 1;
+}
+.bomb-sec-val {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #ff3b30;
+}
+.bomb-team-tag {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #e2e8f0;
+}
+
+/* Stadium Editor Modal Card */
+.stadium-editor-card {
+  width: 95%;
+  max-width: 940px;
+  max-height: 94vh;
+  overflow-y: auto;
+  background: rgba(14, 18, 28, 0.96);
+  border: 1.5px solid rgba(236, 72, 153, 0.4);
+  box-shadow: 0 12px 45px rgba(0, 0, 0, 0.85), 0 0 30px rgba(236, 72, 153, 0.25);
+}
+.editor-main-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 16px;
+  margin-top: 10px;
+}
+@media (max-width: 820px) and (orientation: portrait) {
+  .editor-main-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.editor-tools-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: rgba(20, 26, 40, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 14px;
+}
+.editor-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.editor-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #94a3b8;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.editor-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.btn-micro-pill {
+  background: rgba(30, 41, 59, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #cbd5e1;
+  font-size: 11px;
+  padding: 5px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+.btn-micro-pill:hover {
+  background: rgba(51, 65, 85, 0.9);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+.btn-micro-pill.active {
+  background: linear-gradient(135deg, #ec4899, #8b5cf6);
+  border-color: #ec4899;
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(236, 72, 153, 0.5);
+  font-weight: 600;
+}
+.btn-micro-pill.danger {
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #fca5a5;
+}
+.btn-micro-pill.danger:hover {
+  background: rgba(239, 68, 68, 0.3);
+}
+
+.editor-canvas-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.canvas-editor-hint {
+  font-size: 11px;
+  color: #94a3b8;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+.editor-canvas {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 620 / 340;
+  background: #0b0f19;
+  border: 1.5px solid rgba(236, 72, 153, 0.35);
+  border-radius: 12px;
+  cursor: crosshair;
+  box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.8), 0 0 15px rgba(236, 72, 153, 0.15);
+}
+.editor-summary-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #94a3b8;
+  padding: 4px 6px;
+}
+
+/* ==========================================================================
+   Eliminated Player Spectator Banner (Soyunma Odası)
+   ========================================================================== */
+.eliminated-spectator-banner {
+  position: absolute;
+  top: 64px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(15, 23, 42, 0.94);
+  border: 1.5px solid #ef4444;
+  box-shadow: 0 0 24px rgba(239, 68, 68, 0.45), 0 8px 30px rgba(0, 0, 0, 0.7);
+  border-radius: 24px;
+  padding: 8px 22px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 45;
+  backdrop-filter: blur(8px);
+  pointer-events: none;
+  animation: bannerBounce 0.35s ease-out;
+}
+.eliminated-spectator-banner.hidden {
+  display: none !important;
+}
+.elim-door-icon {
+  font-size: 20px;
+  line-height: 1;
+}
+.elim-main-text {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #f87171;
+  letter-spacing: 0.8px;
+}
+.elim-sub-text {
+  font-size: 11px;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   MASTER LANDSCAPE RESPONSIVE RULES (Tüm Pencereler İçin Yatay Mobil Uyumu)
+   ========================================================================== */
+@media screen and (orientation: landscape) and (max-height: 480px) {
+  /* 1. Maç Öncesi Ayarlar Penceresi (1v1-4v4, Süre, Gol, Saha) */
+  .match-setup-card {
+    width: min(94vw, 760px) !important;
+    max-width: 760px !important;
+    max-height: 94dvh !important;
+    padding: 10px 16px !important;
+    border-radius: 14px !important;
+    overflow-y: auto !important;
+  }
+  .match-setup-card .modal-header {
+    margin-bottom: 4px !important;
+  }
+  .match-setup-card .modal-header .modal-header-icon {
+    font-size: 18px !important;
+    margin-bottom: 0 !important;
+  }
+  .match-setup-card .modal-header h2 {
+    font-size: 15px !important;
+    letter-spacing: 1px !important;
+  }
+  .match-setup-card .modal-header p {
+    display: none !important;
+  }
+  .match-setup-card .setup-form-content {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 6px 12px !important;
+    margin-top: 4px !important;
+  }
+  .match-setup-card .setup-section {
+    gap: 3px !important;
+  }
+  .match-setup-card .setup-label {
+    font-size: 10px !important;
+  }
+  .match-setup-card .setup-pill {
+    padding: 4px 8px !important;
+    font-size: 10px !important;
+    border-radius: 6px !important;
+  }
+  .match-setup-card .setup-pill .pill-title {
+    font-size: 10.5px !important;
+  }
+  .match-setup-card .setup-pill .pill-desc {
+    font-size: 8.5px !important;
+  }
+  .match-setup-card .setup-pill-group {
+    gap: 4px !important;
+  }
+  .match-setup-card .setup-summary-strip {
+    grid-column: span 2 !important;
+    padding: 4px 8px !important;
+    font-size: 9.5px !important;
+    margin-top: 2px !important;
+    border-radius: 6px !important;
+  }
+  .match-setup-card .setup-modal-actions {
+    margin-top: 6px !important;
+    gap: 8px !important;
+  }
+  .match-setup-card .btn-launch-match {
+    padding: 6px 14px !important;
+    font-size: 12px !important;
+  }
+  .match-setup-card .btn-secondary {
+    padding: 6px 14px !important;
+    font-size: 12px !important;
+  }
+
+  /* 2. Maç Sonu İstatistikleri Penceresi */
+  .stats-card {
+    width: min(94vw, 720px) !important;
+    max-width: 720px !important;
+    max-height: 94dvh !important;
+    padding: 10px 16px !important;
+    border-radius: 14px !important;
+    overflow-y: auto !important;
+  }
+  .stats-card .modal-header {
+    margin-bottom: 2px !important;
+  }
+  .stats-card .modal-header h2 {
+    font-size: 15px !important;
+    margin: 0 !important;
+  }
+  .stats-card .stats-big-score {
+    font-size: 22px !important;
+    margin: 2px 0 4px 0 !important;
+  }
+  .stats-card .match-goals-card {
+    padding: 6px 10px !important;
+    margin-bottom: 6px !important;
+    border-radius: 8px !important;
+  }
+  .stats-card .goals-card-header {
+    font-size: 10px !important;
+    margin-bottom: 4px !important;
+  }
+  .stats-card .goals-columns {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+  }
+  .stats-card .goals-col-title {
+    font-size: 10px !important;
+  }
+  .stats-card .goals-list li {
+    font-size: 10px !important;
+    padding: 2px 0 !important;
+  }
+  .stats-card .stats-table {
+    gap: 3px !important;
+    margin-top: 4px !important;
+  }
+  .stats-card .stats-row {
+    padding: 3px 8px !important;
+  }
+  .stats-card .stat-name {
+    font-size: 10px !important;
+  }
+  .stats-card .stat-val {
+    font-size: 12.5px !important;
+  }
+  .stats-card .stats-modal-actions {
+    margin-top: 6px !important;
+    gap: 6px !important;
+  }
+  .stats-card .stats-modal-actions button {
+    padding: 6px 8px !important;
+    font-size: 11px !important;
+  }
+
+  /* 3. Gol Krallığı Penceresi */
+  .leaderboard-card {
+    width: min(94vw, 700px) !important;
+    max-width: 700px !important;
+    max-height: 94dvh !important;
+    padding: 10px 16px !important;
+    border-radius: 14px !important;
+  }
+  .leaderboard-card .crown-big-icon {
+    font-size: 22px !important;
+    margin-bottom: 0 !important;
+  }
+  .leaderboard-card .modal-header h2 {
+    font-size: 15px !important;
+    letter-spacing: 1px !important;
+  }
+  .leaderboard-card .modal-header p {
+    display: none !important;
+  }
+  .leaderboard-card .my-rank-indicator {
+    padding: 3px 8px !important;
+    font-size: 10.5px !important;
+    margin-bottom: 4px !important;
+  }
+  .leaderboard-podium {
+    min-height: 55px !important;
+    gap: 8px !important;
+    margin-bottom: 6px !important;
+  }
+  .podium-col {
+    padding: 3px !important;
+  }
+  .podium-col.gold-col {
+    height: 65px !important;
+  }
+  .podium-col.silver-col, .podium-col.bronze-col {
+    height: 50px !important;
+  }
+  .podium-name {
+    font-size: 9.5px !important;
+  }
+  .podium-score {
+    font-size: 10.5px !important;
+  }
+  .leaderboard-table-wrapper {
+    max-height: 120px !important;
+  }
+  .leaderboard-table th, .leaderboard-table td {
+    padding: 3px 6px !important;
+    font-size: 10px !important;
+  }
+  .leaderboard-card .modal-actions-bar {
+    margin-top: 6px !important;
+  }
+  .leaderboard-card .modal-actions-bar button {
+    padding: 6px 14px !important;
+    font-size: 11px !important;
+  }
+
+  /* 4. Kupa Turnuvası Penceresi */
+  .tournament-card {
+    width: min(96vw, 840px) !important;
+    max-width: 840px !important;
+    max-height: 94dvh !important;
+    padding: 8px 14px !important;
+    border-radius: 14px !important;
+    overflow-y: auto !important;
+  }
+  .tournament-header {
+    margin-bottom: 4px !important;
+  }
+  .tournament-header .cup-icon {
+    font-size: 20px !important;
+    margin-bottom: 0 !important;
+  }
+  .tournament-header h2 {
+    font-size: 15px !important;
+  }
+  .tournament-header p {
+    display: none !important;
+  }
+  .tournament-bracket-grid {
+    gap: 6px !important;
+    margin-bottom: 6px !important;
+  }
+  .bracket-round {
+    gap: 5px !important;
+  }
+  .round-title {
+    font-size: 9.5px !important;
+    margin-bottom: 2px !important;
+  }
+  .bracket-match {
+    padding: 3px 6px !important;
+    border-radius: 6px !important;
+  }
+  .match-team {
+    font-size: 9.5px !important;
+  }
+  .tournament-actions {
+    margin-top: 4px !important;
+    gap: 6px !important;
+  }
+  .tournament-actions button {
+    padding: 5px 12px !important;
+    font-size: 11px !important;
+  }
+
+  /* 5. Çok Oyunculu Odalar Penceresi */
+  .room-card {
+    width: min(94vw, 760px) !important;
+    max-width: 760px !important;
+    max-height: 94dvh !important;
+    padding: 10px 16px !important;
+    border-radius: 14px !important;
+    overflow-y: auto !important;
+  }
+  .room-card .modal-header {
+    margin-bottom: 4px !important;
+  }
+  .room-card .modal-header .ball-icon {
+    font-size: 18px !important;
+    margin-bottom: 0 !important;
+  }
+  .room-card .modal-header h2 {
+    font-size: 15px !important;
+  }
+  .room-card .modal-header p {
+    display: none !important;
+  }
+  .room-card .create-room-box {
+    padding: 6px 10px !important;
+    margin-bottom: 6px !important;
+  }
+  .room-card .create-room-box h4 {
+    font-size: 11px !important;
+    margin-bottom: 3px !important;
+  }
+  .room-card .form-row {
+    gap: 6px !important;
+    margin-bottom: 3px !important;
+  }
+  .room-card input, .room-card select {
+    padding: 3px 8px !important;
+    font-size: 10.5px !important;
+    height: 26px !important;
+  }
+  .room-card .rooms-table-wrapper {
+    max-height: 110px !important;
+  }
+  .room-card .rooms-table th, .room-card .rooms-table td {
+    padding: 3px 6px !important;
+    font-size: 9.5px !important;
+  }
+  .room-card .modal-actions-bar {
+    margin-top: 4px !important;
+  }
+  .room-card .modal-actions-bar button {
+    padding: 5px 12px !important;
+    font-size: 11px !important;
+  }
+
+  /* 6. Saha Editörü Penceresi */
+  .stadium-editor-card {
+    width: min(96vw, 900px) !important;
+    max-width: 900px !important;
+    max-height: 94dvh !important;
+    padding: 8px 12px !important;
+    border-radius: 14px !important;
+  }
+  .stadium-editor-card .modal-header {
+    margin-bottom: 3px !important;
+  }
+  .stadium-editor-card .modal-header h2 {
+    font-size: 15px !important;
+  }
+  .stadium-editor-card .modal-header p {
+    display: none !important;
+  }
+  .editor-main-layout {
+    grid-template-columns: 210px 1fr !important;
+    gap: 10px !important;
+    margin-top: 3px !important;
+  }
+  .editor-tools-panel {
+    padding: 6px 8px !important;
+    gap: 5px !important;
+  }
+  .editor-group {
+    gap: 2px !important;
+  }
+  .editor-label {
+    font-size: 9px !important;
+  }
+  .btn-micro-pill {
+    padding: 3px 6px !important;
+    font-size: 9.5px !important;
+  }
+  .canvas-editor-hint {
+    padding: 2px 6px !important;
+    font-size: 9px !important;
+  }
+
+  /* 7. Duraklatma Menüsü */
+  .pause-card {
+    width: min(90vw, 380px) !important;
+    max-width: 380px !important;
+    max-height: 94dvh !important;
+    padding: 10px 16px !important;
+    border-radius: 16px !important;
+  }
+  .pause-modal-header {
+    margin-bottom: 6px !important;
+  }
+  .pause-big-icon {
+    font-size: 22px !important;
+    margin-bottom: 0 !important;
+  }
+  .pause-card h2 {
+    font-size: 16px !important;
+  }
+  .pause-match-summary {
+    font-size: 10.5px !important;
+    padding: 2px 8px !important;
+    margin-top: 2px !important;
+  }
+  .pause-menu-actions {
+    gap: 5px !important;
+  }
+  .pause-btn {
+    padding: 7px 12px !important;
+    font-size: 11.5px !important;
+  }
+}
+
+
