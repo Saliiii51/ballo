@@ -64,11 +64,14 @@
   const statRedShots = document.getElementById('statRedShots');
   const statBlueShots = document.getElementById('statBlueShots');
   const btnCloseStats = document.getElementById('btnCloseStats');
+  const btnReturnToMenuFromStats = document.getElementById('btnReturnToMenuFromStats');
   const btnStartNewMatch = document.getElementById('btnStartNewMatch');
   const btnRestartMatch = document.getElementById('btnRestartMatch');
   const redGoalsList = document.getElementById('redGoalsList');
   const blueGoalsList = document.getElementById('blueGoalsList');
   const gameOverScorersList = document.getElementById('gameOverScorersList');
+
+  let currentActiveRoomId = 'main';
 
   // Canvas & Render Engine
   const canvas = document.getElementById('gameCanvas');
@@ -441,10 +444,66 @@
     updateMatchSetupSummary();
   }
 
-  // "Hemen Oyna" -> Anında maça başla!
+  const DEFAULT_CLASSIC_MATCH_SETUP = {
+    gameMode: 'classic',
+    format: '1v1',
+    team: 'red',
+    duration: 180,
+    scoreLimit: 3,
+    difficulty: 'medium',
+    map: 'classic',
+    weather: 'night',
+    bombTimer: 20
+  };
+
+  function launchClassicSoloMatch() {
+    // 1. Klasik standart ayarları uygula (önceki özel veya kayıtlı ayarlar değil)
+    currentMatchSetup = { ...DEFAULT_CLASSIC_MATCH_SETUP };
+    updateSetupUIFromState();
+
+    // 2. Solo oyuncuyu izole solo odaya taşı (başkalarının maçı bölmemesi ve arka planda maç seslerinin karışmaması için)
+    const soloRoomId = 'solo_' + (socket.id || 'player');
+    currentActiveRoomId = soloRoomId;
+    socket.emit('switch_room', { roomId: soloRoomId });
+
+    // 3. Sahaya kırmızı takımda girip klasik maçı başlat
+    enterGame('red');
+    const payload = { ...DEFAULT_CLASSIC_MATCH_SETUP };
+    socket.emit('setup_and_start_match', payload);
+    if (renderer) renderer.setWeather(DEFAULT_CLASSIC_MATCH_SETUP.weather);
+
+    if (matchSetupModal) matchSetupModal.classList.add('hidden');
+    if (mainMenuModal) mainMenuModal.classList.add('hidden');
+    if (statsModal) statsModal.classList.add('hidden');
+    if (gameOverBanner) gameOverBanner.classList.add('hidden');
+    updateMatchSetupSummary();
+  }
+
+  function returnToMainMenu() {
+    closePauseMenu();
+    if (statsModal) statsModal.classList.add('hidden');
+    if (gameOverBanner) gameOverBanner.classList.add('hidden');
+    if (matchSetupModal) matchSetupModal.classList.add('hidden');
+    if (stadiumEditorModal) stadiumEditorModal.classList.add('hidden');
+
+    // Eğer solo odadaysak, odadan çıkıp main lobisine dön (sunucu solo odayı anında silsin, arka planda maç kalmasın)
+    if (currentActiveRoomId && currentActiveRoomId.startsWith('solo_')) {
+      socket.emit('switch_room', { roomId: 'main' });
+      currentActiveRoomId = 'main';
+    } else {
+      socket.emit('leave_match_to_menu');
+    }
+
+    if (mainMenuModal) {
+      mainMenuModal.classList.remove('hidden');
+      if (window.soundManager) window.soundManager.playBGM(true);
+    }
+  }
+
+  // "Hemen Oyna" -> Klasik standart ayarlarla anında solo maça başla!
   if (btnPlaySolo) {
     btnPlaySolo.addEventListener('click', () => {
-      launchConfiguredMatch();
+      launchClassicSoloMatch();
     });
   }
 
@@ -492,13 +551,7 @@
 
   // Header "🏠 Menü" -> Return to main menu overlay
   if (btnReturnToMenu) {
-    btnReturnToMenu.addEventListener('click', () => {
-      closePauseMenu();
-      if (mainMenuModal) {
-        mainMenuModal.classList.remove('hidden');
-        if (window.soundManager) window.soundManager.playBGM(true);
-      }
-    });
+    btnReturnToMenu.addEventListener('click', returnToMainMenu);
   }
 
   // Menu Secondary Action Buttons
@@ -1021,6 +1074,20 @@
     });
   }
 
+  if (btnReturnToMenuFromStats) {
+    btnReturnToMenuFromStats.addEventListener('click', () => {
+      returnToMainMenu();
+    });
+  }
+
+  if (btnOpenSetupFromStats) {
+    btnOpenSetupFromStats.addEventListener('click', () => {
+      if (statsModal) statsModal.classList.add('hidden');
+      if (gameOverBanner) gameOverBanner.classList.add('hidden');
+      if (matchSetupModal) matchSetupModal.classList.remove('hidden');
+    });
+  }
+
   if (btnTacticalStats) {
     btnTacticalStats.addEventListener('click', () => {
       if (statsModal) {
@@ -1251,6 +1318,9 @@
 
   socket.on('init_stadium', (stadiumData) => {
     renderer.setStadium(stadiumData);
+    if (stadiumData && stadiumData.roomId) {
+      currentActiveRoomId = stadiumData.roomId;
+    }
     if (stadiumData && stadiumData.preset) {
       currentMatchSetup.map = stadiumData.preset;
       updateMatchSetupSummary();
@@ -1259,6 +1329,9 @@
 
   socket.on('stadium_changed', (stadiumData) => {
     renderer.setStadium(stadiumData);
+    if (stadiumData && stadiumData.roomId) {
+      currentActiveRoomId = stadiumData.roomId;
+    }
     if (stadiumData && stadiumData.preset) {
       currentMatchSetup.map = stadiumData.preset;
       updateMatchSetupSummary();

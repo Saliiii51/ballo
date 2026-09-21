@@ -106,10 +106,15 @@ class TournamentManager {
 
   close() {
     if (this.modal) this.modal.classList.add('hidden');
-    // Sadece solo mod kendi izole odasını açtıysa temizle; online turnuvalı odaya dokunma
-    if (this.soloRoomId && !this.isTournamentActive && !(this.onlineData && this.onlineData.active)) {
+    // Solo mod kendi izole odasını açtıysa temizle ve main lobisine dön
+    if (this.soloRoomId && !(this.onlineData && this.onlineData.active)) {
       this.socket.emit('switch_room', { roomId: 'main' });
       this.soloRoomId = null;
+    }
+    const mainMenuModal = document.getElementById('mainMenuModal');
+    if (mainMenuModal) {
+      mainMenuModal.classList.remove('hidden');
+      if (window.soundManager) window.soundManager.playBGM(true);
     }
   }
 
@@ -218,10 +223,16 @@ class TournamentManager {
     if (this.stage === 'FINAL') botDiff = 'extreme';
 
     setTimeout(() => {
-      this.socket.emit('set_bot_difficulty', { difficulty: botDiff });
-      this.socket.emit('change_map', { preset: (this.stage === 'FINAL' ? 'big' : 'classic') });
-      this.socket.emit('add_bot', { team: 'blue' });
-      this.socket.emit('restart_match');
+      this.socket.emit('setup_and_start_match', {
+        format: '1v1',
+        team: 'red',
+        duration: 180,
+        scoreLimit: 3,
+        difficulty: botDiff,
+        map: (this.stage === 'FINAL' ? 'big' : 'classic'),
+        weather: 'night',
+        gameMode: 'classic'
+      });
     }, 250);
   }
 

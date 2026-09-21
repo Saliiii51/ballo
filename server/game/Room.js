@@ -181,7 +181,7 @@ class Room {
   // --- Host / Yetki ---
   isSoloRoom() {
     const id = String(this.roomId || '');
-    return id.startsWith('training_') || id.startsWith('tourn_');
+    return id.startsWith('training_') || id.startsWith('tourn_') || id.startsWith('solo_');
   }
 
   isHost(socketId) {
@@ -1066,16 +1066,17 @@ class Room {
       return;
     }
 
-    // 1. Match Time & Overtime (Golden Goal)
+    // 1. Match Time & Overtime (Golden Goal only for tournaments)
     if (this.state === 'PLAYING' || this.state === 'OVERTIME') {
       if (this.tickCount % 60 === 0) {
         this.timeElapsed++;
         if (this.timeElapsed >= this.timeLimit && this.state === 'PLAYING') {
-          if (this.scores.red === this.scores.blue) {
-            // Golden goal overtime!
+          if (this.scores.red === this.scores.blue && this.tournament && this.tournament.state === 'PLAYING') {
+            // Golden goal overtime only for online tournaments where a winner is mandatory!
             this.state = 'OVERTIME';
             this.broadcastToRoom('overtime_started');
           } else {
+            // Normal matches end completely when time limit is reached
             this.endMatch();
           }
         }
@@ -1437,6 +1438,18 @@ class Room {
     this.state = 'GAME_OVER';
     this.isGoldenGoalPending = false;
     this.isMatchWipeoutPending = false;
+
+    // Reset ball velocity and player inputs to complete stillness
+    this.ball.vel.set(0, 0);
+    for (const p of this.players.values()) {
+      p.vel.set(0, 0);
+      p.inputs = { up: false, down: false, left: false, right: false, kick: false };
+    }
+    for (const b of this.bots.values()) {
+      b.vel.set(0, 0);
+      b.inputs = { up: false, down: false, left: false, right: false, kick: false };
+    }
+
     let winner = this.scores.red > this.scores.blue ? 'red' : (this.scores.blue > this.scores.red ? 'blue' : 'draw');
     if (this.gameMode === 'bomb' && this.lastWipeoutWinner) {
       winner = this.lastWipeoutWinner;

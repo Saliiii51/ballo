@@ -34,6 +34,28 @@ class InputManager {
     return ['INPUT', 'TEXTAREA', 'SELECT'].includes(el.tagName) || el.isContentEditable;
   }
 
+  isInputBlocked() {
+    if (this.isTyping()) return true;
+    const blockingModalIds = [
+      'mainMenuModal',
+      'statsModal',
+      'matchSetupModal',
+      'tournamentModal',
+      'stadiumEditorModal',
+      'roomLobbyModal',
+      'profileModal',
+      'leaderboardModal',
+      'howToPlayBox'
+    ];
+    for (const id of blockingModalIds) {
+      const el = document.getElementById(id);
+      if (el && !el.classList.contains('hidden')) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   initListeners() {
     window.addEventListener('keydown', (e) => this.handleKey(e, true));
     window.addEventListener('keyup', (e) => this.handleKey(e, false));
@@ -87,6 +109,7 @@ class InputManager {
 
     // --- 1. Virtual Joystick Listeners ---
     const handleJoystickStart = (e) => {
+      if (this.isInputBlocked()) return;
       if (this.joystickTouchId !== null) return;
       const touch = e.changedTouches[0];
       this.joystickTouchId = touch.identifier;
@@ -96,6 +119,10 @@ class InputManager {
     };
 
     const handleJoystickMove = (e) => {
+      if (this.isInputBlocked()) {
+        this.resetJoystick();
+        return;
+      }
       if (this.joystickTouchId === null) return;
       for (let i = 0; i < e.changedTouches.length; i++) {
         const touch = e.changedTouches[i];
@@ -122,12 +149,17 @@ class InputManager {
     };
 
     this.joystickZone.addEventListener('touchstart', handleJoystickStart, { passive: false });
-    window.addEventListener('touchmove', handleJoystickMove, { passive: false });
-    window.addEventListener('touchend', handleJoystickEnd, { passive: false });
-    window.addEventListener('touchcancel', handleJoystickEnd, { passive: false });
+    this.joystickZone.addEventListener('touchmove', handleJoystickMove, { passive: false });
+    this.joystickZone.addEventListener('touchend', handleJoystickEnd, { passive: false });
+    this.joystickZone.addEventListener('touchcancel', handleJoystickEnd, { passive: false });
 
     // --- 2. Touch Kick Button Listeners ---
     const handleKickStart = (e) => {
+      if (this.isInputBlocked()) return;
+      if (window.skipWalkoutIfActive && window.skipWalkoutIfActive()) {
+        e.preventDefault();
+        return;
+      }
       e.preventDefault();
       this.keys.kick = true;
       this.touchKickBtn.classList.add('active');
@@ -239,7 +271,8 @@ class InputManager {
       }
     }
 
-    if (this.isTyping()) {
+    if (this.isInputBlocked()) {
+      this.reset();
       return;
     }
 

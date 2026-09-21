@@ -94,6 +94,11 @@ class SoundManager {
     return !!(menu && !menu.classList.contains('hidden'));
   }
 
+  isGameSoundMuted() {
+    if (!this.enabled) return true;
+    return this.isMainMenuActive();
+  }
+
   playBGM(fade = true) {
     if (!this.enabled || !this.bgm) return;
     if (this.bgmFadeTimer) {
@@ -174,7 +179,7 @@ class SoundManager {
 
   // Realistic football kick: low-frequency thud
   playKick() {
-    if (!this.enabled) return;
+    if (this.isGameSoundMuted()) return;
     this.initContext();
     if (!this.ctx) return;
 
@@ -202,7 +207,7 @@ class SoundManager {
 
   // Realistic goalpost hit: deep resonant thud
   playPost() {
-    if (!this.enabled) return;
+    if (this.isGameSoundMuted()) return;
     this.initContext();
     if (!this.ctx) return;
 
@@ -230,7 +235,7 @@ class SoundManager {
 
   // Goal celebration: Real authentic football stadium crowd cheer
   playGoal() {
-    if (!this.enabled) return;
+    if (this.isGameSoundMuted()) return;
     const now = Date.now();
     // Debounce to avoid multiple simultaneous triggers
     if (this.lastGoalTime && now - this.lastGoalTime < 1800) return;
@@ -272,7 +277,7 @@ class SoundManager {
 
   // High-tech countdown acoustic beep synthesizer (3, 2, 1)
   playCountdownBeep(count = 3) {
-    if (!this.enabled) return;
+    if (this.isGameSoundMuted()) return;
     this.initContext();
     if (!this.ctx) return;
 
@@ -311,7 +316,7 @@ class SoundManager {
 
   // Authentic football referee kickoff whistle (Double chirp: Tweet-Tweeeeet!)
   playWhistle() {
-    if (!this.enabled) return;
+    if (this.isGameSoundMuted()) return;
     this.initContext();
     if (!this.ctx) return;
 
@@ -366,7 +371,7 @@ class SoundManager {
 
   // Bomb countdown ticking sound with urgency pitch scaling
   playBombTick(urgency = 0) {
-    if (!this.enabled) return;
+    if (this.isGameSoundMuted()) return;
     this.initContext();
     if (!this.ctx) return;
 
@@ -395,7 +400,7 @@ class SoundManager {
 
   // Huge cinematic bomb explosion boom (sub-bass drop + heavy impact)
   playBombExplosion() {
-    if (!this.enabled) return;
+    if (this.isGameSoundMuted()) return;
     this.initContext();
     if (!this.ctx) return;
 
@@ -441,7 +446,7 @@ class SoundManager {
 
   // Pinball Bumper / Bouncer high-energy ping bounce
   playBumperHit() {
-    if (!this.enabled) return;
+    if (this.isGameSoundMuted()) return;
     this.initContext();
     if (!this.ctx) return;
 
@@ -470,7 +475,7 @@ class SoundManager {
 
   // Bomb Tag Transfer audio chirp (bomba birine çarptı / ebelendi)
   playBombTag() {
-    if (!this.enabled) return;
+    if (this.isGameSoundMuted()) return;
     this.initContext();
     if (!this.ctx) return;
 

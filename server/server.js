@@ -397,6 +397,26 @@ io.on('connection', (socket) => {
     room.setupAndStartMatch({ format: '1v1', team: 'red', duration: 180, scoreLimit: 3 }, socket.id);
   });
 
+  // Leave match and return to menu cleanly (solos get deleted immediately, no background matches)
+  socket.on('leave_match_to_menu', () => {
+    const room = getRoom();
+    if (room) {
+      if (room.isSoloRoom()) {
+        roomManager.removeSocket(socket.id);
+        roomManager.assignSocketToRoom(socket.id, 'main');
+        socket.leave(room.roomId);
+        socket.join('main');
+        const mainRoom = roomManager.getRoom('main');
+        if (mainRoom) {
+          sendStadiumInfo(mainRoom);
+          mainRoom.broadcastLobby();
+        }
+      } else {
+        room.setPlayerTeam(socket.id, 'spec');
+      }
+    }
+  });
+
   // ============ ONLINE TURNUVA (gerçek oyuncular) ============
   socket.on('create_online_tournament', (data) => {
     const room = getRoom();
