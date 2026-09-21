@@ -36,15 +36,22 @@ class PhysicsEngine {
 
       if (inputDir.magSq() > 0) {
         inputDir.normalize();
+        // Turn-around braking: if changing direction opposite to current velocity, brake fast
+        const dot = player.vel.x * inputDir.x + player.vel.y * inputDir.y;
+        if (dot < 0) {
+          player.vel.mult(0.88);
+        }
         player.vel.x += inputDir.x * player.accel;
         player.vel.y += inputDir.y * player.accel;
+        player.vel.mult(player.damping);
+      } else {
+        // Active braking when no keys are pressed (stops quickly instead of sliding like ice)
+        player.vel.mult(0.86);
       }
 
-      // Apply damping (friction)
-      player.vel.mult(player.damping);
-      // Clamp player velocity to prevent tunneling and overspeed
-      if (player.vel.magSq() > 33.64) {
-        player.vel.normalize().mult(5.8);
+      // Clamp player velocity to prevent overspeed and sliding
+      if (player.vel.magSq() > 14.44) {
+        player.vel.normalize().mult(3.8);
       }
       // Update position
       player.pos.add(player.vel);
@@ -75,8 +82,8 @@ class PhysicsEngine {
           const rotDirX = kickDir.x * cosA - kickDir.y * sinA;
           const rotDirY = kickDir.x * sinA + kickDir.y * cosA;
 
-          ball.vel.x = rotDirX * kickSpeed + player.vel.x * 0.4;
-          ball.vel.y = rotDirY * kickSpeed + player.vel.y * 0.4;
+          ball.vel.x = rotDirX * kickSpeed + player.vel.x * 0.35;
+          ball.vel.y = rotDirY * kickSpeed + player.vel.y * 0.35;
 
           player.kickCooldown = 15; // small debounce between kicks
           this.events.push({ type: 'kick', pos: ball.pos.clone(), playerId: player.id, team: player.team });
@@ -87,8 +94,8 @@ class PhysicsEngine {
     // 2. Move Ball
     ball.vel.mult(ball.damping);
     // Clamp ball velocity to prevent tunneling and overspeed
-    if (ball.vel.magSq() > 169.0) {
-      ball.vel.normalize().mult(13.0);
+    if (ball.vel.magSq() > 81.0) {
+      ball.vel.normalize().mult(9.0);
     }
     ball.pos.add(ball.vel);
 

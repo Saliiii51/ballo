@@ -300,9 +300,77 @@ class GameRenderer {
       currentFrame = this.replayFrames[this.replayIndex];
     }
 
-    // Direct 60 FPS crisp physics rendering (no rubberbanding, lag or lerp oscillation)
-    const interpBall = (currentFrame && currentFrame.ball) ? currentFrame.ball : null;
-    const interpPlayers = (currentFrame && currentFrame.players) ? currentFrame.players : [];
+    // Smooth Interpolation for 60/120/144 FPS ultra-fluid rendering over network
+    let interpBall = null;
+    let interpPlayers = [];
+
+    if (this.isReplaying) {
+      interpBall = (currentFrame && currentFrame.ball) ? currentFrame.ball : null;
+      interpPlayers = (currentFrame && currentFrame.players) ? currentFrame.players : [];
+    } else if (currentFrame) {
+      // 1. Smooth Ball Lerp
+      if (currentFrame.ball) {
+        if (!this.smoothBall) {
+          this.smoothBall = { ...currentFrame.ball };
+        } else {
+          const dx = currentFrame.ball.x - this.smoothBall.x;
+          const dy = currentFrame.ball.y - this.smoothBall.y;
+          const distSq = dx * dx + dy * dy;
+          if (distSq > 10000) { // Teleport / Reset
+            this.smoothBall.x = currentFrame.ball.x;
+            this.smoothBall.y = currentFrame.ball.y;
+          } else {
+            this.smoothBall.x += dx * 0.45;
+            this.smoothBall.y += dy * 0.45;
+          }
+          this.smoothBall.vx = currentFrame.ball.vx;
+          this.smoothBall.vy = currentFrame.ball.vy;
+          this.smoothBall.radius = currentFrame.ball.radius || 10;
+        }
+        interpBall = this.smoothBall;
+      }
+
+      // 2. Smooth Players Lerp
+      if (currentFrame.players) {
+        for (const p of currentFrame.players) {
+          let sp = this.smoothPlayers.get(p.id);
+          if (!sp) {
+            sp = { ...p };
+            this.smoothPlayers.set(p.id, sp);
+          } else {
+            const dx = p.x - sp.x;
+            const dy = p.y - sp.y;
+            const distSq = dx * dx + dy * dy;
+            if (distSq > 10000) { // Teleport / Reset
+              sp.x = p.x;
+              sp.y = p.y;
+            } else {
+              sp.x += dx * 0.45;
+              sp.y += dy * 0.45;
+            }
+            sp.name = p.name;
+            sp.team = p.team;
+            sp.avatar = p.avatar;
+            sp.aura = p.aura;
+            sp.title = p.title;
+            sp.hasCrown = p.hasCrown;
+            sp.isEliminated = p.isEliminated;
+            sp.kickAnimationTimer = p.kickAnimationTimer;
+            sp.radius = p.radius || 15;
+            sp.vx = p.vx;
+            sp.vy = p.vy;
+          }
+          interpPlayers.push(sp);
+        }
+
+        // Clean up disconnected players
+        for (const id of this.smoothPlayers.keys()) {
+          if (!currentFrame.players.some(p => p.id === id)) {
+            this.smoothPlayers.delete(id);
+          }
+        }
+      }
+    }
 
     // Calculate Screen Shake offset
     let shakeX = 0;

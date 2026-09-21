@@ -10,8 +10,8 @@ const STADIUM_PRESETS = {
     goalDepth: 70,
     postRadius: 8,
     centerCircleRadius: 80,
-    ballDamping: 0.985,
-    playerDamping: 0.96,
+    ballDamping: 0.978,
+    playerDamping: 0.95,
     wallBounciness: 0.95,
     ballBounciness: 0.8
   },
@@ -24,8 +24,8 @@ const STADIUM_PRESETS = {
     goalDepth: 80,
     postRadius: 9,
     centerCircleRadius: 100,
-    ballDamping: 0.986,
-    playerDamping: 0.96,
+    ballDamping: 0.980,
+    playerDamping: 0.95,
     wallBounciness: 0.95,
     ballBounciness: 0.8
   },

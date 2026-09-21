@@ -15,9 +15,9 @@ class Player {
     this.mass = 1.0;
     this.invMass = 1.0;
     this.bounciness = 0.5;
-    this.damping = 0.96;
-    this.accel = 0.11;
-    this.kickStrength = 4.9;
+    this.damping = 0.95;
+    this.accel = 0.08;
+    this.kickStrength = 4.0;
 
     this.kickCooldown = 0;
     this.kickAnimationTimer = 0;

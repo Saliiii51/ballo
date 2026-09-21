@@ -219,7 +219,7 @@ class Room {
       return (this.tickCount - this.lastBroadcastTick) >= 60;
     }
     if (this.state === 'PLAYING' || this.state === 'OVERTIME' || this.state === 'GOAL_CELEBRATION' || this.state === 'WALKOUT') {
-      return (this.tickCount - this.lastBroadcastTick) >= 1;
+      return (this.tickCount - this.lastBroadcastTick) >= 2;
     }
     return (this.tickCount - this.lastBroadcastTick) >= 15;
   }
