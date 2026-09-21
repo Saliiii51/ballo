@@ -82,21 +82,10 @@ class BotAI {
     // Initialize per-bot tracking
     if (bot.unstuckTicks === undefined) bot.unstuckTicks = 0;
     if (bot.stuckCounter === undefined) bot.stuckCounter = 0;
-    if (bot.cornerStepBackTicks === undefined) bot.cornerStepBackTicks = 0;
     if (!bot.lastPos) bot.lastPos = bot.pos.clone();
 
     // Reset inputs
     bot.inputs = { up: false, down: false, left: false, right: false, kick: false };
-
-    // --- 1. CORNER REBOUND CLEARANCE RELEASE ---
-    if (bot.cornerStepBackTicks > 0) {
-      bot.cornerStepBackTicks--;
-      const cornerSignX = Math.sign(ball.pos.x || 1);
-      const cornerSignY = Math.sign(ball.pos.y || 1);
-      // Steer strongly away from the corner towards the open field
-      this.steerTowards(bot, bot.pos.x - cornerSignX * 90, bot.pos.y - cornerSignY * 90);
-      return;
-    }
 
     const isBlue = bot.team === 'blue';
     const ownGoalX = isBlue ? this.room.stadium.halfW : -this.room.stadium.halfW;
@@ -228,7 +217,7 @@ class BotAI {
 
     // --- 5. ON-THE-BALL ACTIVE PLAY (TOPA EN YAKIN BOT / OYUN KURUCU) ---
     const interceptPos = this.predictOptimalIntercept(bot, ball, this.profile.predictionFrames);
-    const inCorner = Math.abs(ball.pos.x) > (this.room.stadium.halfW - 90) && Math.abs(ball.pos.y) > 80;
+    const inCorner = Math.abs(ball.pos.x) > (this.room.stadium.halfW - 75) && Math.abs(ball.pos.y) > (this.room.stadium.halfH - 75);
     const ballInOwnHalf = isBlue ? ball.pos.x > 0 : ball.pos.x < 0;
 
     const ballFastToOwnGoal = isBlue ? ball.vel.x > 0.8 : ball.vel.x < -0.8;
@@ -250,7 +239,7 @@ class BotAI {
         targetX = keeperLineX;
         targetY = saveY;
 
-        if (distToBall < bot.radius + ball.radius + this.profile.kickRangeBonus) {
+        if (distToBall < bot.radius + ball.radius + 3) {
           if (this.isSafeKick(bot, ball)) {
             shouldKick = true;
           }
@@ -265,15 +254,14 @@ class BotAI {
       targetX = keeperLineX;
       targetY = angleY;
     }
-    // CASE C: BALL IN CORNER / FLANK (SMASH IT OUT & STEP BACK)
+    // CASE C: BALL IN CORNER / FLANK (SMASH IT DIRECTLY OUT)
     else if (inCorner) {
       targetX = ball.pos.x;
       targetY = ball.pos.y;
 
-      const kickReach = bot.radius + ball.radius + this.profile.kickRangeBonus + 4;
+      const kickReach = bot.radius + ball.radius + 3;
       if (distToBall <= kickReach) {
         shouldKick = true;
-        bot.cornerStepBackTicks = 22;
       }
     }
     // CASE D: ATTACK, DRIBBLE & PASSING
@@ -618,11 +606,9 @@ class BotAI {
       if (isBallInCorner) {
         this.steerTowards(bot, ball.pos.x, ball.pos.y);
 
-        const kickReach = bot.radius + ball.radius + 10;
+        const kickReach = bot.radius + ball.radius + 3;
         if (distToBall <= kickReach) {
-          // Smash bomb out of corner and step back
           bot.inputs.kick = true;
-          bot.cornerStepBackTicks = 16;
         }
         return;
       }
