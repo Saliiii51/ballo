@@ -93,7 +93,8 @@ class BotAI {
       bot.cornerStepBackTicks--;
       const cornerSignX = Math.sign(ball.pos.x || 1);
       const cornerSignY = Math.sign(ball.pos.y || 1);
-      this.steerTowards(bot, bot.pos.x - cornerSignX * 60, bot.pos.y - cornerSignY * 60);
+      // Steer strongly away from the corner towards the open field
+      this.steerTowards(bot, bot.pos.x - cornerSignX * 90, bot.pos.y - cornerSignY * 90);
       return;
     }
 
@@ -105,22 +106,28 @@ class BotAI {
     // --- 2. ANTI-STUCK TRACKING ---
     const movedDist = bot.pos.dist(bot.lastPos);
     bot.lastPos = bot.pos.clone();
-    const isNearWall = Math.abs(bot.pos.x) > (this.room.stadium.halfW - 50) || Math.abs(bot.pos.y) > (this.room.stadium.halfH - 50);
+    const isNearWall = Math.abs(bot.pos.x) > (this.room.stadium.halfW - 55) || Math.abs(bot.pos.y) > (this.room.stadium.halfH - 55);
 
-    if (movedDist < 0.12 && distToBall > 45 && isNearWall) {
+    // If bot barely moved while trapped against a wall or corner (with or without ball)
+    if (movedDist < 0.2 && isNearWall) {
       bot.stuckCounter++;
     } else {
       bot.stuckCounter = Math.max(0, bot.stuckCounter - 1);
     }
 
-    if (bot.stuckCounter > 25) {
-      bot.unstuckTicks = 12;
+    if (bot.stuckCounter > 15) {
+      bot.unstuckTicks = 20;
       bot.stuckCounter = 0;
+      // Kick to dislodge ball if close
+      if (distToBall < bot.radius + ball.radius + 12) {
+        bot.inputs.kick = true;
+      }
     }
 
     if (bot.unstuckTicks > 0) {
       bot.unstuckTicks--;
-      this.steerTowards(bot, bot.pos.x * 0.85, bot.pos.y * 0.85);
+      // Move directly toward pitch center (0, 0)
+      this.steerTowards(bot, 0, 0);
       return;
     }
 
@@ -258,15 +265,15 @@ class BotAI {
       targetX = keeperLineX;
       targetY = angleY;
     }
-    // CASE C: BALL IN CORNER / FLANK (SMASH IT OUT)
+    // CASE C: BALL IN CORNER / FLANK (SMASH IT OUT & STEP BACK)
     else if (inCorner) {
       targetX = ball.pos.x;
       targetY = ball.pos.y;
 
-      const kickReach = bot.radius + ball.radius + this.profile.kickRangeBonus;
-      if (distToBall <= kickReach && this.isSafeKick(bot, ball)) {
+      const kickReach = bot.radius + ball.radius + this.profile.kickRangeBonus + 4;
+      if (distToBall <= kickReach) {
         shouldKick = true;
-        bot.cornerStepBackTicks = 12;
+        bot.cornerStepBackTicks = 22;
       }
     }
     // CASE D: ATTACK, DRIBBLE & PASSING
@@ -402,15 +409,16 @@ class BotAI {
           }
         }
 
-        // If near own penalty box/goal area:
+        // If near own penalty box directly in front of goal mouth (|y| <= goalHalfW + 35):
         const nearOwnBox = Math.abs(ball.pos.x - ownGoalX) < 220;
-        if (nearOwnBox) {
+        const inFrontOfGoalMouth = Math.abs(ball.pos.y) <= (goalHalfW + 35);
+        if (nearOwnBox && inFrontOfGoalMouth) {
           const movingBackwards = isBlue ? (kickDir.x > 0) : (kickDir.x < 0);
           if (movingBackwards) {
             // Only allow if clearing hard towards wide touchline far away from goal mouth
             const isWideClearance = Math.abs(kickDir.y) > 0.85 && Math.abs(ball.pos.y) > 90;
             if (!isWideClearance) {
-              return false; // Reject backwards kick near own net
+              return false; // Reject backwards kick directly in front of own net
             }
           }
         }
