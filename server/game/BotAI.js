@@ -2,8 +2,8 @@ const Vector2D = require('../physics/Vector2D');
 
 const DIFFICULTY_PROFILES = {
   easy: {
-    accel: 0.14,
-    kickStrength: 5.8,
+    accel: 0.11,
+    kickStrength: 4.9,
     damping: 0.96,
     predictionFrames: 10,
     kickRangeBonus: 4,
@@ -12,8 +12,8 @@ const DIFFICULTY_PROFILES = {
     wallBankShot: false
   },
   medium: {
-    accel: 0.14,
-    kickStrength: 5.8,
+    accel: 0.11,
+    kickStrength: 4.9,
     damping: 0.96,
     predictionFrames: 20,
     kickRangeBonus: 4,
@@ -22,8 +22,8 @@ const DIFFICULTY_PROFILES = {
     wallBankShot: false
   },
   hard: {
-    accel: 0.14,
-    kickStrength: 5.8,
+    accel: 0.11,
+    kickStrength: 4.9,
     damping: 0.96,
     predictionFrames: 32,
     kickRangeBonus: 4,
@@ -32,8 +32,8 @@ const DIFFICULTY_PROFILES = {
     wallBankShot: true
   },
   extreme: {
-    accel: 0.14,
-    kickStrength: 5.8,
+    accel: 0.11,
+    kickStrength: 4.9,
     damping: 0.96,
     predictionFrames: 45,
     kickRangeBonus: 4,
@@ -55,8 +55,8 @@ class BotAI {
     this.profile = DIFFICULTY_PROFILES[this.difficulty] || DIFFICULTY_PROFILES.extreme;
 
     if (bot) {
-      bot.accel = 0.14;
-      bot.kickStrength = 5.8;
+      bot.accel = 0.11;
+      bot.kickStrength = 4.9;
       bot.damping = this.room.stadium.playerDamping || 0.96;
     }
   }

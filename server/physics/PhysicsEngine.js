@@ -42,9 +42,9 @@ class PhysicsEngine {
 
       // Apply damping (friction)
       player.vel.mult(player.damping);
-      // Clamp player velocity to prevent tunneling
-      if (player.vel.magSq() > 56.25) {
-        player.vel.normalize().mult(7.5);
+      // Clamp player velocity to prevent tunneling and overspeed
+      if (player.vel.magSq() > 33.64) {
+        player.vel.normalize().mult(5.8);
       }
       // Update position
       player.pos.add(player.vel);
@@ -86,9 +86,9 @@ class PhysicsEngine {
 
     // 2. Move Ball
     ball.vel.mult(ball.damping);
-    // Clamp ball velocity to prevent tunneling
-    if (ball.vel.magSq() > 256.0) {
-      ball.vel.normalize().mult(16.0);
+    // Clamp ball velocity to prevent tunneling and overspeed
+    if (ball.vel.magSq() > 169.0) {
+      ball.vel.normalize().mult(13.0);
     }
     ball.pos.add(ball.vel);
 

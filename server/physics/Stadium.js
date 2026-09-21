@@ -10,7 +10,7 @@ const STADIUM_PRESETS = {
     goalDepth: 70,
     postRadius: 8,
     centerCircleRadius: 80,
-    ballDamping: 0.99,
+    ballDamping: 0.985,
     playerDamping: 0.96,
     wallBounciness: 0.95,
     ballBounciness: 0.8
@@ -24,7 +24,7 @@ const STADIUM_PRESETS = {
     goalDepth: 80,
     postRadius: 9,
     centerCircleRadius: 100,
-    ballDamping: 0.99,
+    ballDamping: 0.986,
     playerDamping: 0.96,
     wallBounciness: 0.95,
     ballBounciness: 0.8
@@ -38,7 +38,7 @@ const STADIUM_PRESETS = {
     goalDepth: 60,
     postRadius: 8,
     centerCircleRadius: 75,
-    ballDamping: 0.985,
+    ballDamping: 0.98,
     playerDamping: 0.955,
     wallBounciness: 0.92,
     ballBounciness: 0.72
@@ -52,7 +52,7 @@ const STADIUM_PRESETS = {
     goalDepth: 70,
     postRadius: 8,
     centerCircleRadius: 80,
-    ballDamping: 0.997,
+    ballDamping: 0.992,
     playerDamping: 0.982, // Extra slippery ice physics!
     wallBounciness: 0.98,
     ballBounciness: 0.85,
@@ -67,7 +67,7 @@ const STADIUM_PRESETS = {
     goalDepth: 55,
     postRadius: 7,
     centerCircleRadius: 70,
-    ballDamping: 0.985,
+    ballDamping: 0.98,
     playerDamping: 0.965, // Fast-paced street football
     wallBounciness: 0.99, // Super lively metal fences!
     ballBounciness: 0.88
