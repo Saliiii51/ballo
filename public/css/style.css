@@ -2204,37 +2204,22 @@ html, body {
 }
 
 /* ==========================================================================
-   Main Menu Modal Styles
+   Main Menu Modal Styles - Ultra-Sleek Esports Game Hub
    ========================================================================== */
-/* ==========================================================================
-   Main Menu Modal Styles - 2-Column High-Tech Sports Console Hub
-   ========================================================================== */
-/* Ambient Backing Glows */
-.menu-ambient-glow {
+.main-menu-overlay {
+  background: radial-gradient(circle at 50% 45%, rgba(15, 23, 42, 0.82) 0%, rgba(3, 7, 18, 0.94) 100%) !important;
+  backdrop-filter: blur(16px);
+}
+
+.menu-backdrop-glow {
   position: absolute;
-  width: 380px;
-  height: 380px;
+  width: 520px;
+  height: 520px;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.12) 0%, rgba(14, 165, 233, 0) 70%);
   border-radius: 50%;
   filter: blur(90px);
   pointer-events: none;
-  opacity: 0.35;
   z-index: 1;
-  animation: ambientFloat 7s ease-in-out infinite alternate;
-}
-.glow-cyan {
-  top: 10%;
-  left: 20%;
-  background: radial-gradient(circle, #0284c7 0%, rgba(2, 132, 199, 0) 70%);
-}
-.glow-gold {
-  bottom: 10%;
-  right: 20%;
-  background: radial-gradient(circle, #f59e0b 0%, rgba(245, 158, 11, 0) 70%);
-  animation-delay: -3.5s;
-}
-@keyframes ambientFloat {
-  0% { transform: translate(0, 0) scale(1); }
-  100% { transform: translate(30px, -24px) scale(1.15); }
 }
 
 .main-menu-card {
@@ -2243,58 +2228,24 @@ html, body {
   max-width: 710px !important;
   height: auto !important;
   max-height: 94dvh !important;
-  padding: 14px 18px !important;
-  background: radial-gradient(135% 125% at 15% 10%, #152035 0%, #0d1322 45%, #060912 100%);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-top: 2px solid rgba(56, 189, 248, 0.7);
-  border-radius: 20px;
-  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.9), 0 0 50px rgba(14, 165, 233, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  padding: 16px 20px !important;
+  background: linear-gradient(145deg, rgba(17, 24, 39, 0.96) 0%, rgba(10, 15, 26, 0.98) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 18px;
+  box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.05), 0 0 40px rgba(14, 165, 233, 0.06);
   display: grid;
   grid-template-columns: 215px 1fr;
-  gap: 14px;
-  overflow: hidden !important; /* MOBİL YATAYDA KESİNLİKLE KAYDIRMA YOK */
+  gap: 16px;
+  overflow: hidden !important;
   box-sizing: border-box;
   z-index: 2;
   backdrop-filter: blur(24px);
   animation: menuFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.menu-brand-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.btn-menu-sound {
-  width: 34px;
-  height: 34px;
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 50%;
-  color: #fff;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.22s ease;
-  flex-shrink: 0;
-}
-
-.btn-menu-sound:hover {
-  background: rgba(56, 189, 248, 0.25);
-  border-color: rgba(56, 189, 248, 0.8);
-  transform: scale(1.1);
-  box-shadow: 0 0 16px rgba(56, 189, 248, 0.5);
-}
-
-.btn-menu-sound:active {
-  transform: scale(0.94);
-}
-
 @keyframes menuFadeIn {
-  from { opacity: 0; transform: scale(0.97) translateY(8px); }
+  from { opacity: 0; transform: scale(0.98) translateY(6px); }
   to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
@@ -2306,7 +2257,7 @@ html, body {
   flex-direction: column;
   justify-content: space-between;
   gap: 10px;
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  border-right: 1px solid rgba(255, 255, 255, 0.07);
   padding-right: 16px;
   min-width: 0;
   box-sizing: border-box;
@@ -2317,43 +2268,25 @@ html, body {
   text-align: left;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
+}
+
+.menu-brand-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .menu-brand {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-}
-
-.menu-ball-wrap {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  gap: 8px;
 }
 
 .menu-ball-icon {
-  font-size: clamp(24px, 4.5dvh, 32px);
-  filter: drop-shadow(0 0 14px rgba(56, 189, 248, 0.6));
-  animation: ballBounce 2.5s infinite ease-in-out;
-  position: relative;
-  z-index: 2;
-}
-
-.menu-ball-glow {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.5) 0%, transparent 75%);
-  border-radius: 50%;
-  filter: blur(5px);
-  z-index: 1;
-}
-
-@keyframes ballBounce {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-3px) rotate(8deg); }
+  font-size: 22px;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.5));
 }
 
 .menu-brand-titles {
@@ -2362,123 +2295,89 @@ html, body {
   gap: 8px;
 }
 
-.glow-text {
+.brand-title {
   font-family: 'Chakra Petch', sans-serif;
-  font-size: clamp(22px, 4.2dvh, 28px);
-  font-weight: 800;
-  letter-spacing: 2.5px;
-  background: linear-gradient(180deg, #ffffff 25%, #38bdf8 80%, #818cf8 100%) !important;
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
+  font-size: 23px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #ffffff;
   line-height: 1;
-  filter: drop-shadow(0 2px 10px rgba(56, 189, 248, 0.45));
+  margin: 0;
 }
 
-.menu-badge-live {
+.menu-badge-online {
   font-family: 'Chakra Petch', sans-serif;
-  font-size: 9px;
+  font-size: 8.5px;
   font-weight: 700;
   letter-spacing: 0.8px;
   color: #34d399;
-  background: rgba(16, 185, 129, 0.18);
-  border: 1px solid rgba(16, 185, 129, 0.5);
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.35);
   border-radius: 999px;
-  padding: 2px 7px;
-  text-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
-  white-space: nowrap;
+  padding: 1.5px 6px;
   display: flex;
   align-items: center;
   gap: 4px;
 }
 
-.live-dot-pulse {
-  width: 6px;
-  height: 6px;
+.online-indicator {
+  width: 5px;
+  height: 5px;
   background: #34d399;
   border-radius: 50%;
-  display: inline-block;
-  box-shadow: 0 0 8px #34d399;
-  animation: livePing 1.5s infinite;
-}
-
-@keyframes livePing {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.4); opacity: 0.5; }
+  box-shadow: 0 0 6px #34d399;
 }
 
 .menu-subtitle {
-  font-size: clamp(10px, 2dvh, 11px);
+  font-size: 10.5px;
   color: #94a3b8;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.3px;
+  margin: 0;
 }
 
-/* Oyuncu Profil Kartı (FUT / VIP Stili) */
+/* Oyuncu Profil Kartı */
 .menu-profile-wrapper {
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   margin: 0;
-  min-height: 0;
 }
 
 .menu-profile-strip {
   display: flex;
   align-items: center;
-  gap: 12px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.13);
-  border-radius: 14px;
-  padding: clamp(8px, 1.8dvh, 12px) clamp(10px, 1.5vw, 12px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 12px;
+  padding: 9px 11px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
   text-align: left;
-  transition: all 0.22s ease;
+  transition: all 0.2s ease;
 }
 
 .menu-profile-strip:hover {
-  border-color: rgba(56, 189, 248, 0.4);
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.03) 100%);
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45), 0 0 20px rgba(56, 189, 248, 0.15);
-}
-
-.menu-profile-avatar-wrap {
-  position: relative;
-  flex-shrink: 0;
-}
-
-.avatar-ring-glow {
-  position: absolute;
-  inset: -3px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #ffd700, #ff4d4d, #38bdf8);
-  z-index: 0;
-  opacity: 0.75;
-  filter: blur(1.5px);
-  animation: rotateRing 6s linear infinite;
-}
-
-@keyframes rotateRing {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  border-color: rgba(56, 189, 248, 0.35);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .menu-profile-avatar {
-  position: relative;
-  z-index: 1;
-  width: clamp(38px, 8dvh, 46px);
-  height: clamp(38px, 8dvh, 46px);
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #e63946 0%, #881337 100%);
-  border: 2px solid #ffffff;
+  background: linear-gradient(135deg, #e11d48 0%, #9f1239 100%);
+  border: 2px solid rgba(255, 255, 255, 0.9);
   color: #fff;
   font-family: 'Chakra Petch', sans-serif;
-  font-weight: 800;
-  font-size: clamp(13px, 2.8dvh, 16px);
+  font-weight: 700;
+  font-size: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+  flex-shrink: 0;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35);
 }
 
 .menu-profile-details {
@@ -2486,56 +2385,55 @@ html, body {
   min-width: 0;
 }
 
-.menu-profile-welcome {
-  font-size: 9px;
+.menu-profile-tag {
+  font-size: 8.5px;
   color: #38bdf8;
   text-transform: uppercase;
-  letter-spacing: 0.9px;
-  font-weight: 800;
+  letter-spacing: 0.8px;
+  font-weight: 700;
   margin-bottom: 2px;
 }
 
 .menu-profile-name {
-  font-size: clamp(13px, 2.8dvh, 16px);
-  font-weight: 800;
+  font-size: 14px;
+  font-weight: 700;
   color: #f8fafc;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.2px;
 }
 
 .menu-profile-stats {
-  font-size: clamp(10px, 2dvh, 12px);
-  color: #ffd700;
-  font-weight: 700;
-  margin-top: 2px;
+  font-size: 11px;
+  color: #94a3b8;
+  font-weight: 500;
+  margin-top: 1px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
 }
 
 .btn-micro {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 8px;
   color: #e2e8f0;
-  padding: 6px 9px;
-  font-size: 13px;
+  padding: 5px 8px;
+  font-size: 12px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.18s ease;
   flex-shrink: 0;
 }
 
 .btn-micro:hover {
-  background: rgba(56, 189, 248, 0.25);
-  border-color: rgba(56, 189, 248, 0.7);
-  transform: scale(1.1);
-  box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+  background: rgba(56, 189, 248, 0.2);
+  border-color: rgba(56, 189, 248, 0.6);
+  color: #fff;
+  transform: scale(1.05);
 }
 
-/* Satır İçi Profil Formu (Düzenle butonuna basınca kartın üzerine oturur) */
+/* Satır İçi Profil Formu */
 .menu-inline-form {
   position: absolute;
   inset: 0;
@@ -2544,8 +2442,8 @@ html, body {
   flex-direction: column;
   justify-content: center;
   background: rgba(14, 20, 34, 0.98);
-  border: 1px solid rgba(56, 189, 248, 0.5);
-  border-radius: 14px;
+  border: 1px solid rgba(56, 189, 248, 0.45);
+  border-radius: 12px;
   padding: 8px 12px;
   backdrop-filter: blur(14px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
@@ -2577,7 +2475,8 @@ html, body {
   font-size: 11px !important;
   font-weight: 700 !important;
   border-radius: 8px !important;
-  background: linear-gradient(135deg, #0ea5e9, #2563eb) !important;
+  background: linear-gradient(135deg, #0284c7, #2563eb) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
 }
 
 .btn-cancel-profile {
@@ -2600,106 +2499,122 @@ html, body {
 
 /* Now Playing Müzik Çubuğu */
 .menu-now-playing {
-  background: rgba(15, 23, 42, 0.82);
-  border: 1px solid rgba(56, 189, 248, 0.26);
-  border-radius: 11px;
-  padding: 6px 11px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 9px;
+  padding: 6px 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  font-size: 11px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
   transition: all 0.2s ease;
 }
 
 .menu-now-playing:hover {
-  border-color: rgba(56, 189, 248, 0.5);
-  box-shadow: 0 4px 18px rgba(56, 189, 248, 0.2);
+  border-color: rgba(56, 189, 248, 0.3);
 }
 
 .now-playing-left {
   display: flex;
   align-items: center;
-  gap: 6px;
-}
-
-.now-playing-tag {
-  font-size: 9px;
-  font-weight: 800;
-  color: #38bdf8;
-  letter-spacing: 0.8px;
-}
-
-.now-playing-track-info {
+  gap: 8px;
+  min-width: 0;
   flex: 1;
-  text-align: left;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+}
+
+.music-wave {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+.music-bar {
+  width: 2.5px;
+  background: #38bdf8;
+  border-radius: 1px;
+  animation: musicPulse 1.2s infinite ease-in-out alternate;
+}
+.music-bar.b1 { height: 40%; animation-delay: 0.1s; }
+.music-bar.b2 { height: 85%; animation-delay: 0.3s; }
+.music-bar.b3 { height: 60%; animation-delay: 0.5s; }
+.music-bar.b4 { height: 100%; animation-delay: 0.2s; }
+
+@keyframes musicPulse {
+  0% { height: 25%; }
+  100% { height: 100%; }
 }
 
 .now-playing-title {
-  font-size: 11px;
-  font-weight: 600;
-  color: #e2e8f0;
+  font-size: 10.5px;
+  color: #94a3b8;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+.btn-now-playing-toggle, .btn-menu-sound {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+  color: #cbd5e1;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  flex-shrink: 0;
+}
+
+.btn-now-playing-toggle:hover, .btn-menu-sound:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #fff;
+  transform: scale(1.05);
+}
+
+.btn-now-playing-toggle:active, .btn-menu-sound:active {
+  transform: scale(0.95);
 }
 
 /* --------------------------------------------------------------------------
-   SAĞ PANEL: Hemen Oyna, Modlar Izgarası & Alt Çubuk
+   SAĞ PANEL: Hemen Oyna & Oyun Modları
    -------------------------------------------------------------------------- */
 .menu-col-right {
-  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 8px;
+  gap: 10px;
   min-width: 0;
   box-sizing: border-box;
 }
 
-/* Ana Kahraman Butonu (HEMEN OYNA) */
+/* Ana Kahraman Butonu: HEMEN OYNA */
 .menu-btn-play {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: clamp(9px, 2dvh, 13px) clamp(12px, 1.8vw, 18px);
-  background: linear-gradient(135deg, #0284c7 0%, #1d4ed8 45%, #4f46e5 100%);
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  padding: 12px 18px;
   border-radius: 14px;
-  box-shadow: 0 4px 24px rgba(2, 132, 199, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.4);
-  color: #fff;
+  border: 1px solid rgba(56, 189, 248, 0.45);
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 60%, #075985 100%);
+  box-shadow: 0 8px 20px -4px rgba(2, 132, 199, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.25);
   cursor: pointer;
-  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
-  width: 100%;
-  box-sizing: border-box;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   overflow: hidden;
 }
 
-/* Shimmer effect across play button */
-.menu-btn-play::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
-  transform: skewX(-20deg);
-  animation: buttonShimmer 3.5s infinite;
-}
-
-@keyframes buttonShimmer {
-  0%, 60% { left: -100%; }
-  100% { left: 200%; }
-}
-
 .menu-btn-play:hover {
-  transform: translateY(-2px) scale(1.005);
-  box-shadow: 0 8px 32px rgba(2, 132, 199, 0.65), 0 0 25px rgba(56, 189, 248, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.6);
-  border-color: rgba(255, 255, 255, 0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px -4px rgba(2, 132, 199, 0.6), 0 0 20px rgba(56, 189, 248, 0.25);
+  border-color: #38bdf8;
 }
 
 .menu-btn-play:active {
@@ -2712,238 +2627,144 @@ html, body {
   gap: 12px;
 }
 
-.menu-btn-play .menu-btn-icon {
-  font-size: clamp(20px, 4.2dvh, 26px);
-  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.7));
-  animation: boltPulse 2s infinite ease-in-out;
-}
-
-@keyframes boltPulse {
-  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6)); }
-  50% { transform: scale(1.15); filter: drop-shadow(0 0 14px rgba(56, 189, 248, 0.9)); }
-}
-
-.menu-btn-play .menu-btn-title {
-  font-family: 'Chakra Petch', sans-serif;
-  font-size: clamp(15px, 3dvh, 18px);
-  font-weight: 800;
-  letter-spacing: 1.5px;
-  line-height: 1.1;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
-}
-
-.menu-btn-play .menu-btn-desc {
-  font-size: clamp(10px, 1.9dvh, 11px);
-  color: rgba(255, 255, 255, 0.9);
-  font-weight: 500;
-  margin-top: 1px;
-}
-
-.play-action-pill {
+.play-icon-box {
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
   display: flex;
   align-items: center;
-  gap: 6px;
-  background: rgba(255, 255, 255, 0.18);
-  padding: 4px 12px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-  transition: all 0.2s ease;
-}
-
-.play-pill-text {
-  font-family: 'Chakra Petch', sans-serif;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 1px;
-  color: #fff;
-}
-
-.menu-play-arrow {
-  font-size: 12px;
-  color: #bae6fd;
-  transition: transform 0.2s ease;
-}
-
-.menu-btn-play:hover .play-action-pill {
-  background: rgba(255, 255, 255, 0.3);
-  border-color: #fff;
-}
-
-.menu-btn-play:hover .menu-play-arrow {
-  transform: translateX(4px);
-  color: #fff;
-}
-
-/* Oyun Modları Izgarası (3+2 Dengeli Tasarım & Rozetler) */
-.menu-modes-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: clamp(5px, 1.1dvh, 8px);
-  margin: 0;
-}
-
-.menu-modes-grid .menu-btn {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  padding: clamp(7px, 1.5dvh, 11px) clamp(8px, 1.2vw, 12px);
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.04);
-  cursor: pointer;
-  text-align: left;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  box-sizing: border-box;
-  overflow: hidden;
-}
-
-.menu-modes-grid .menu-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
-}
-
-.menu-modes-grid .menu-btn:active {
-  transform: scale(0.97);
-}
-
-/* Kart Rozetleri (Corner Badges) */
-.mode-card-badge {
-  position: absolute;
-  top: 4px;
-  right: 6px;
-  font-family: 'Chakra Petch', sans-serif;
-  font-size: 7.5px;
-  font-weight: 800;
-  letter-spacing: 0.6px;
-  padding: 1.5px 5px;
-  border-radius: 4px;
-  line-height: 1.2;
-  text-transform: uppercase;
-}
-
-.badge-cyan {
-  background: rgba(14, 165, 233, 0.22);
-  border: 1px solid rgba(14, 165, 233, 0.55);
-  color: #38bdf8;
-}
-
-.badge-gold {
-  background: rgba(245, 158, 11, 0.24);
-  border: 1px solid rgba(245, 158, 11, 0.65);
-  color: #fbbf24;
-}
-
-.badge-live {
-  background: rgba(16, 185, 129, 0.24);
-  border: 1px solid rgba(16, 185, 129, 0.65);
-  color: #34d399;
-}
-
-.badge-orange {
-  background: rgba(249, 115, 22, 0.24);
-  border: 1px solid rgba(249, 115, 22, 0.65);
-  color: #fb923c;
-}
-
-.badge-purple {
-  background: rgba(168, 85, 247, 0.24);
-  border: 1px solid rgba(168, 85, 247, 0.65);
-  color: #c084fc;
-}
-
-/* İlk satırdaki 3 buton (her biri 2/6 genişlik kaplar) */
-.menu-btn-lobby {
-  grid-column: span 2;
-  background: linear-gradient(135deg, rgba(30, 41, 59, 0.75) 0%, rgba(15, 23, 42, 0.85) 100%) !important;
-  border-color: rgba(148, 163, 184, 0.26) !important;
-}
-.menu-btn-lobby:hover {
-  border-color: #38bdf8 !important;
-  box-shadow: 0 6px 20px rgba(56, 189, 248, 0.25) !important;
-}
-
-.menu-btn-tournament {
-  grid-column: span 2;
-  background: linear-gradient(135deg, rgba(78, 32, 5, 0.75) 0%, rgba(26, 14, 5, 0.9) 100%) !important;
-  border-color: rgba(245, 158, 11, 0.38) !important;
-}
-.menu-btn-tournament:hover {
-  border-color: #fbbf24 !important;
-  box-shadow: 0 6px 22px rgba(245, 158, 11, 0.35) !important;
-}
-
-.menu-btn-rooms {
-  grid-column: span 2;
-  background: linear-gradient(135deg, rgba(6, 78, 59, 0.75) 0%, rgba(2, 44, 34, 0.9) 100%) !important;
-  border-color: rgba(16, 185, 129, 0.38) !important;
-}
-.menu-btn-rooms:hover {
-  border-color: #34d399 !important;
-  box-shadow: 0 6px 22px rgba(16, 185, 129, 0.35) !important;
-}
-
-/* İkinci satırdaki 2 buton (her biri 3/6 genişlik kaplar) */
-.menu-btn-training {
-  grid-column: span 3;
-  background: linear-gradient(135deg, rgba(76, 22, 9, 0.75) 0%, rgba(28, 11, 6, 0.9) 100%) !important;
-  border-color: rgba(249, 115, 22, 0.38) !important;
-}
-.menu-btn-training:hover {
-  border-color: #fb923c !important;
-  box-shadow: 0 6px 22px rgba(249, 115, 22, 0.35) !important;
-}
-
-.menu-btn-editor {
-  grid-column: span 3;
-  background: linear-gradient(135deg, rgba(74, 11, 120, 0.75) 0%, rgba(30, 6, 52, 0.9) 100%) !important;
-  border-color: rgba(168, 85, 247, 0.38) !important;
-}
-.menu-btn-editor:hover {
-  border-color: #c084fc !important;
-  box-shadow: 0 6px 22px rgba(168, 85, 247, 0.35) !important;
-}
-
-.menu-modes-grid .menu-btn-icon {
-  font-size: clamp(16px, 3.2dvh, 22px);
+  justify-content: center;
+  font-size: 15px;
+  color: #ffffff;
   flex-shrink: 0;
   transition: transform 0.2s ease;
 }
 
-.menu-modes-grid .menu-btn:hover .menu-btn-icon {
-  transform: scale(1.15) rotate(4deg);
+.menu-btn-play:hover .play-icon-box {
+  transform: scale(1.08);
+  background: rgba(255, 255, 255, 0.24);
 }
 
-.menu-modes-grid .menu-btn-texts {
+.menu-btn-play .menu-btn-texts {
+  text-align: left;
+}
+
+.menu-btn-play .menu-btn-title {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: #ffffff;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.menu-btn-play .menu-btn-desc {
+  font-size: 10.5px;
+  color: #bae6fd;
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+.play-arrow-chevron {
+  font-size: 16px;
+  color: #bae6fd;
+  transition: transform 0.2s ease;
+}
+
+.menu-btn-play:hover .play-arrow-chevron {
+  transform: translateX(4px);
+  color: #fff;
+}
+
+/* Oyun Modları Izgarası (3+2 Dengeli Tasarım) */
+.menu-modes-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 7px;
+  margin: 0;
+}
+
+.menu-btn-mode {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 11px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+}
+
+.menu-btn-mode:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+}
+
+.menu-btn-mode:active {
+  transform: scale(0.98);
+}
+
+/* Subtle accent hover borders */
+.mode-settings:hover { border-color: rgba(56, 189, 248, 0.5); }
+.mode-tournament:hover { border-color: rgba(245, 158, 11, 0.5); }
+.mode-rooms:hover { border-color: rgba(52, 211, 153, 0.5); }
+.mode-training:hover { border-color: rgba(249, 115, 22, 0.5); }
+.mode-editor:hover { border-color: rgba(168, 85, 247, 0.5); }
+
+/* Grid dağılımı: 1. satırda 3 kart (her biri 2 span), 2. satırda 2 kart (her biri 3 span) */
+.mode-settings, .mode-tournament, .mode-rooms {
+  grid-column: span 2;
+}
+
+.mode-training, .mode-editor {
+  grid-column: span 3;
+}
+
+.mode-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.menu-btn-mode:hover .mode-icon {
+  transform: scale(1.12);
+}
+
+.menu-btn-mode .menu-btn-texts {
   display: flex;
   flex-direction: column;
   min-width: 0;
 }
 
-.menu-modes-grid .menu-btn-title {
+.menu-btn-mode .menu-btn-title {
   font-family: 'Chakra Petch', sans-serif;
-  font-size: clamp(11.5px, 2.3dvh, 14px);
+  font-size: 12.5px;
   font-weight: 700;
   color: #f8fafc;
   letter-spacing: 0.3px;
-  line-height: 1.1;
+  line-height: 1.15;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
-.menu-modes-grid .menu-btn-desc {
-  font-size: clamp(9px, 1.8dvh, 10.5px);
+.menu-btn-mode .menu-btn-desc {
+  font-size: 10px;
   color: #94a3b8;
-  margin-top: 1px;
+  font-weight: 500;
+  margin-top: 2px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-/* Alt Yardımcı Hap Butonlar */
+/* Alt Yardımcı Butonlar */
 .menu-secondary-row {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -2955,45 +2776,31 @@ html, body {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  padding: clamp(6px, 1.4dvh, 9px) 6px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 10px;
+  padding: 7px 8px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 9px;
   color: #cbd5e1;
-  font-size: clamp(10px, 2dvh, 11.5px);
-  font-weight: 700;
+  font-size: 11px;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.18s ease;
   white-space: nowrap;
 }
 
 .menu-btn-sub:hover {
-  transform: translateY(-1.5px);
-}
-
-.sub-gold:hover {
-  background: rgba(245, 158, 11, 0.15);
-  border-color: rgba(245, 158, 11, 0.6);
-  color: #fbbf24;
-  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.25);
-}
-
-.sub-cyan:hover {
-  background: rgba(14, 165, 233, 0.15);
-  border-color: rgba(14, 165, 233, 0.6);
-  color: #38bdf8;
-  box-shadow: 0 4px 14px rgba(14, 165, 233, 0.25);
-}
-
-.sub-emerald:hover {
-  background: rgba(16, 185, 129, 0.15);
-  border-color: rgba(16, 185, 129, 0.6);
-  color: #34d399;
-  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25);
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  transform: translateY(-1px);
 }
 
 .menu-btn-sub:active {
   transform: scale(0.97);
+}
+
+.sub-icon {
+  font-size: 12px;
 }
 
 /* Taktikler Bilgi Katmanı (Açıldığında sağ panelin üzerine biner, asla kaydırma yapmaz) */
