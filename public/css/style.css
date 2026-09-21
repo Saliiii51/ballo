@@ -2206,6 +2206,19 @@ html, body {
 /* ==========================================================================
    Main Menu Modal Styles - Ultra-Sleek Esports Console Hub
    ========================================================================== */
+.main-menu-overlay button,
+.main-menu-card button {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: inherit;
+  color: inherit;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
 .main-menu-overlay {
   background: radial-gradient(circle at 50% 30%, rgba(15, 23, 42, 0.88) 0%, rgba(2, 6, 23, 0.98) 100%) !important;
   backdrop-filter: blur(20px);
@@ -2222,6 +2235,7 @@ html, body {
   z-index: 1;
 }
 
+.main-menu-card,
 .main-menu-card.main-menu-hub {
   position: relative;
   width: min(94vw, 880px) !important;
@@ -2229,17 +2243,17 @@ html, body {
   height: auto !important;
   max-height: 94dvh !important;
   padding: clamp(14px, 2.2dvh, 22px) clamp(16px, 2.2vw, 26px) !important;
-  background: linear-gradient(165deg, rgba(21, 31, 53, 0.96) 0%, rgba(10, 16, 30, 0.98) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-top: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 20px;
-  box-shadow: 0 30px 80px -15px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.04), 0 0 50px rgba(14, 165, 233, 0.08);
+  background: linear-gradient(165deg, rgba(21, 31, 53, 0.96) 0%, rgba(10, 16, 30, 0.98) 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.25) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 30px 80px -15px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.04), 0 0 50px rgba(14, 165, 233, 0.08) !important;
   display: flex !important;
   flex-direction: column !important;
   justify-content: space-between !important;
   gap: clamp(10px, 1.8dvh, 16px) !important;
   overflow: hidden !important;
-  box-sizing: border-box;
+  box-sizing: border-box !important;
   z-index: 2;
   backdrop-filter: blur(24px);
   animation: menuFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
@@ -2254,18 +2268,18 @@ html, body {
    1. ÜST BAŞLIK BARI: Marka Logo, Oyuncu VIP Kartı & Ses
    -------------------------------------------------------------------------- */
 .menu-hub-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-bottom: clamp(8px, 1.4dvh, 12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  width: 100%;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding-bottom: clamp(8px, 1.4dvh, 12px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  width: 100% !important;
 }
 
 .menu-brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
 }
 
 .brand-crest {
@@ -2289,6 +2303,7 @@ html, body {
   display: flex;
   flex-direction: column;
   gap: 2px;
+  text-align: left;
 }
 
 .brand-name-row {
@@ -2298,36 +2313,36 @@ html, body {
 }
 
 .brand-title {
-  font-family: 'Chakra Petch', sans-serif;
-  font-size: clamp(20px, 3.5dvh, 24px);
-  font-weight: 800;
-  letter-spacing: 2px;
-  color: #ffffff;
-  line-height: 1;
-  margin: 0;
+  font-family: 'Chakra Petch', sans-serif !important;
+  font-size: clamp(20px, 3.5dvh, 24px) !important;
+  font-weight: 800 !important;
+  letter-spacing: 2px !important;
+  color: #ffffff !important;
+  line-height: 1 !important;
+  margin: 0 !important;
 }
 
 .brand-version {
-  font-family: 'Chakra Petch', sans-serif;
-  font-size: 9px;
-  font-weight: 700;
-  color: #38bdf8;
-  background: rgba(56, 189, 248, 0.15);
-  border: 1px solid rgba(56, 189, 248, 0.35);
-  border-radius: 4px;
-  padding: 1px 5px;
-  line-height: 1.2;
+  font-family: 'Chakra Petch', sans-serif !important;
+  font-size: 9px !important;
+  font-weight: 700 !important;
+  color: #38bdf8 !important;
+  background: rgba(56, 189, 248, 0.15) !important;
+  border: 1px solid rgba(56, 189, 248, 0.35) !important;
+  border-radius: 4px !important;
+  padding: 1px 5px !important;
+  line-height: 1.2 !important;
 }
 
 .menu-badge-online {
-  font-family: 'Chakra Petch', sans-serif;
-  font-size: 8.5px;
-  font-weight: 700;
-  letter-spacing: 0.8px;
-  color: #34d399;
-  display: flex;
-  align-items: center;
-  gap: 4px;
+  font-family: 'Chakra Petch', sans-serif !important;
+  font-size: 8.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.8px !important;
+  color: #34d399 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 4px !important;
 }
 
 .online-indicator {
@@ -2339,112 +2354,112 @@ html, body {
 }
 
 .menu-header-right {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
 }
 
 /* Oyuncu Profil VIP Şeridi */
 .menu-profile-wrapper {
-  position: relative;
+  position: relative !important;
 }
 
 .menu-profile-strip {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  border-radius: 12px;
-  padding: 5px 10px;
-  transition: all 0.18s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  display: flex !important;
+  align-items: center !important;
+  gap: 9px !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.10) !important;
+  border-radius: 12px !important;
+  padding: 5px 10px !important;
+  transition: all 0.18s ease !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
 }
 
 .menu-profile-strip:hover {
-  background: rgba(255, 255, 255, 0.07);
-  border-color: rgba(56, 189, 248, 0.4);
+  background: rgba(255, 255, 255, 0.07) !important;
+  border-color: rgba(56, 189, 248, 0.4) !important;
 }
 
 .menu-profile-avatar {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #e11d48 0%, #9f1239 100%);
-  border: 2px solid rgba(255, 255, 255, 0.9);
-  color: #fff;
-  font-family: 'Chakra Petch', sans-serif;
-  font-weight: 800;
-  font-size: 13px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+  width: 34px !important;
+  height: 34px !important;
+  border-radius: 50% !important;
+  background: linear-gradient(135deg, #e11d48 0%, #9f1239 100%) !important;
+  border: 2px solid rgba(255, 255, 255, 0.9) !important;
+  color: #fff !important;
+  font-family: 'Chakra Petch', sans-serif !important;
+  font-weight: 800 !important;
+  font-size: 13px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35) !important;
 }
 
 .menu-profile-details {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  text-align: left;
+  display: flex !important;
+  flex-direction: column !important;
+  min-width: 0 !important;
+  text-align: left !important;
 }
 
 .menu-profile-name {
-  font-size: 13px;
-  font-weight: 700;
-  color: #f8fafc;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 110px;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  color: #f8fafc !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  max-width: 110px !important;
 }
 
 .menu-profile-stats {
-  font-size: 10.5px;
-  color: #ffd700;
-  font-weight: 600;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  font-size: 10.5px !important;
+  color: #ffd700 !important;
+  font-weight: 600 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
 }
 
 .btn-micro {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 8px;
-  color: #e2e8f0;
-  padding: 4px 7px;
-  font-size: 11px;
-  cursor: pointer;
-  transition: all 0.18s ease;
-  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  border-radius: 8px !important;
+  color: #e2e8f0 !important;
+  padding: 4px 7px !important;
+  font-size: 11px !important;
+  cursor: pointer !important;
+  transition: all 0.18s ease !important;
+  flex-shrink: 0 !important;
 }
 
 .btn-micro:hover {
-  background: rgba(56, 189, 248, 0.2);
-  border-color: rgba(56, 189, 248, 0.6);
-  color: #fff;
-  transform: scale(1.06);
+  background: rgba(56, 189, 248, 0.2) !important;
+  border-color: rgba(56, 189, 248, 0.6) !important;
+  color: #fff !important;
+  transform: scale(1.06) !important;
 }
 
 /* Satır İçi Profil Formu Popover */
 .menu-inline-form {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  margin-top: 6px;
-  z-index: 30;
-  width: 240px;
-  display: flex;
-  flex-direction: column;
-  background: rgba(14, 20, 34, 0.98);
-  border: 1px solid rgba(56, 189, 248, 0.5);
-  border-radius: 12px;
-  padding: 10px 12px;
-  backdrop-filter: blur(16px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.85);
-  animation: menuFadeIn 0.15s ease-out;
+  position: absolute !important;
+  top: 100% !important;
+  right: 0 !important;
+  margin-top: 6px !important;
+  z-index: 30 !important;
+  width: 240px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  background: rgba(14, 20, 34, 0.98) !important;
+  border: 1px solid rgba(56, 189, 248, 0.5) !important;
+  border-radius: 12px !important;
+  padding: 10px 12px !important;
+  backdrop-filter: blur(16px) !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.85) !important;
+  animation: menuFadeIn 0.15s ease-out !important;
 }
 
 .menu-inline-form.hidden {
@@ -2452,353 +2467,357 @@ html, body {
 }
 
 .inline-form-title {
-  font-family: 'Chakra Petch', sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  color: #38bdf8;
-  letter-spacing: 0.8px;
-  margin-bottom: 6px;
+  font-family: 'Chakra Petch', sans-serif !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  color: #38bdf8 !important;
+  letter-spacing: 0.8px !important;
+  margin-bottom: 6px !important;
 }
 
 .inline-form-actions {
-  display: flex;
-  gap: 6px;
-  margin-top: 6px;
+  display: flex !important;
+  gap: 6px !important;
+  margin-top: 6px !important;
 }
 
 .btn-save-profile {
-  flex: 2;
+  flex: 2 !important;
   padding: 6px 10px !important;
   font-size: 11px !important;
   font-weight: 700 !important;
   border-radius: 8px !important;
   background: linear-gradient(135deg, #0284c7, #2563eb) !important;
   border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: #fff !important;
 }
 
 .btn-cancel-profile {
-  flex: 1;
-  padding: 6px 8px;
-  font-size: 11px;
-  font-weight: 600;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 8px;
-  color: #94a3b8;
-  cursor: pointer;
-  transition: all 0.15s ease;
+  flex: 1 !important;
+  padding: 6px 8px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 8px !important;
+  color: #94a3b8 !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
 }
 
 .btn-cancel-profile:hover {
-  background: rgba(255, 255, 255, 0.12);
-  color: #fff;
+  background: rgba(255, 255, 255, 0.12) !important;
+  color: #fff !important;
 }
 
 .btn-menu-sound {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 50%;
-  color: #cbd5e1;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
-  cursor: pointer;
-  transition: all 0.18s ease;
-  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  border-radius: 50% !important;
+  color: #cbd5e1 !important;
+  width: 32px !important;
+  height: 32px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 13px !important;
+  cursor: pointer !important;
+  transition: all 0.18s ease !important;
+  flex-shrink: 0 !important;
 }
 
 .btn-menu-sound:hover {
-  background: rgba(255, 255, 255, 0.14);
-  border-color: rgba(255, 255, 255, 0.3);
-  color: #fff;
-  transform: scale(1.08);
+  background: rgba(255, 255, 255, 0.14) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  color: #fff !important;
+  transform: scale(1.08) !important;
 }
 
 /* --------------------------------------------------------------------------
    2. MERKEZ OYUN MODLARI: Kahraman Kartlar & İkincil Modlar
    -------------------------------------------------------------------------- */
 .menu-hub-body {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(8px, 1.6dvh, 14px);
-  flex: 1;
-  min-height: 0;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: clamp(8px, 1.6dvh, 14px) !important;
+  flex: 1 !important;
+  min-height: 0 !important;
 }
 
 /* A) Öne Çıkan İkili Kahraman Modlar */
 .hero-modes-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(8px, 1.5vw, 14px);
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: clamp(8px, 1.5vw, 14px) !important;
 }
 
 .hero-card {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: clamp(10px, 2dvh, 16px) clamp(12px, 1.8vw, 18px);
-  border-radius: 16px;
-  cursor: pointer;
-  text-align: left;
-  overflow: hidden;
-  box-sizing: border-box;
-  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: clamp(10px, 2dvh, 16px) clamp(12px, 1.8vw, 18px) !important;
+  border-radius: 16px !important;
+  cursor: pointer !important;
+  text-align: left !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  outline: none !important;
 }
 
 .hero-play {
-  background: linear-gradient(135deg, #059669 0%, #047857 45%, #064e3b 100%);
-  border: 1px solid rgba(52, 211, 153, 0.45);
-  box-shadow: 0 8px 24px -6px rgba(5, 150, 105, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  background: linear-gradient(135deg, #059669 0%, #047857 45%, #064e3b 100%) !important;
+  border: 1px solid rgba(52, 211, 153, 0.45) !important;
+  box-shadow: 0 8px 24px -6px rgba(5, 150, 105, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
 }
 
 .hero-play:hover {
-  transform: translateY(-2px);
-  border-color: #34d399;
-  box-shadow: 0 12px 30px -4px rgba(5, 150, 105, 0.7), 0 0 24px rgba(52, 211, 153, 0.3);
+  transform: translateY(-2px) !important;
+  border-color: #34d399 !important;
+  box-shadow: 0 12px 30px -4px rgba(5, 150, 105, 0.7), 0 0 24px rgba(52, 211, 153, 0.3) !important;
 }
 
 .hero-multiplayer {
-  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 45%, #1e1b4b 100%);
-  border: 1px solid rgba(96, 165, 250, 0.45);
-  box-shadow: 0 8px 24px -6px rgba(37, 99, 235, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 45%, #1e1b4b 100%) !important;
+  border: 1px solid rgba(96, 165, 250, 0.45) !important;
+  box-shadow: 0 8px 24px -6px rgba(37, 99, 235, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
 }
 
 .hero-multiplayer:hover {
-  transform: translateY(-2px);
-  border-color: #60a5fa;
-  box-shadow: 0 12px 30px -4px rgba(37, 99, 235, 0.7), 0 0 24px rgba(96, 165, 250, 0.3);
+  transform: translateY(-2px) !important;
+  border-color: #60a5fa !important;
+  box-shadow: 0 12px 30px -4px rgba(37, 99, 235, 0.7), 0 0 24px rgba(96, 165, 250, 0.3) !important;
 }
 
 .hero-card:active {
-  transform: scale(0.985);
+  transform: scale(0.985) !important;
 }
 
 .hero-card-left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-width: 0;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  min-width: 0 !important;
 }
 
 .hero-icon-box {
-  width: clamp(38px, 6.5dvh, 46px);
-  height: clamp(38px, 6.5dvh, 46px);
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.16);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: clamp(18px, 3dvh, 22px);
-  color: #fff;
-  flex-shrink: 0;
-  transition: transform 0.2s ease;
+  width: clamp(38px, 6.5dvh, 46px) !important;
+  height: clamp(38px, 6.5dvh, 46px) !important;
+  border-radius: 12px !important;
+  background: rgba(255, 255, 255, 0.16) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: clamp(18px, 3dvh, 22px) !important;
+  color: #fff !important;
+  flex-shrink: 0 !important;
+  transition: transform 0.2s ease !important;
 }
 
 .hero-card:hover .hero-icon-box {
-  transform: scale(1.08);
-  background: rgba(255, 255, 255, 0.24);
+  transform: scale(1.08) !important;
+  background: rgba(255, 255, 255, 0.24) !important;
 }
 
 .hero-card-texts {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
+  display: flex !important;
+  flex-direction: column !important;
+  min-width: 0 !important;
+  text-align: left !important;
 }
 
 .hero-tag {
-  font-family: 'Chakra Petch', sans-serif;
-  font-size: 8.5px;
-  font-weight: 700;
-  letter-spacing: 0.8px;
-  color: rgba(255, 255, 255, 0.75);
+  font-family: 'Chakra Petch', sans-serif !important;
+  font-size: 8.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.8px !important;
+  color: rgba(255, 255, 255, 0.75) !important;
 }
 
 .hero-title {
-  font-family: 'Chakra Petch', sans-serif;
-  font-size: clamp(15px, 2.8dvh, 18px);
-  font-weight: 800;
-  letter-spacing: 1.2px;
-  color: #ffffff;
-  line-height: 1.1;
-  margin-top: 1px;
+  font-family: 'Chakra Petch', sans-serif !important;
+  font-size: clamp(15px, 2.8dvh, 18px) !important;
+  font-weight: 800 !important;
+  letter-spacing: 1.2px !important;
+  color: #ffffff !important;
+  line-height: 1.1 !important;
+  margin-top: 1px !important;
 }
 
 .hero-desc {
-  font-size: clamp(9.5px, 1.7dvh, 11px);
-  color: rgba(255, 255, 255, 0.85);
-  font-weight: 500;
-  margin-top: 2px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  font-size: clamp(9.5px, 1.7dvh, 11px) !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+  font-weight: 500 !important;
+  margin-top: 2px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
 }
 
 .hero-cta-btn {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  padding: 6px 12px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.18);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  font-family: 'Chakra Petch', sans-serif;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.8px;
-  color: #fff;
-  flex-shrink: 0;
-  margin-left: 10px;
-  transition: all 0.2s ease;
+  display: flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  padding: 6px 12px !important;
+  border-radius: 999px !important;
+  background: rgba(255, 255, 255, 0.18) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  font-family: 'Chakra Petch', sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.8px !important;
+  color: #fff !important;
+  flex-shrink: 0 !important;
+  margin-left: 10px !important;
+  transition: all 0.2s ease !important;
 }
 
 .hero-card:hover .hero-cta-btn {
-  background: rgba(255, 255, 255, 0.3);
-  border-color: #fff;
+  background: rgba(255, 255, 255, 0.3) !important;
+  border-color: #fff !important;
 }
 
 .hero-cta-arrow {
-  font-size: 10px;
-  transition: transform 0.2s ease;
+  font-size: 10px !important;
+  transition: transform 0.2s ease !important;
 }
 
 .hero-card:hover .hero-cta-arrow {
-  transform: translateX(3px);
+  transform: translateX(3px) !important;
 }
 
 /* B) 4'lü İkincil Oyun Modları Izgarası */
 .sub-modes-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: clamp(6px, 1.2vw, 10px);
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: clamp(6px, 1.2vw, 10px) !important;
 }
 
 .sub-mode-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: clamp(9px, 1.7dvh, 13px) clamp(10px, 1.2vw, 14px);
-  border-radius: 13px;
-  background: rgba(255, 255, 255, 0.035);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  cursor: pointer;
-  text-align: left;
-  box-sizing: border-box;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  padding: clamp(9px, 1.7dvh, 13px) clamp(10px, 1.2vw, 14px) !important;
+  border-radius: 13px !important;
+  background: rgba(255, 255, 255, 0.035) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  cursor: pointer !important;
+  text-align: left !important;
+  box-sizing: border-box !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  outline: none !important;
 }
 
 .sub-mode-card:hover {
-  transform: translateY(-2px);
-  background: rgba(255, 255, 255, 0.06);
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.45);
+  transform: translateY(-2px) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.45) !important;
 }
 
 .sub-mode-card:active {
-  transform: scale(0.97);
+  transform: scale(0.97) !important;
 }
 
-.card-settings:hover { border-color: rgba(56, 189, 248, 0.55); box-shadow: 0 8px 22px rgba(56, 189, 248, 0.2); }
-.card-tournament:hover { border-color: rgba(245, 158, 11, 0.55); box-shadow: 0 8px 22px rgba(245, 158, 11, 0.2); }
-.card-training:hover { border-color: rgba(249, 115, 22, 0.55); box-shadow: 0 8px 22px rgba(249, 115, 22, 0.2); }
-.card-editor:hover { border-color: rgba(168, 85, 247, 0.55); box-shadow: 0 8px 22px rgba(168, 85, 247, 0.2); }
+.card-settings:hover { border-color: rgba(56, 189, 248, 0.55) !important; box-shadow: 0 8px 22px rgba(56, 189, 248, 0.2) !important; }
+.card-tournament:hover { border-color: rgba(245, 158, 11, 0.55) !important; box-shadow: 0 8px 22px rgba(245, 158, 11, 0.2) !important; }
+.card-training:hover { border-color: rgba(249, 115, 22, 0.55) !important; box-shadow: 0 8px 22px rgba(249, 115, 22, 0.2) !important; }
+.card-editor:hover { border-color: rgba(168, 85, 247, 0.55) !important; box-shadow: 0 8px 22px rgba(168, 85, 247, 0.2) !important; }
 
 .sub-card-icon {
-  font-size: clamp(18px, 3.2dvh, 22px);
-  margin-bottom: 4px;
-  transition: transform 0.2s ease;
+  font-size: clamp(18px, 3.2dvh, 22px) !important;
+  margin-bottom: 4px !important;
+  transition: transform 0.2s ease !important;
 }
 
 .sub-mode-card:hover .sub-card-icon {
-  transform: scale(1.12);
+  transform: scale(1.12) !important;
 }
 
 .sub-card-texts {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
+  display: flex !important;
+  flex-direction: column !important;
+  min-width: 0 !important;
 }
 
 .sub-card-title {
-  font-family: 'Chakra Petch', sans-serif;
-  font-size: clamp(11.5px, 2.1dvh, 13px);
-  font-weight: 700;
-  color: #f8fafc;
-  letter-spacing: 0.3px;
-  line-height: 1.15;
-  white-space: nowrap;
+  font-family: 'Chakra Petch', sans-serif !important;
+  font-size: clamp(11.5px, 2.1dvh, 13px) !important;
+  font-weight: 700 !important;
+  color: #f8fafc !important;
+  letter-spacing: 0.3px !important;
+  line-height: 1.15 !important;
+  white-space: nowrap !important;
 }
 
 .sub-card-desc {
-  font-size: clamp(9px, 1.6dvh, 10px);
-  color: #94a3b8;
-  font-weight: 500;
-  margin-top: 2px;
-  line-height: 1.25;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  font-size: clamp(9px, 1.6dvh, 10px) !important;
+  color: #94a3b8 !important;
+  font-weight: 500 !important;
+  margin-top: 2px !important;
+  line-height: 1.25 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
 }
 
 /* --------------------------------------------------------------------------
    3. ALT BİLGİ & KISAYOL BARI
    -------------------------------------------------------------------------- */
 .menu-hub-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: clamp(8px, 1.4dvh, 10px);
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  gap: 10px;
-  width: 100%;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding-top: clamp(8px, 1.4dvh, 10px) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+  gap: 10px !important;
+  width: 100% !important;
 }
 
 .menu-now-playing {
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 9px;
-  padding: 5px 10px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  transition: all 0.2s ease;
-  max-width: 260px;
+  background: rgba(0, 0, 0, 0.3) !important;
+  border: 1px solid rgba(255, 255, 255, 0.07) !important;
+  border-radius: 9px !important;
+  padding: 5px 10px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 8px !important;
+  transition: all 0.2s ease !important;
+  max-width: 260px !important;
 }
 
 .menu-now-playing:hover {
-  border-color: rgba(56, 189, 248, 0.3);
+  border-color: rgba(56, 189, 248, 0.3) !important;
 }
 
 .now-playing-left {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-width: 0;
-  flex: 1;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  min-width: 0 !important;
+  flex: 1 !important;
 }
 
 .music-wave {
-  display: inline-flex;
-  align-items: flex-end;
-  gap: 2px;
-  height: 11px;
-  flex-shrink: 0;
+  display: inline-flex !important;
+  align-items: flex-end !important;
+  gap: 2px !important;
+  height: 11px !important;
+  flex-shrink: 0 !important;
 }
 
 .music-bar {
-  width: 2px;
-  background: #38bdf8;
-  border-radius: 1px;
-  animation: musicPulse 1.2s infinite ease-in-out alternate;
+  width: 2px !important;
+  background: #38bdf8 !important;
+  border-radius: 1px !important;
+  animation: musicPulse 1.2s infinite ease-in-out alternate !important;
 }
-.music-bar.b1 { height: 40%; animation-delay: 0.1s; }
-.music-bar.b2 { height: 85%; animation-delay: 0.3s; }
-.music-bar.b3 { height: 60%; animation-delay: 0.5s; }
-.music-bar.b4 { height: 100%; animation-delay: 0.2s; }
+.music-bar.b1 { height: 40% !important; animation-delay: 0.1s !important; }
+.music-bar.b2 { height: 85% !important; animation-delay: 0.3s !important; }
+.music-bar.b3 { height: 60% !important; animation-delay: 0.5s !important; }
+.music-bar.b4 { height: 100% !important; animation-delay: 0.2s !important; }
 
 @keyframes musicPulse {
   0% { height: 25%; }
@@ -2806,59 +2825,59 @@ html, body {
 }
 
 .now-playing-title {
-  font-size: 10px;
-  color: #94a3b8;
-  font-weight: 500;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-align: left;
+  font-size: 10px !important;
+  color: #94a3b8 !important;
+  font-weight: 500 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  text-align: left !important;
 }
 
 .btn-now-playing-toggle {
-  background: transparent;
-  border: none;
-  font-size: 12px;
-  cursor: pointer;
-  padding: 0 2px;
-  transition: transform 0.15s ease;
+  background: transparent !important;
+  border: none !important;
+  font-size: 12px !important;
+  cursor: pointer !important;
+  padding: 0 2px !important;
+  transition: transform 0.15s ease !important;
 }
 
 .btn-now-playing-toggle:hover {
-  transform: scale(1.15);
+  transform: scale(1.15) !important;
 }
 
 .menu-secondary-row {
-  display: flex;
-  align-items: center;
-  gap: 7px;
+  display: flex !important;
+  align-items: center !important;
+  gap: 7px !important;
 }
 
 .menu-btn-sub {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 9px;
-  color: #cbd5e1;
-  font-size: 11px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.18s ease;
-  white-space: nowrap;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 6px 12px !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 9px !important;
+  color: #cbd5e1 !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.18s ease !important;
+  white-space: nowrap !important;
 }
 
 .menu-btn-sub:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.2);
-  color: #ffffff;
-  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+  transform: translateY(-1px) !important;
 }
 
 .menu-btn-sub:active {
-  transform: scale(0.97);
+  transform: scale(0.97) !important;
 }
 
 .sub-icon {
