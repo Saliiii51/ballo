@@ -23,60 +23,145 @@
     </div>
   </div>
 
-  <!-- Main Menu Modal (Açılış Menüsü) -->
+  <!-- Main Menu Modal (Açılış Menüsü - Espor Konsol Hub) -->
   <div id="mainMenuModal" class="modal-overlay main-menu-overlay">
     <div class="menu-backdrop-glow"></div>
 
-    <div class="main-menu-card">
-      <!-- SOL PANEL: Marka, Oyuncu Kartı & Müzik -->
-      <div class="menu-col-left">
-        <div class="menu-hero">
-          <div class="menu-brand-row">
-            <div class="menu-brand">
-              <span class="menu-ball-icon">⚽</span>
-              <div class="menu-brand-titles">
-                <h1 class="brand-title">BALLO</h1>
-                <span class="menu-badge-online"><span class="online-indicator"></span>ONLINE</span>
-              </div>
-            </div>
-            <button type="button" id="btnMenuSoundToggle" class="btn-menu-sound" title="Müziği ve Sesi Aç/Kapat">🔊</button>
+    <div class="main-menu-card main-menu-hub">
+      <!-- 1. ÜST BAŞLIK BARI: Logo & Oyuncu VIP Kartı & Ses -->
+      <header class="menu-hub-header">
+        <div class="menu-brand">
+          <div class="brand-crest">
+            <span class="menu-ball-icon">⚽</span>
           </div>
-          <p class="menu-subtitle">2D Çevrimiçi Fizik Futbolu</p>
+          <div class="brand-info">
+            <div class="brand-name-row">
+              <h1 class="brand-title">BALLO</h1>
+              <span class="brand-version">v2.0</span>
+            </div>
+            <span class="menu-badge-online"><span class="online-indicator"></span>CANLI ARENA</span>
+          </div>
         </div>
 
-        <!-- Oyuncu Profil Kartı -->
-        <div class="menu-profile-wrapper">
-          <div class="menu-profile-strip" id="menuProfileStrip">
-            <div class="menu-profile-avatar" id="menuAvatarPreview">10</div>
-            <div class="menu-profile-details">
-              <div class="menu-profile-tag">OYUNCU KARTI</div>
-              <div class="menu-profile-name" id="menuProfileNameText">Misafir Oyuncu</div>
-              <div class="menu-profile-stats" id="menuProfileStatsText">0 Gol • 0 Maç</div>
+        <div class="menu-header-right">
+          <!-- Oyuncu Profil Şeridi -->
+          <div class="menu-profile-wrapper">
+            <div class="menu-profile-strip" id="menuProfileStrip">
+              <div class="menu-profile-avatar" id="menuAvatarPreview">10</div>
+              <div class="menu-profile-details">
+                <div class="menu-profile-name" id="menuProfileNameText">Misafir Oyuncu</div>
+                <div class="menu-profile-stats" id="menuProfileStatsText">0 Gol • 0 Maç</div>
+              </div>
+              <button type="button" id="btnMenuEditProfile" class="btn-micro" title="Profili Düzenle">✏️</button>
             </div>
-            <button type="button" id="btnMenuEditProfile" class="btn-micro" title="Profili Düzenle">✏️</button>
+
+            <!-- Satır İçi Form (Düzenle tıklandığında açılır) -->
+            <form id="menuProfileForm" class="menu-inline-form hidden">
+              <div class="inline-form-title">✏️ PROFİLİ DÜZENLE</div>
+              <div class="form-row">
+                <div class="form-group flex-2">
+                  <label for="nicknameInput">İsim</label>
+                  <input type="text" id="nicknameInput" placeholder="Messi, Kral..." maxlength="15" autocomplete="off">
+                </div>
+                <div class="form-group flex-1">
+                  <label for="avatarInput">Forma</label>
+                  <input type="text" id="avatarInput" placeholder="10" maxlength="3" autocomplete="off" value="10">
+                </div>
+              </div>
+              <div class="inline-form-actions">
+                <button type="submit" id="btnSaveMenuProfile" class="btn-primary btn-save-profile">💾 Kaydet</button>
+                <button type="button" id="btnCancelMenuProfile" class="btn-secondary btn-cancel-profile">İptal</button>
+              </div>
+            </form>
           </div>
 
-          <!-- Satır İçi İsim/Forma Formu (Düzenleme açıkken kartın yerine oturur) -->
-          <form id="menuProfileForm" class="menu-inline-form hidden">
-            <div class="inline-form-title">✏️ PROFİLİ DÜZENLE</div>
-            <div class="form-row">
-              <div class="form-group flex-2">
-                <label for="nicknameInput">İsim</label>
-                <input type="text" id="nicknameInput" placeholder="Messi, Kral..." maxlength="15" autocomplete="off">
-              </div>
-              <div class="form-group flex-1">
-                <label for="avatarInput">Forma</label>
-                <input type="text" id="avatarInput" placeholder="10" maxlength="3" autocomplete="off" value="10">
+          <!-- Ses Aç/Kapat Butonu -->
+          <button type="button" id="btnMenuSoundToggle" class="btn-menu-sound" title="Müziği ve Sesi Aç/Kapat">🔊</button>
+        </div>
+      </header>
+
+      <!-- 2. MERKEZ OYUN MODLARI: Kahraman Kartlar & İkincil Modlar -->
+      <main class="menu-hub-body">
+        <!-- A) Öne Çıkan İkili Kahraman Modlar (Hemen Oyna + Çok Oyunculu) -->
+        <div class="hero-modes-row">
+          <!-- 1. HEMEN OYNA (Yeşil Stadyum Çimi / Hızlı Maç) -->
+          <button type="button" id="btnPlaySolo" class="menu-btn hero-card hero-play">
+            <div class="hero-card-glow"></div>
+            <div class="hero-card-left">
+              <div class="hero-icon-box">⚡</div>
+              <div class="hero-card-texts">
+                <span class="hero-tag">HIZLI KARŞILAŞMA</span>
+                <span class="hero-title">HEMEN OYNA</span>
+                <span class="hero-desc">Yapay zekaya karşı tek tuşla anında sahaya çık</span>
               </div>
             </div>
-            <div class="inline-form-actions">
-              <button type="submit" id="btnSaveMenuProfile" class="btn-primary btn-save-profile">💾 Kaydet</button>
-              <button type="button" id="btnCancelMenuProfile" class="btn-secondary btn-cancel-profile">İptal</button>
+            <div class="hero-cta-btn">
+              <span>BAŞLA</span>
+              <span class="hero-cta-arrow">▶</span>
             </div>
-          </form>
+          </button>
+
+          <!-- 2. ÇOK OYUNCULU LOBİ (Espor Neon Mavi / Canlı Odalar) -->
+          <button type="button" id="btnOpenRoomLobby" class="menu-btn hero-card hero-multiplayer">
+            <div class="hero-card-glow"></div>
+            <div class="hero-card-left">
+              <div class="hero-icon-box">🌐</div>
+              <div class="hero-card-texts">
+                <span class="hero-tag">ONLINE REKABET</span>
+                <span class="hero-title">ÇOK OYUNCULU</span>
+                <span class="hero-desc">Özel oda kur, canlı lobiye katıl ve arkadaşlarınla oyna</span>
+              </div>
+            </div>
+            <div class="hero-cta-btn">
+              <span>LOBİ</span>
+              <span class="hero-cta-arrow">➔</span>
+            </div>
+          </button>
         </div>
 
-        <!-- Müzik Göstergesi (Çalan Parça & Ekolayzır) -->
+        <!-- B) 4'lü İkincil Oyun Modları Izgarası -->
+        <div class="sub-modes-grid">
+          <!-- 3. Maç Ayarları -->
+          <button type="button" id="btnEnterLobby" class="menu-btn sub-mode-card card-settings menu-btn-lobby">
+            <div class="sub-card-icon">⚙️</div>
+            <div class="sub-card-texts">
+              <span class="sub-card-title">Maç Ayarları</span>
+              <span class="sub-card-desc">1v1 - 4v4, Bot Zorluğu, Süre & Format</span>
+            </div>
+          </button>
+
+          <!-- 4. Kupa Turnuvası -->
+          <button type="button" id="btnOpenTournament" class="menu-btn sub-mode-card card-tournament menu-btn-tournament">
+            <div class="sub-card-icon">🏆</div>
+            <div class="sub-card-texts">
+              <span class="sub-card-title">Kupa Turnuvası</span>
+              <span class="sub-card-desc">8 Takımlı Eleme & Şampiyonluk Kupası</span>
+            </div>
+          </button>
+
+          <!-- 5. Şut Antrenmanı -->
+          <button type="button" id="btnOpenTraining" class="menu-btn sub-mode-card card-training menu-btn-training">
+            <div class="sub-card-icon">🎯</div>
+            <div class="sub-card-texts">
+              <span class="sub-card-title">Şut Antrenmanı</span>
+              <span class="sub-card-desc">Baraj & 90 Frikik Serbest Vuruş Pratiği</span>
+            </div>
+          </button>
+
+          <!-- 6. Saha Editörü -->
+          <button type="button" id="btnOpenStadiumEditor" class="menu-btn sub-mode-card card-editor menu-btn-editor">
+            <div class="sub-card-icon">🏟️</div>
+            <div class="sub-card-texts">
+              <span class="sub-card-title">Saha Editörü</span>
+              <span class="sub-card-desc">Kendi Stadyumunu Çiz, Özelleştir & Oyna</span>
+            </div>
+          </button>
+        </div>
+      </main>
+
+      <!-- 3. ALT BİLGİ & KISAYOL BARI -->
+      <footer class="menu-hub-footer">
+        <!-- Sol: Canlı Arka Plan Müzik Çaları -->
         <div class="menu-now-playing" id="menuNowPlaying" title="Arka plan müziği">
           <div class="now-playing-left">
             <span class="music-wave" id="musicWave">
@@ -89,66 +174,8 @@
           </div>
           <button type="button" id="btnNowPlayingMute" class="btn-now-playing-toggle" title="Müziği Aç/Kapat">🔊</button>
         </div>
-      </div>
 
-      <!-- SAĞ PANEL: Hemen Oyna & Oyun Modları -->
-      <div class="menu-col-right">
-        <!-- Ana Kahraman Butonu: HEMEN OYNA -->
-        <button type="button" id="btnPlaySolo" class="menu-btn menu-btn-play">
-          <div class="menu-btn-play-content">
-            <div class="play-icon-box">▶</div>
-            <div class="menu-btn-texts">
-              <span class="menu-btn-title">HEMEN OYNA</span>
-              <span class="menu-btn-desc">Hızlı Maç • Anında Sahaya Çık</span>
-            </div>
-          </div>
-          <span class="play-arrow-chevron">➔</span>
-        </button>
-
-        <!-- Oyun Modları Izgarası (Dengeli 3+2 Dağılım) -->
-        <div class="menu-modes-grid">
-          <button type="button" id="btnEnterLobby" class="menu-btn menu-btn-mode mode-settings menu-btn-lobby">
-            <span class="mode-icon">⚙️</span>
-            <div class="menu-btn-texts">
-              <span class="menu-btn-title">Maç Ayarları</span>
-              <span class="menu-btn-desc">1v1 - 4v4 & Botlar</span>
-            </div>
-          </button>
-
-          <button type="button" id="btnOpenTournament" class="menu-btn menu-btn-mode mode-tournament menu-btn-tournament">
-            <span class="mode-icon">🏆</span>
-            <div class="menu-btn-texts">
-              <span class="menu-btn-title">Kupa Turnuvası</span>
-              <span class="menu-btn-desc">8 Takımlı Eleme</span>
-            </div>
-          </button>
-
-          <button type="button" id="btnOpenRoomLobby" class="menu-btn menu-btn-mode mode-rooms menu-btn-rooms">
-            <span class="mode-icon">👥</span>
-            <div class="menu-btn-texts">
-              <span class="menu-btn-title">Çok Oyunculu</span>
-              <span class="menu-btn-desc">Özel Oda & Lobi</span>
-            </div>
-          </button>
-
-          <button type="button" id="btnOpenTraining" class="menu-btn menu-btn-mode mode-training menu-btn-training">
-            <span class="mode-icon">🎯</span>
-            <div class="menu-btn-texts">
-              <span class="menu-btn-title">Şut Antrenmanı</span>
-              <span class="menu-btn-desc">Frikik & Baraj Pratiği</span>
-            </div>
-          </button>
-
-          <button type="button" id="btnOpenStadiumEditor" class="menu-btn menu-btn-mode mode-editor menu-btn-editor">
-            <span class="mode-icon">🏟️</span>
-            <div class="menu-btn-texts">
-              <span class="menu-btn-title">Saha Editörü</span>
-              <span class="menu-btn-desc">Özel Saha & Yaylar</span>
-            </div>
-          </button>
-        </div>
-
-        <!-- Alt Yardımcı Butonlar -->
+        <!-- Sağ: Kısayol Aksiyon Butonları -->
         <div class="menu-secondary-row">
           <button type="button" id="btnMenuLeaderboard" class="menu-btn-sub">
             <span class="sub-icon">👑</span> Gol Krallığı
@@ -160,20 +187,20 @@
             <span class="sub-icon">🎮</span> Nasıl Oynanır
           </button>
         </div>
+      </footer>
 
-        <!-- Taktikler & Kontroller Bilgi Katmanı (Açıldığında sağ panelin üstünü kaplar, kaydırma yaptırmaz) -->
-        <div id="howToPlayBox" class="how-to-play-box hidden">
-          <div class="how-to-play-header">
-            <h4>🎮 Oyun Kontrolleri & Taktikler</h4>
-            <button type="button" id="btnCloseHowToPlay" class="btn-close-htp" title="Kapat">✕</button>
-          </div>
-          <ul class="how-to-play-list">
-            <li><span class="htp-key-wrap"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></span> <span class="htp-label">Hareket (Mobilde Sol Joystick)</span></li>
-            <li><span class="htp-key-wrap"><kbd>SPACE</kbd> / <kbd>X</kbd></span> <span class="htp-label">Şut & Pas (Mobilde Sağ Buton)</span></li>
-            <li><span class="htp-key-wrap"><kbd>ENTER</kbd></span> <span class="htp-label">Sohbet Mesajı Yaz</span></li>
-            <li><span class="htp-key-wrap">⚡ FALSO</span> <span class="htp-label">Şut tuşuna basılı tutarak topa açı ve sertlik ver</span></li>
-          </ul>
+      <!-- Taktikler & Kontroller Bilgi Katmanı (Açıldığında hub'ın üstünü kaplar) -->
+      <div id="howToPlayBox" class="how-to-play-box hidden">
+        <div class="how-to-play-header">
+          <h4>🎮 Oyun Kontrolleri & Taktikler</h4>
+          <button type="button" id="btnCloseHowToPlay" class="btn-close-htp" title="Kapat">✕</button>
         </div>
+        <ul class="how-to-play-list">
+          <li><span class="htp-key-wrap"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></span> <span class="htp-label">Hareket (Mobilde Sol Dokunmatik Joystick)</span></li>
+          <li><span class="htp-key-wrap"><kbd>SPACE</kbd> / <kbd>X</kbd></span> <span class="htp-label">Şut & Pas (Mobilde Sağ Şut Butonu)</span></li>
+          <li><span class="htp-key-wrap"><kbd>ENTER</kbd></span> <span class="htp-label">Oyun İçi Sohbet Mesajı Gönder</span></li>
+          <li><span class="htp-key-wrap">⚡ FALSO</span> <span class="htp-label">Topa vururken yön tuşunu basılı tutarak kavis ve falso ver</span></li>
+        </ul>
       </div>
     </div>
   </div>

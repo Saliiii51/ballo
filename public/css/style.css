@@ -2204,39 +2204,40 @@ html, body {
 }
 
 /* ==========================================================================
-   Main Menu Modal Styles - Ultra-Sleek Esports Game Hub
+   Main Menu Modal Styles - Ultra-Sleek Esports Console Hub
    ========================================================================== */
 .main-menu-overlay {
-  background: radial-gradient(circle at 50% 45%, rgba(15, 23, 42, 0.82) 0%, rgba(3, 7, 18, 0.94) 100%) !important;
-  backdrop-filter: blur(16px);
+  background: radial-gradient(circle at 50% 30%, rgba(15, 23, 42, 0.88) 0%, rgba(2, 6, 23, 0.98) 100%) !important;
+  backdrop-filter: blur(20px);
 }
 
 .menu-backdrop-glow {
   position: absolute;
-  width: 520px;
+  width: min(90vw, 850px);
   height: 520px;
-  background: radial-gradient(circle, rgba(14, 165, 233, 0.12) 0%, rgba(14, 165, 233, 0) 70%);
+  background: radial-gradient(ellipse at center, rgba(14, 165, 233, 0.14) 0%, transparent 70%);
   border-radius: 50%;
   filter: blur(90px);
   pointer-events: none;
   z-index: 1;
 }
 
-.main-menu-card {
+.main-menu-card.main-menu-hub {
   position: relative;
-  width: min(88vw, 710px) !important;
-  max-width: 710px !important;
+  width: min(94vw, 880px) !important;
+  max-width: 880px !important;
   height: auto !important;
   max-height: 94dvh !important;
-  padding: 16px 20px !important;
-  background: linear-gradient(145deg, rgba(17, 24, 39, 0.96) 0%, rgba(10, 15, 26, 0.98) 100%);
+  padding: clamp(14px, 2.2dvh, 22px) clamp(16px, 2.2vw, 26px) !important;
+  background: linear-gradient(165deg, rgba(21, 31, 53, 0.96) 0%, rgba(10, 16, 30, 0.98) 100%);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 18px;
-  box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.05), 0 0 40px rgba(14, 165, 233, 0.06);
-  display: grid;
-  grid-template-columns: 215px 1fr;
-  gap: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 20px;
+  box-shadow: 0 30px 80px -15px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.04), 0 0 50px rgba(14, 165, 233, 0.08);
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  gap: clamp(10px, 1.8dvh, 16px) !important;
   overflow: hidden !important;
   box-sizing: border-box;
   z-index: 2;
@@ -2250,59 +2251,72 @@ html, body {
 }
 
 /* --------------------------------------------------------------------------
-   SOL PANEL: Marka, Oyuncu Kartı & Müzik Barı
+   1. ÜST BAŞLIK BARI: Marka Logo, Oyuncu VIP Kartı & Ses
    -------------------------------------------------------------------------- */
-.menu-col-left {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 10px;
-  border-right: 1px solid rgba(255, 255, 255, 0.07);
-  padding-right: 16px;
-  min-width: 0;
-  box-sizing: border-box;
-}
-
-/* Brand Hero */
-.menu-hero {
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.menu-brand-row {
+.menu-hub-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding-bottom: clamp(8px, 1.4dvh, 12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   width: 100%;
 }
 
 .menu-brand {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+}
+
+.brand-crest {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
 }
 
 .menu-ball-icon {
-  font-size: 22px;
-  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.5));
+  font-size: 20px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
 }
 
-.menu-brand-titles {
+.brand-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.brand-name-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .brand-title {
   font-family: 'Chakra Petch', sans-serif;
-  font-size: 23px;
-  font-weight: 700;
+  font-size: clamp(20px, 3.5dvh, 24px);
+  font-weight: 800;
   letter-spacing: 2px;
   color: #ffffff;
   line-height: 1;
   margin: 0;
+}
+
+.brand-version {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: 4px;
+  padding: 1px 5px;
+  line-height: 1.2;
 }
 
 .menu-badge-online {
@@ -2311,10 +2325,6 @@ html, body {
   font-weight: 700;
   letter-spacing: 0.8px;
   color: #34d399;
-  background: rgba(16, 185, 129, 0.12);
-  border: 1px solid rgba(16, 185, 129, 0.35);
-  border-radius: 999px;
-  padding: 1.5px 6px;
   display: flex;
   align-items: center;
   gap: 4px;
@@ -2328,87 +2338,72 @@ html, body {
   box-shadow: 0 0 6px #34d399;
 }
 
-.menu-subtitle {
-  font-size: 10.5px;
-  color: #94a3b8;
-  font-weight: 500;
-  letter-spacing: 0.3px;
-  margin: 0;
+.menu-header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-/* Oyuncu Profil Kartı */
+/* Oyuncu Profil VIP Şeridi */
 .menu-profile-wrapper {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin: 0;
 }
 
 .menu-profile-strip {
   display: flex;
   align-items: center;
-  gap: 10px;
-  background: rgba(255, 255, 255, 0.035);
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  gap: 9px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.10);
   border-radius: 12px;
-  padding: 9px 11px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
-  text-align: left;
-  transition: all 0.2s ease;
+  padding: 5px 10px;
+  transition: all 0.18s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }
 
 .menu-profile-strip:hover {
-  border-color: rgba(56, 189, 248, 0.35);
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(56, 189, 248, 0.4);
 }
 
 .menu-profile-avatar {
-  width: 40px;
-  height: 40px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   background: linear-gradient(135deg, #e11d48 0%, #9f1239 100%);
   border: 2px solid rgba(255, 255, 255, 0.9);
   color: #fff;
   font-family: 'Chakra Petch', sans-serif;
-  font-weight: 700;
-  font-size: 14px;
+  font-weight: 800;
+  font-size: 13px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
 }
 
 .menu-profile-details {
-  flex: 1;
+  display: flex;
+  flex-direction: column;
   min-width: 0;
-}
-
-.menu-profile-tag {
-  font-size: 8.5px;
-  color: #38bdf8;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  font-weight: 700;
-  margin-bottom: 2px;
+  text-align: left;
 }
 
 .menu-profile-name {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   color: #f8fafc;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  letter-spacing: 0.2px;
+  max-width: 110px;
 }
 
 .menu-profile-stats {
-  font-size: 11px;
-  color: #94a3b8;
-  font-weight: 500;
-  margin-top: 1px;
+  font-size: 10.5px;
+  color: #ffd700;
+  font-weight: 600;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -2419,8 +2414,8 @@ html, body {
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 8px;
   color: #e2e8f0;
-  padding: 5px 8px;
-  font-size: 12px;
+  padding: 4px 7px;
+  font-size: 11px;
   cursor: pointer;
   transition: all 0.18s ease;
   flex-shrink: 0;
@@ -2430,23 +2425,25 @@ html, body {
   background: rgba(56, 189, 248, 0.2);
   border-color: rgba(56, 189, 248, 0.6);
   color: #fff;
-  transform: scale(1.05);
+  transform: scale(1.06);
 }
 
-/* Satır İçi Profil Formu */
+/* Satır İçi Profil Formu Popover */
 .menu-inline-form {
   position: absolute;
-  inset: 0;
-  z-index: 15;
+  top: 100%;
+  right: 0;
+  margin-top: 6px;
+  z-index: 30;
+  width: 240px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   background: rgba(14, 20, 34, 0.98);
-  border: 1px solid rgba(56, 189, 248, 0.45);
+  border: 1px solid rgba(56, 189, 248, 0.5);
   border-radius: 12px;
-  padding: 8px 12px;
-  backdrop-filter: blur(14px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+  padding: 10px 12px;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.85);
   animation: menuFadeIn 0.15s ease-out;
 }
 
@@ -2460,13 +2457,13 @@ html, body {
   font-weight: 700;
   color: #38bdf8;
   letter-spacing: 0.8px;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 .inline-form-actions {
   display: flex;
   gap: 6px;
-  margin-top: 4px;
+  margin-top: 6px;
 }
 
 .btn-save-profile {
@@ -2497,17 +2494,279 @@ html, body {
   color: #fff;
 }
 
-/* Now Playing Müzik Çubuğu */
+.btn-menu-sound {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 50%;
+  color: #cbd5e1;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  flex-shrink: 0;
+}
+
+.btn-menu-sound:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #fff;
+  transform: scale(1.08);
+}
+
+/* --------------------------------------------------------------------------
+   2. MERKEZ OYUN MODLARI: Kahraman Kartlar & İkincil Modlar
+   -------------------------------------------------------------------------- */
+.menu-hub-body {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 1.6dvh, 14px);
+  flex: 1;
+  min-height: 0;
+}
+
+/* A) Öne Çıkan İkili Kahraman Modlar */
+.hero-modes-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(8px, 1.5vw, 14px);
+}
+
+.hero-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: clamp(10px, 2dvh, 16px) clamp(12px, 1.8vw, 18px);
+  border-radius: 16px;
+  cursor: pointer;
+  text-align: left;
+  overflow: hidden;
+  box-sizing: border-box;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-play {
+  background: linear-gradient(135deg, #059669 0%, #047857 45%, #064e3b 100%);
+  border: 1px solid rgba(52, 211, 153, 0.45);
+  box-shadow: 0 8px 24px -6px rgba(5, 150, 105, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.hero-play:hover {
+  transform: translateY(-2px);
+  border-color: #34d399;
+  box-shadow: 0 12px 30px -4px rgba(5, 150, 105, 0.7), 0 0 24px rgba(52, 211, 153, 0.3);
+}
+
+.hero-multiplayer {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 45%, #1e1b4b 100%);
+  border: 1px solid rgba(96, 165, 250, 0.45);
+  box-shadow: 0 8px 24px -6px rgba(37, 99, 235, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.hero-multiplayer:hover {
+  transform: translateY(-2px);
+  border-color: #60a5fa;
+  box-shadow: 0 12px 30px -4px rgba(37, 99, 235, 0.7), 0 0 24px rgba(96, 165, 250, 0.3);
+}
+
+.hero-card:active {
+  transform: scale(0.985);
+}
+
+.hero-card-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.hero-icon-box {
+  width: clamp(38px, 6.5dvh, 46px);
+  height: clamp(38px, 6.5dvh, 46px);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(18px, 3dvh, 22px);
+  color: #fff;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.hero-card:hover .hero-icon-box {
+  transform: scale(1.08);
+  background: rgba(255, 255, 255, 0.24);
+}
+
+.hero-card-texts {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.hero-tag {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.hero-title {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: clamp(15px, 2.8dvh, 18px);
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  color: #ffffff;
+  line-height: 1.1;
+  margin-top: 1px;
+}
+
+.hero-desc {
+  font-size: clamp(9.5px, 1.7dvh, 11px);
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 500;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hero-cta-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  color: #fff;
+  flex-shrink: 0;
+  margin-left: 10px;
+  transition: all 0.2s ease;
+}
+
+.hero-card:hover .hero-cta-btn {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: #fff;
+}
+
+.hero-cta-arrow {
+  font-size: 10px;
+  transition: transform 0.2s ease;
+}
+
+.hero-card:hover .hero-cta-arrow {
+  transform: translateX(3px);
+}
+
+/* B) 4'lü İkincil Oyun Modları Izgarası */
+.sub-modes-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(6px, 1.2vw, 10px);
+}
+
+.sub-mode-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(9px, 1.7dvh, 13px) clamp(10px, 1.2vw, 14px);
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  text-align: left;
+  box-sizing: border-box;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sub-mode-card:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.45);
+}
+
+.sub-mode-card:active {
+  transform: scale(0.97);
+}
+
+.card-settings:hover { border-color: rgba(56, 189, 248, 0.55); box-shadow: 0 8px 22px rgba(56, 189, 248, 0.2); }
+.card-tournament:hover { border-color: rgba(245, 158, 11, 0.55); box-shadow: 0 8px 22px rgba(245, 158, 11, 0.2); }
+.card-training:hover { border-color: rgba(249, 115, 22, 0.55); box-shadow: 0 8px 22px rgba(249, 115, 22, 0.2); }
+.card-editor:hover { border-color: rgba(168, 85, 247, 0.55); box-shadow: 0 8px 22px rgba(168, 85, 247, 0.2); }
+
+.sub-card-icon {
+  font-size: clamp(18px, 3.2dvh, 22px);
+  margin-bottom: 4px;
+  transition: transform 0.2s ease;
+}
+
+.sub-mode-card:hover .sub-card-icon {
+  transform: scale(1.12);
+}
+
+.sub-card-texts {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.sub-card-title {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: clamp(11.5px, 2.1dvh, 13px);
+  font-weight: 700;
+  color: #f8fafc;
+  letter-spacing: 0.3px;
+  line-height: 1.15;
+  white-space: nowrap;
+}
+
+.sub-card-desc {
+  font-size: clamp(9px, 1.6dvh, 10px);
+  color: #94a3b8;
+  font-weight: 500;
+  margin-top: 2px;
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* --------------------------------------------------------------------------
+   3. ALT BİLGİ & KISAYOL BARI
+   -------------------------------------------------------------------------- */
+.menu-hub-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: clamp(8px, 1.4dvh, 10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  gap: 10px;
+  width: 100%;
+}
+
 .menu-now-playing {
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: 9px;
-  padding: 6px 10px;
+  padding: 5px 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
   transition: all 0.2s ease;
+  max-width: 260px;
 }
 
 .menu-now-playing:hover {
@@ -2526,12 +2785,12 @@ html, body {
   display: inline-flex;
   align-items: flex-end;
   gap: 2px;
-  height: 12px;
+  height: 11px;
   flex-shrink: 0;
 }
 
 .music-bar {
-  width: 2.5px;
+  width: 2px;
   background: #38bdf8;
   border-radius: 1px;
   animation: musicPulse 1.2s infinite ease-in-out alternate;
@@ -2547,237 +2806,40 @@ html, body {
 }
 
 .now-playing-title {
-  font-size: 10.5px;
-  color: #94a3b8;
-  font-weight: 500;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-align: left;
-}
-
-.btn-now-playing-toggle, .btn-menu-sound {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 50%;
-  color: #cbd5e1;
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  cursor: pointer;
-  transition: all 0.18s ease;
-  flex-shrink: 0;
-}
-
-.btn-now-playing-toggle:hover, .btn-menu-sound:hover {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.25);
-  color: #fff;
-  transform: scale(1.05);
-}
-
-.btn-now-playing-toggle:active, .btn-menu-sound:active {
-  transform: scale(0.95);
-}
-
-/* --------------------------------------------------------------------------
-   SAĞ PANEL: Hemen Oyna & Oyun Modları
-   -------------------------------------------------------------------------- */
-.menu-col-right {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 10px;
-  min-width: 0;
-  box-sizing: border-box;
-}
-
-/* Ana Kahraman Butonu: HEMEN OYNA */
-.menu-btn-play {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 18px;
-  border-radius: 14px;
-  border: 1px solid rgba(56, 189, 248, 0.45);
-  background: linear-gradient(135deg, #0284c7 0%, #0369a1 60%, #075985 100%);
-  box-shadow: 0 8px 20px -4px rgba(2, 132, 199, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.25);
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  overflow: hidden;
-}
-
-.menu-btn-play:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 26px -4px rgba(2, 132, 199, 0.6), 0 0 20px rgba(56, 189, 248, 0.25);
-  border-color: #38bdf8;
-}
-
-.menu-btn-play:active {
-  transform: scale(0.985);
-}
-
-.menu-btn-play-content {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.play-icon-box {
-  width: 36px;
-  height: 36px;
-  background: rgba(255, 255, 255, 0.16);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 15px;
-  color: #ffffff;
-  flex-shrink: 0;
-  transition: transform 0.2s ease;
-}
-
-.menu-btn-play:hover .play-icon-box {
-  transform: scale(1.08);
-  background: rgba(255, 255, 255, 0.24);
-}
-
-.menu-btn-play .menu-btn-texts {
-  text-align: left;
-}
-
-.menu-btn-play .menu-btn-title {
-  font-family: 'Chakra Petch', sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: 1.2px;
-  color: #ffffff;
-  line-height: 1.1;
-  margin: 0;
-}
-
-.menu-btn-play .menu-btn-desc {
-  font-size: 10.5px;
-  color: #bae6fd;
-  font-weight: 500;
-  margin-top: 2px;
-}
-
-.play-arrow-chevron {
-  font-size: 16px;
-  color: #bae6fd;
-  transition: transform 0.2s ease;
-}
-
-.menu-btn-play:hover .play-arrow-chevron {
-  transform: translateX(4px);
-  color: #fff;
-}
-
-/* Oyun Modları Izgarası (3+2 Dengeli Tasarım) */
-.menu-modes-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 7px;
-  margin: 0;
-}
-
-.menu-btn-mode {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 9px 12px;
-  border-radius: 11px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.03);
-  cursor: pointer;
-  text-align: left;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  box-sizing: border-box;
-}
-
-.menu-btn-mode:hover {
-  transform: translateY(-2px);
-  background: rgba(255, 255, 255, 0.06);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-}
-
-.menu-btn-mode:active {
-  transform: scale(0.98);
-}
-
-/* Subtle accent hover borders */
-.mode-settings:hover { border-color: rgba(56, 189, 248, 0.5); }
-.mode-tournament:hover { border-color: rgba(245, 158, 11, 0.5); }
-.mode-rooms:hover { border-color: rgba(52, 211, 153, 0.5); }
-.mode-training:hover { border-color: rgba(249, 115, 22, 0.5); }
-.mode-editor:hover { border-color: rgba(168, 85, 247, 0.5); }
-
-/* Grid dağılımı: 1. satırda 3 kart (her biri 2 span), 2. satırda 2 kart (her biri 3 span) */
-.mode-settings, .mode-tournament, .mode-rooms {
-  grid-column: span 2;
-}
-
-.mode-training, .mode-editor {
-  grid-column: span 3;
-}
-
-.mode-icon {
-  font-size: 18px;
-  flex-shrink: 0;
-  transition: transform 0.2s ease;
-}
-
-.menu-btn-mode:hover .mode-icon {
-  transform: scale(1.12);
-}
-
-.menu-btn-mode .menu-btn-texts {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
-.menu-btn-mode .menu-btn-title {
-  font-family: 'Chakra Petch', sans-serif;
-  font-size: 12.5px;
-  font-weight: 700;
-  color: #f8fafc;
-  letter-spacing: 0.3px;
-  line-height: 1.15;
-  white-space: nowrap;
-}
-
-.menu-btn-mode .menu-btn-desc {
   font-size: 10px;
   color: #94a3b8;
   font-weight: 500;
-  margin-top: 2px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-align: left;
 }
 
-/* Alt Yardımcı Butonlar */
+.btn-now-playing-toggle {
+  background: transparent;
+  border: none;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 0 2px;
+  transition: transform 0.15s ease;
+}
+
+.btn-now-playing-toggle:hover {
+  transform: scale(1.15);
+}
+
 .menu-secondary-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  display: flex;
+  align-items: center;
   gap: 7px;
 }
 
 .menu-btn-sub {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 6px;
-  padding: 7px 8px;
-  background: rgba(255, 255, 255, 0.035);
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 9px;
   color: #cbd5e1;
@@ -2789,7 +2851,7 @@ html, body {
 }
 
 .menu-btn-sub:hover {
-  background: rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.08);
   border-color: rgba(255, 255, 255, 0.2);
   color: #ffffff;
   transform: translateY(-1px);
@@ -2803,15 +2865,15 @@ html, body {
   font-size: 12px;
 }
 
-/* Taktikler Bilgi Katmanı (Açıldığında sağ panelin üzerine biner, asla kaydırma yapmaz) */
+/* Taktikler Bilgi Katmanı (Açıldığında hub'ın üzerine biner, asla kaydırma yapmaz) */
 .how-to-play-box {
   position: absolute;
   inset: 0;
   background: rgba(11, 16, 28, 0.97);
   border: 1.5px solid rgba(56, 189, 248, 0.45);
-  border-radius: 14px;
-  padding: clamp(8px, 1.8dvh, 14px) clamp(10px, 1.5vw, 16px);
-  backdrop-filter: blur(16px);
+  border-radius: 16px;
+  padding: clamp(10px, 2dvh, 16px) clamp(14px, 2vw, 20px);
+  backdrop-filter: blur(20px);
   z-index: 25;
   display: flex;
   flex-direction: column;
@@ -2829,11 +2891,11 @@ html, body {
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  padding-bottom: 4px;
+  padding-bottom: 6px;
 }
 
 .how-to-play-box h4 {
-  font-size: clamp(11px, 2.2dvh, 13px);
+  font-size: clamp(12px, 2.2dvh, 14px);
   color: #ffd700;
   margin: 0;
   font-family: 'Chakra Petch', sans-serif;
@@ -2845,8 +2907,8 @@ html, body {
   border: none;
   border-radius: 50%;
   color: #94a3b8;
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2864,30 +2926,30 @@ html, body {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: clamp(4px, 1dvh, 7px);
+  gap: clamp(6px, 1.2dvh, 10px);
   padding: 0;
-  margin: 4px 0;
+  margin: 6px 0;
 }
 
 .how-to-play-list li {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: clamp(10px, 1.9dvh, 11.5px);
+  gap: 10px;
+  font-size: clamp(10.5px, 1.9dvh, 12px);
   color: #cbd5e1;
 }
 
 .htp-key-wrap {
   display: inline-flex;
-  gap: 3px;
+  gap: 4px;
   flex-shrink: 0;
-  min-width: 80px;
+  min-width: 90px;
 }
 
 .how-to-play-box kbd {
   background: #1e293b;
   color: #38bdf8;
-  padding: 1px 5px;
+  padding: 2px 6px;
   border-radius: 4px;
   font-size: 10px;
   font-family: monospace;
@@ -2903,170 +2965,166 @@ html, body {
    DİKEY EKRAN & KÜÇÜK CİHAZ UYUMLULUĞU (PORTRAIT MOBİL FALLBACK)
    -------------------------------------------------------------------------- */
 @media screen and (max-width: 660px) and (orientation: portrait), (max-aspect-ratio: 1/1) and (max-width: 660px) {
-  .main-menu-card {
-    grid-template-columns: 1fr;
-    height: auto;
-    max-height: 96dvh;
+  .main-menu-card.main-menu-hub {
+    width: 95vw !important;
+    max-height: 96dvh !important;
     overflow-y: auto !important;
-    gap: 12px;
+    gap: 12px !important;
+    padding: 12px 14px !important;
   }
 
-  .menu-col-left {
-    border-right: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    padding-right: 0;
-    padding-bottom: 10px;
+  .menu-hub-header {
+    flex-direction: column;
+    align-items: flex-start;
     gap: 8px;
   }
 
-  .menu-modes-grid {
+  .menu-header-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .hero-modes-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .sub-modes-grid {
     grid-template-columns: 1fr 1fr;
+    gap: 6px;
   }
 
-  .menu-btn-lobby, .menu-btn-tournament, .menu-btn-rooms, .menu-btn-training, .menu-btn-editor {
-    grid-column: span 1 !important;
+  .menu-hub-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
   }
-}
 
-.btn-menu-return {
-  background: linear-gradient(135deg, #2b3245, #1f2533);
-  color: #ffd700;
-  border: 1px solid rgba(255, 215, 0, 0.3);
-  font-weight: 700;
-}
+  .menu-secondary-row {
+    justify-content: space-between;
+  }
 
-.btn-menu-return:hover {
-  background: #39425b;
-  border-color: #ffd700;
-  transform: translateY(-1px);
+  .menu-secondary-row .menu-btn-sub {
+    flex: 1;
+    justify-content: center;
+  }
 }
 
 /* --------------------------------------------------------------------------
    ULTRA-COMPACT YATAY MOBİL (Height <= 420px) - SIFIR KAYDIRMA GARANTİSİ
    -------------------------------------------------------------------------- */
 @media screen and (orientation: landscape) and (max-height: 420px) {
-  .main-menu-card {
-    width: min(86vw, 670px) !important;
-    max-width: 670px !important;
-    height: auto !important;
-    max-height: 94dvh !important;
-    padding: 8px 12px !important;
-    gap: 10px !important;
-    border-radius: 16px !important;
-    grid-template-columns: 190px 1fr !important;
-  }
-
-  .menu-col-left {
+  .main-menu-card.main-menu-hub {
+    width: min(94vw, 760px) !important;
+    max-height: 95dvh !important;
+    padding: 7px 12px !important;
     gap: 6px !important;
-    padding-right: 12px !important;
+    border-radius: 14px !important;
   }
 
-  .menu-col-right {
-    gap: 6px !important;
+  .menu-hub-header {
+    padding-bottom: 5px !important;
   }
 
-  .menu-hero {
-    gap: 0px;
+  .brand-crest {
+    width: 28px !important;
+    height: 28px !important;
   }
 
   .menu-ball-icon {
-    font-size: 20px;
+    font-size: 16px !important;
   }
 
-  .menu-brand h1 {
-    font-size: 18px;
-    letter-spacing: 1.5px;
-  }
-
-  .menu-subtitle {
-    display: none;
-  }
-
-  .menu-profile-wrapper {
-    margin: 0 !important;
+  .brand-title {
+    font-size: 17px !important;
   }
 
   .menu-profile-strip {
-    padding: 6px 8px;
-    gap: 8px;
-    border-radius: 10px;
+    padding: 3px 8px !important;
+    gap: 6px !important;
   }
 
   .menu-profile-avatar {
-    width: 34px;
-    height: 34px;
-    font-size: 13px;
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 11px !important;
   }
 
   .menu-profile-name {
-    font-size: 13px;
+    font-size: 12px !important;
   }
 
   .menu-profile-stats {
-    font-size: 10.5px;
-  }
-
-  .btn-micro {
-    padding: 4px 7px;
-    font-size: 11px;
-  }
-
-  .menu-now-playing {
-    padding: 4px 8px;
-    border-radius: 8px;
-  }
-
-  .now-playing-title {
-    font-size: 10.5px;
-  }
-
-  .menu-btn-play {
-    padding: 8px 14px;
-    min-height: 42px;
-    border-radius: 10px;
-  }
-
-  .menu-btn-play .menu-btn-title {
-    font-size: 14px;
-  }
-
-  .menu-btn-play .menu-btn-desc {
-    font-size: 10px;
-  }
-
-  .menu-modes-grid {
-    gap: 5px !important;
-    margin: 0 !important;
-  }
-
-  .menu-modes-grid .menu-btn {
-    padding: 6px 8px;
-    min-height: 38px;
-    border-radius: 8px;
-  }
-
-  .menu-modes-grid .menu-btn-title {
-    font-size: 11.5px;
-  }
-
-  .menu-modes-grid .menu-btn-desc {
-    font-size: 9.5px;
-  }
-
-  .menu-secondary-row {
-    gap: 5px;
-  }
-
-  .menu-btn-sub {
-    padding: 5px 6px;
-    font-size: 10.5px;
-    border-radius: 7px;
+    font-size: 9.5px !important;
   }
 
   .btn-menu-sound {
-    width: 28px;
-    height: 28px;
-    font-size: 13px;
+    width: 26px !important;
+    height: 26px !important;
+    font-size: 11px !important;
+  }
+
+  .hero-modes-row {
+    gap: 6px !important;
+  }
+
+  .hero-card {
+    padding: 6px 10px !important;
+    border-radius: 10px !important;
+  }
+
+  .hero-icon-box {
+    width: 30px !important;
+    height: 30px !important;
+    font-size: 15px !important;
+  }
+
+  .hero-title {
+    font-size: 13.5px !important;
+  }
+
+  .hero-desc {
+    display: none !important;
+  }
+
+  .hero-cta-btn {
+    padding: 3px 8px !important;
+    font-size: 9.5px !important;
+  }
+
+  .sub-modes-grid {
+    gap: 5px !important;
+  }
+
+  .sub-mode-card {
+    padding: 5px 8px !important;
+    border-radius: 9px !important;
+  }
+
+  .sub-card-icon {
+    font-size: 15px !important;
+    margin-bottom: 2px !important;
+  }
+
+  .sub-card-title {
+    font-size: 11px !important;
+  }
+
+  .sub-card-desc {
+    display: none !important;
+  }
+
+  .menu-hub-footer {
+    padding-top: 5px !important;
+  }
+
+  .menu-now-playing {
+    padding: 3px 6px !important;
+  }
+
+  .menu-btn-sub {
+    padding: 4px 8px !important;
+    font-size: 10px !important;
   }
 }
 
