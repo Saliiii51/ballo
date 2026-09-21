@@ -5,11 +5,11 @@
     "avatar": "10",
     "aura": "none",
     "title": "Efsane Kaptan",
-    "goals": 22,
-    "matches": 21,
+    "goals": 23,
+    "matches": 22,
     "wins": 7,
     "createdAt": 1789855098239,
-    "lastActiveAt": 1789926524216
+    "lastActiveAt": 1790016581920
   },
   {
     "key": "messsi",
@@ -18,10 +18,10 @@
     "aura": "none",
     "title": "Çaylak Forvet",
     "goals": 36,
-    "matches": 21,
-    "wins": 15,
+    "matches": 25,
+    "wins": 17,
     "createdAt": 1789856818404,
-    "lastActiveAt": 1789926524216
+    "lastActiveAt": 1790017561451
   },
   {
     "key": "asfasf",
@@ -65,10 +65,94 @@
     "avatar": "10",
     "aura": "none",
     "title": "Çaylak Forvet",
-    "goals": 1,
+    "goals": 2,
     "matches": 0,
     "wins": 0,
     "createdAt": 1789925877870,
-    "lastActiveAt": 1789925917107
+    "lastActiveAt": 1790015406873
+  },
+  {
+    "key": "neymar",
+    "name": "Neymar",
+    "avatar": "10",
+    "aura": "none",
+    "title": "Çaylak Forvet",
+    "goals": 0,
+    "matches": 0,
+    "wins": 0,
+    "createdAt": 1790015438352,
+    "lastActiveAt": 1790015438352
+  },
+  {
+    "key": "de bruyne",
+    "name": "De Bruyne",
+    "avatar": "10",
+    "aura": "none",
+    "title": "Çaylak Forvet",
+    "goals": 0,
+    "matches": 0,
+    "wins": 0,
+    "createdAt": 1790015601956,
+    "lastActiveAt": 1790015601956
+  },
+  {
+    "key": "kerem",
+    "name": "Kerem",
+    "avatar": "10",
+    "aura": "none",
+    "title": "Çaylak Forvet",
+    "goals": 1,
+    "matches": 0,
+    "wins": 0,
+    "createdAt": 1790015648449,
+    "lastActiveAt": 1790015666075
+  },
+  {
+    "key": "sihirbaz",
+    "name": "Sihirbaz",
+    "avatar": "10",
+    "aura": "none",
+    "title": "Çaylak Forvet",
+    "goals": 1,
+    "matches": 0,
+    "wins": 0,
+    "createdAt": 1790015841595,
+    "lastActiveAt": 1790015990319
+  },
+  {
+    "key": "zidane",
+    "name": "Zidane",
+    "avatar": "10",
+    "aura": "none",
+    "title": "Çaylak Forvet",
+    "goals": 0,
+    "matches": 0,
+    "wins": 0,
+    "createdAt": 1790016362261,
+    "lastActiveAt": 1790016362261
+  },
+  {
+    "key": "pelé",
+    "name": "Pelé",
+    "avatar": "10",
+    "aura": "none",
+    "title": "Çaylak Forvet",
+    "goals": 0,
+    "matches": 0,
+    "wins": 0,
+    "createdAt": 1790016429726,
+    "lastActiveAt": 1790016429726
+  },
+  {
+    "key": "kasırga",
+    "name": "Kasırga",
+    "avatar": "10",
+    "aura": "none",
+    "title": "Çaylak Forvet",
+    "goals": 0,
+    "matches": 0,
+    "wins": 0,
+    "createdAt": 1790016463761,
+    "lastActiveAt": 1790016463761
   }
 ]
