@@ -21,7 +21,7 @@
     "matches": 25,
     "wins": 17,
     "createdAt": 1789856818404,
-    "lastActiveAt": 1790017561451
+    "lastActiveAt": 1790022444359
   },
   {
     "key": "asfasf",
@@ -154,5 +154,17 @@
     "wins": 0,
     "createdAt": 1790016463761,
     "lastActiveAt": 1790016463761
+  },
+  {
+    "key": "kenan yıldız",
+    "name": "Kenan Yıldız",
+    "avatar": "10",
+    "aura": "none",
+    "title": "Çaylak Forvet",
+    "goals": 0,
+    "matches": 0,
+    "wins": 0,
+    "createdAt": 1790022379389,
+    "lastActiveAt": 1790022379389
   }
 ]

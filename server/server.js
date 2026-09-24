@@ -11,7 +11,7 @@ const io = new Server(server, {
   cors: { origin: '*' }
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3005;
 
 process.on('uncaughtException', (err) => {
   console.error('[Uncaught Exception]:', err);
